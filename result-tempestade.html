@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seu Resultado: A Tempestade</title>
+  <meta name="description" content="Você é A Tempestade. Descubra seu padrão relacional e receba seu plano personalizado de 7 dias.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #FDEEF0; }
+
+    .profile-hero {
+      background: linear-gradient(160deg, #8B1A2C 0%, #6B0F1E 100%);
+      color: #FFF;
+      text-align: center;
+      padding: 52px 24px 44px;
+    }
+    .profile-hero .profile-emoji { font-size: 4rem; display:block; margin-bottom:16px; }
+    .profile-hero .profile-label {
+      font-size: 0.72rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:2px; opacity:0.7; margin-bottom:8px;
+    }
+    .profile-hero .profile-name { font-size:2.4rem; font-weight:900; letter-spacing:-0.5px; margin-bottom:12px; }
+    .profile-hero .profile-tagline { font-size:1rem; opacity:0.85; line-height:1.5; }
+
+    .content-wrap { background: #FFF; padding: 32px 24px; }
+
+    .section-title {
+      font-size: 0.72rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:1.5px; color:#8B1A2C; margin-bottom:16px;
+    }
+    .profile-text { font-size: 1.05rem; line-height: 1.8; color: #2A2A2A; }
+    .profile-text p { margin-bottom: 20px; }
+    .profile-text strong { color: #6B0F1E; }
+    .quote-block {
+      background: #FDEEF0;
+      border-left: 3px solid #8B1A2C;
+      border-radius: 0 12px 12px 0;
+      padding: 16px 18px; margin: 24px 0;
+      font-size: 1rem; font-style: italic; color: #555; line-height: 1.65;
+    }
+    .traits-grid { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+    .trait-item {
+      display: flex; align-items: center; gap: 12px;
+      background: #FDF5F6; border-radius: 12px; padding: 14px 16px;
+    }
+    .trait-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .trait-text { font-size: 0.9rem; color: #333; line-height: 1.4; }
+
+    .share-section { background: #FDEEF0; padding: 28px 24px; text-align: center; }
+    .share-title { font-size: 1rem; font-weight: 700; color: #333; margin-bottom: 8px; }
+    .share-sub { font-size: 0.88rem; color: #777; margin-bottom: 20px; line-height: 1.5; }
+    .share-text-box {
+      background: #FFF; border: 1.5px solid #DDD; border-radius: 12px;
+      padding: 14px 16px; font-size: 0.9rem; color: #333; line-height: 1.5;
+      text-align: left; margin-bottom: 14px;
+    }
+    .btn-share-action {
+      display: block; width: 100%; padding: 16px;
+      background: #8B1A2C; color: #FFF;
+      border: none; border-radius: 12px;
+      font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; margin-bottom: 10px; transition: transform 0.1s;
+    }
+    .btn-share-action:active { transform: scale(0.97); }
+
+    .offer-wrap { background: #FFF; padding: 32px 24px; }
+    .offer-hook {
+      text-align: center; padding: 24px;
+      background: #FDEEF0; border-radius: 16px; margin-bottom: 24px;
+    }
+    .offer-hook-title { font-size: 1.4rem; font-weight: 800; color: #111; margin-bottom: 8px; }
+    .offer-hook-sub { font-size: 0.95rem; color: #666; line-height: 1.5; }
+
+    .price-block { text-align: center; padding: 20px 0 4px; }
+    .price-from { font-size: 0.8rem; color: #AAA; text-decoration: line-through; margin-bottom: 4px; }
+    .price-main { font-size: 3.2rem; font-weight: 900; color: #111; line-height: 1; }
+    .price-note { font-size: 0.78rem; color: #888; margin-top: 4px; }
+
+    .features-list { list-style: none; margin: 20px 0; }
+    .features-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 0; border-bottom: 1px solid #F5F5F5;
+      font-size: 0.93rem; color: #333; line-height: 1.4;
+    }
+    .features-list li:last-child { border-bottom: none; }
+    .fi-check { color: #2E7D32; font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+    .btn-buy {
+      display: block; width: 100%; padding: 20px;
+      background: linear-gradient(135deg, #8B1A2C, #6B0F1E);
+      color: #FFF; border: none; border-radius: 16px;
+      font-size: 1.05rem; font-weight: 800;
+      text-align: center; cursor: pointer; text-decoration: none;
+      box-shadow: 0 6px 20px rgba(139,26,44,0.35);
+      transition: transform 0.1s, box-shadow 0.2s; margin-top: 8px;
+    }
+    .btn-buy:active { transform: scale(0.97); }
+    .guarantee-text { text-align: center; font-size: 0.78rem; color: #AAA; margin-top: 12px; line-height: 1.5; }
+
+    .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+      background:#111; color:#FFF; padding:12px 24px; border-radius:30px;
+      font-size:0.88rem; font-weight:600; opacity:0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      white-space:nowrap; z-index:999; pointer-events:none; }
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<div class="profile-hero">
+  <span class="profile-emoji">🌪️</span>
+  <p class="profile-label">Seu padrão relacional é</p>
+  <h1 class="profile-name">A Tempestade</h1>
+  <p class="profile-tagline">Você ama intensamente.<br>Isso não é defeito — é uma força que ainda não encontrou o canal certo.</p>
+</div>
+
+<div class="content-wrap">
+
+  <p class="section-title">Seu diagnóstico</p>
+
+  <div class="profile-text">
+    <p>A Tempestade <strong>sente tudo em volume máximo</strong>. Alegria, raiva, amor, dor — tudo chega grande. Seus relacionamentos começam com faíscas genuínas e vão ficando mais difíceis de sustentar conforme a intensidade aumenta.</p>
+
+    <div class="quote-block">
+      "Você não quer brigar. Você quer ser entendida. Mas a urgência do que você sente às vezes chega antes das palavras certas."
+    </div>
+
+    <p>O que as pessoas chamam de intensidade, você sente como profundidade. O problema não é o quanto você sente — é que ninguém te ensinou a canalizar esse sentimento de uma forma que <strong>conecta em vez de afastar</strong>.</p>
+
+    <p>Esse padrão tem uma raiz. E a raiz pode ser trabalhada — sem apagar quem você é, sem fingir sentir menos do que sente.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <p class="section-title">Suas marcas do padrão</p>
+  <div class="traits-grid">
+    <div class="trait-item">
+      <span class="trait-icon">⚡</span>
+      <span class="trait-text">Seus relacionamentos começam com muita energia — e se tornam desgastantes</span>
+    </div>
+    <div class="trait-item">
+      <span class="trait-icon">🔥</span>
+      <span class="trait-text">Quando magoada, a emoção chega antes da reflexão</span>
+    </div>
+    <div class="trait-item">
+      <span class="trait-icon">💬</span>
+      <span class="trait-text">Você quer ser ouvida de verdade — não apenas tolerada</span>
+    </div>
+    <div class="trait-item">
+      <span class="trait-icon">🌱</span>
+      <span class="trait-text">Tem profundidade emocional real — e merece alguém que saiba recebê-la</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="share-section">
+  <p class="share-title">Compartilhe seu resultado</p>
+  <p class="share-sub">Quem na sua vida também é uma Tempestade? Compartilhe e descubram juntas.</p>
+  <div class="share-text-box" id="share-text">
+    🌪️ Descobri que sou A Tempestade no Diagnóstico Relacional. Amo intensamente e isso explica muito dos meus padrões. O resultado foi muito preciso. Faz em 2 minutos: https://ever-rod.github.io/diagnostico-relacional/
+  </div>
+  <button class="btn-share-action" onclick="compartilhar()">📤 Copiar e Compartilhar</button>
+  <button class="btn-share-action" style="background:#25D366;" onclick="compartilharWhats()">💬 Compartilhar no WhatsApp</button>
+</div>
+
+<div class="offer-wrap">
+
+  <div class="offer-hook">
+    <p class="offer-hook-title">Você descobriu seu padrão.</p>
+    <p class="offer-hook-sub">Agora você precisa aprender a canalizar sua intensidade — sem se perder e sem afastar quem ama.</p>
+  </div>
+
+  <p class="section-title" style="text-align:center">O que você recebe</p>
+
+  <ul class="features-list">
+    <li><span class="fi-check">✓</span> Workbook A Tempestade — 7 dias de reprogramação do padrão</li>
+    <li><span class="fi-check">✓</span> 9 blocos práticos por dia para entender e transformar sua intensidade</li>
+    <li><span class="fi-check">✓</span> Como agir diferente no momento do gatilho — antes de explodir</li>
+    <li><span class="fi-check">✓</span> Afirmações específicas para o padrão da Tempestade</li>
+    <li><span class="fi-check">✓</span> Acesso imediato em PDF — comece hoje</li>
+  </ul>
+
+  <div class="price-block">
+    <p class="price-from">De R$97</p>
+    <p class="price-main">R$37</p>
+    <p class="price-note">pagamento único · acesso imediato</p>
+  </div>
+
+  <div style="background:#FDF5F6; border:1.5px dashed #8B1A2C; border-radius:14px; padding:16px 18px; margin:20px 0;">
+    <label style="display:flex; align-items:flex-start; gap:12px; cursor:pointer;">
+      <input type="checkbox" id="bump-check" style="margin-top:3px; width:18px; height:18px; flex-shrink:0; accent-color:#8B1A2C;">
+      <span>
+        <strong style="font-size:0.9rem; color:#333; display:block; margin-bottom:4px;">
+          ➕ Adicionar: Guia de Frases — R$17
+        </strong>
+        <span style="font-size:0.82rem; color:#777; line-height:1.45;">
+          O que dizer em cada momento do seu padrão. As frases que conectam em vez de afastar.
+        </span>
+      </span>
+    </label>
+  </div>
+
+  <a href="https://go.hotmart.com/Q105649433F" class="btn-buy" id="btn-comprar">
+    QUERO MEU PLANO AGORA — R$37 →
+  </a>
+  <p class="guarantee-text">🔒 Pagamento seguro · Acesso imediato · Satisfação garantida</p>
+
+</div>
+
+<div class="toast" id="toast">✓ Copiado! Cole onde quiser.</div>
+
+<script>
+document.getElementById('bump-check').addEventListener('change', function() {
+  const btn = document.getElementById('btn-comprar');
+  btn.textContent = this.checked ? 'QUERO MEU PLANO AGORA — R$54 →' : 'QUERO MEU PLANO AGORA — R$37 →';
+});
+function compartilhar() {
+  const txt = document.getElementById('share-text').textContent.trim();
+  if (navigator.share) { navigator.share({ text: txt }).catch(() => copiar(txt)); }
+  else { copiar(txt); }
+}
+function compartilharWhats() {
+  window.open('https://wa.me/?text=' + encodeURIComponent(document.getElementById('share-text').textContent.trim()), '_blank');
+}
+function copiar(txt) {
+  if (navigator.clipboard) { navigator.clipboard.writeText(txt).then(() => toast()); }
+  else { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); toast(); }
+}
+function toast() {
+  const t = document.getElementById('toast'); t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+
+</body>
+</html>

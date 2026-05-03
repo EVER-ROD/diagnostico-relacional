@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Workbook 7 Dias — A Distante</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+@page { size: A4; margin: 0; }
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 10pt;
+  color: #1a1a1a;
+  background: #fff;
+  line-height: 1.55;
+}
+
+@media print {
+  .page { page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: avoid; break-after: avoid; }
+  .no-break, .exercicio, .reflexao-box, .frase-ancora, .insight-box,
+  .alerta-box, .dia-header, .tabela-simples, .tabela-dias, .mini-cards {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .capa, .page-header, .dia-header, .insight-box, .frase-ancora,
+  .callout, .progresso-bar, .tag-dia, .coluna-lateral,
+  .exercicio, .ex-header, .reflexao-box, .alerta-box,
+  .tabela-simples, .tabela-dias, .mini-cards, .progresso-strip,
+  .mini-card, .checklist, .escala-wrap {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* ─── VARIÁVEIS ─── */
+:root {
+  --blue-dark:   #0D1F2D;
+  --blue-mid:    #1E4D6B;
+  --blue-warm:   #2C7BB6;
+  --blue-pale:   #F0F7FD;
+  --blue-line:   #C8DFF5;
+  --blue-accent: #85C1E9;
+  --green-brand: #1A4E2D;
+  --alert-signal: #C0392B;
+}
+
+/* ═══════════════════════════════════════
+   CAPA
+═══════════════════════════════════════ */
+.capa {
+  background: linear-gradient(160deg, var(--blue-dark) 0%, var(--blue-mid) 55%, var(--blue-warm) 100%);
+  width: 210mm;
+  height: 297mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18mm 18mm 16mm;
+  position: relative;
+  overflow: hidden;
+}
+
+.capa::before {
+  content: '';
+  position: absolute;
+  top: -40mm; right: -30mm;
+  width: 140mm; height: 140mm;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.capa::after {
+  content: '';
+  position: absolute;
+  bottom: 20mm; left: -30mm;
+  width: 100mm; height: 100mm;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.capa-topo {
+  position: relative;
+  z-index: 2;
+}
+
+.capa-sistema {
+  display: inline-block;
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10mm;
+}
+
+.capa-perfil-num {
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 4mm;
+}
+
+.capa-perfil {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 52pt;
+  font-weight: 900;
+  line-height: 0.88;
+  color: var(--blue-accent);
+  margin-bottom: 6mm;
+}
+
+.capa-perfil em {
+  display: block;
+  font-size: 22pt;
+  color: rgba(255,255,255,0.5);
+  font-weight: 700;
+  font-style: italic;
+  margin-bottom: 2mm;
+}
+
+.capa-tipo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 8mm;
+}
+
+.capa-desc {
+  font-size: 10pt;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  max-width: 120mm;
+  border-left: 2px solid rgba(255,255,255,0.15);
+  padding-left: 4mm;
+}
+
+/* Símbolo central grande */
+.capa-simbolo {
+  position: absolute;
+  right: 10mm;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.06;
+  z-index: 1;
+}
+
+/* Rodapé da capa */
+.capa-rodape {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.capa-dias {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 5mm 8mm;
+  text-align: center;
+}
+
+.capa-dias .num { font-size: 28pt; font-weight: 900; color: var(--blue-accent); line-height: 1; }
+.capa-dias .label { font-size: 8pt; color: rgba(255,255,255,0.5); letter-spacing: 1px; text-transform: uppercase; margin-top: 1mm; }
+
+.capa-marca { font-size: 8pt; color: rgba(255,255,255,0.25); text-align: right; line-height: 1.6; }
+
+/* ═══════════════════════════════════════
+   LAYOUT INTERNO
+═══════════════════════════════════════ */
+.page {
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  padding: 10mm 14mm 8mm;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ─── HEADER DE PÁGINA ─── */
+.page-header {
+  background: var(--blue-dark);
+  margin: -10mm -14mm 6mm;
+  padding: 5mm 14mm 4mm;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.page-header.green { background: var(--green-brand); }
+
+.ph-left {}
+.ph-label {
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 2px;
+}
+
+.ph-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18pt;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.ph-right {}
+.ph-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 36pt;
+  font-weight: 900;
+  color: rgba(255,255,255,0.08);
+  line-height: 1;
+}
+
+/* ─── HEADER DE DIA ─── */
+.dia-header {
+  display: flex;
+  align-items: center;
+  gap: 5mm;
+  background: var(--blue-pale);
+  border-left: 4mm solid var(--blue-warm);
+  padding: 3mm 5mm;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 4mm;
+}
+
+.dia-num-badge {
+  background: var(--blue-warm);
+  color: #fff;
+  font-size: 8pt;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dia-titulo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 14pt;
+  font-weight: 700;
+  color: var(--blue-dark);
+}
+
+.dia-sub {
+  font-size: 8.5pt;
+  color: var(--blue-mid);
+  font-style: italic;
+  margin-top: 1px;
+}
+
+/* ─── LEITURA ─── */
+.leitura {
+  font-size: 10pt;
+  color: #333;
+  line-height: 1.55;
+  margin-bottom: 3mm;
+}
+
+.leitura p + p { margin-top: 2mm; }
+.leitura strong { color: var(--blue-dark); }
+
+/* ─── CALLOUT / INSIGHT ─── */
+.insight-box {
+  background: var(--blue-pale);
+  border-left: 3px solid var(--blue-warm);
+  padding: 3mm 5mm;
+  border-radius: 0 8px 8px 0;
+  margin: 3mm 0;
+  font-size: 9.5pt;
+  color: var(--blue-dark);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.insight-box strong {
+  display: block;
+  font-size: 7.5pt;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--blue-warm);
+  margin-bottom: 2mm;
+}
+
+/* ─── FRASE ÂNCORA ─── */
+.frase-ancora {
+  background: var(--blue-dark);
+  color: var(--blue-accent);
+  padding: 4mm 6mm;
+  border-radius: 10px;
+  margin: 3mm 0;
+}
+
+.frase-ancora .fa-label {
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(133,193,233,0.5);
+  margin-bottom: 3mm;
+}
+
+.frase-ancora .fa-texto {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 13pt;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--blue-accent);
+}
+
+/* ─── EXERCÍCIO ─── */
+.exercicio {
+  margin: 3mm 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ex-header {
+  background: var(--blue-mid);
+  color: #fff;
+  padding: 3mm 5mm;
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+}
+
+.ex-num {
+  width: 6mm; height: 6mm;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7pt;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.ex-titulo {
+  font-size: 9pt;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.ex-body {
+  background: #FAFAFA;
+  border: 1px solid var(--blue-line);
+  border-top: none;
+  padding: 3mm 4mm;
+}
+
+.ex-instrucao {
+  font-size: 9pt;
+  color: #555;
+  margin-bottom: 2mm;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* ─── LINHAS DE ESCRITA ─── */
+.linhas-escrita {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.linha-escrita {
+  height: 7mm;
+  border-bottom: 1px solid var(--blue-line);
+  width: 100%;
+}
+
+.linha-escrita.larga { height: 8mm; }
+
+/* ─── COLUNAS ─── */
+.duas-colunas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3mm;
+  margin: 2mm 0;
+}
+
+.tres-colunas {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2mm;
+  margin: 2mm 0;
+}
+
+/* ─── TABELA DE DIAS ─── */
+.tabela-dias {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0;
+  font-size: 9pt;
+}
+
+.tabela-dias th {
+  background: var(--blue-dark);
+  color: var(--blue-accent);
+  padding: 2mm 3mm;
+  text-align: left;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.tabela-dias td {
+  padding: 2.5mm 3mm;
+  border-bottom: 1px solid var(--blue-line);
+  vertical-align: top;
+  line-height: 1.4;
+}
+
+.tabela-dias tr:last-child td { border-bottom: none; }
+.tabela-dias tr:nth-child(even) td { background: var(--blue-pale); }
+
+.tabela-dias .td-dia {
+  font-weight: 700;
+  color: var(--blue-warm);
+  white-space: nowrap;
+  font-size: 8.5pt;
+}
+
+/* ─── MINI-CARDS ─── */
+.mini-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2mm;
+  margin: 2mm 0;
+}
+
+.mini-card {
+  background: var(--blue-pale);
+  border: 1px solid var(--blue-line);
+  border-radius: 8px;
+  padding: 3mm;
+  text-align: center;
+}
+
+.mini-card .mc-icon { font-size: 18pt; margin-bottom: 2mm; }
+.mini-card .mc-titulo { font-size: 8.5pt; font-weight: 700; color: var(--blue-dark); margin-bottom: 1mm; }
+.mini-card .mc-desc { font-size: 8pt; color: #888; line-height: 1.4; }
+
+/* ─── PERFIL TAG ─── */
+.perfil-tag-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--blue-dark);
+  color: var(--blue-accent);
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ─── CHECKLIST ─── */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5mm;
+  margin: 2mm 0;
+}
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 3mm;
+}
+
+.check-box {
+  width: 4mm; height: 4mm;
+  border: 1.5px solid var(--blue-warm);
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.check-text {
+  font-size: 9.5pt;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* ─── ESCALA VISUAL ─── */
+.escala-wrap {
+  margin: 2mm 0 3mm;
+}
+
+.escala-label {
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: var(--blue-dark);
+  margin-bottom: 2mm;
+}
+
+.escala {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+
+.escala-num {
+  font-size: 8pt;
+  color: #999;
+  min-width: 4mm;
+  text-align: center;
+}
+
+.escala-boxes {
+  display: flex;
+  gap: 1.5mm;
+  flex: 1;
+}
+
+.escala-box {
+  flex: 1;
+  height: 8mm;
+  border: 1.5px solid var(--blue-line);
+  border-radius: 3px;
+  background: #fff;
+}
+
+/* ─── REFLEXÃO ─── */
+.reflexao-box {
+  background: #EEF5FC;
+  border: 1px solid var(--blue-line);
+  border-radius: 10px;
+  padding: 4mm 5mm;
+  margin-top: 3mm;
+}
+
+.reflexao-box .rf-label {
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue-warm);
+  margin-bottom: 2mm;
+}
+
+.reflexao-box .rf-pergunta {
+  font-size: 9.5pt;
+  color: var(--blue-dark);
+  font-weight: 600;
+  margin-bottom: 2mm;
+  line-height: 1.45;
+}
+
+/* ─── PROGRESSO ─── */
+.progresso-strip {
+  display: flex;
+  gap: 2mm;
+  margin: 2mm 0 4mm;
+}
+
+.prog-dia {
+  flex: 1;
+  height: 3mm;
+  border-radius: 2px;
+  background: var(--blue-line);
+}
+
+.prog-dia.ativo { background: var(--blue-warm); }
+.prog-dia.atual { background: var(--blue-dark); }
+
+/* ─── SEÇÃO TÍTULO ─── */
+.secao-titulo {
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue-warm);
+  margin-bottom: 2mm;
+  margin-top: 2mm;
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+}
+
+.secao-titulo::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--blue-line);
+}
+
+/* ─── RODAPÉ DE PÁGINA ─── */
+.page-footer {
+  margin-top: auto;
+  padding-top: 4mm;
+  border-top: 1px solid var(--blue-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 7.5pt;
+  color: #CCC;
+}
+
+.pf-marca { font-weight: 600; letter-spacing: 0.5px; }
+
+/* ─── DESTAQUE INLINE ─── */
+mark {
+  background: #DFF0FA;
+  color: var(--blue-dark);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* ─── CAIXA ALERTA ─── */
+.alerta-box {
+  background: #FFF5F5;
+  border-left: 3px solid var(--alert-signal);
+  padding: 4mm 5mm;
+  border-radius: 0 8px 8px 0;
+  margin: 4mm 0;
+  font-size: 9.5pt;
+  color: #5a1a24;
+  line-height: 1.5;
+}
+
+.alerta-box strong {
+  display: block;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--alert-signal);
+  margin-bottom: 2mm;
+}
+
+/* ─── TABELA SIMPLES ─── */
+.tabela-simples {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 3mm 0;
+  font-size: 9pt;
+}
+
+.tabela-simples th {
+  text-align: left;
+  padding: 2.5mm 3mm;
+  background: var(--blue-mid);
+  color: #fff;
+  font-size: 7.5pt;
+  letter-spacing: 0.5px;
+}
+
+.tabela-simples td {
+  padding: 2mm 2.5mm;
+  border-bottom: 1px solid var(--blue-line);
+  vertical-align: top;
+}
+
+.tabela-simples tr:last-child td { border-bottom: none; }
+.tabela-simples tr:nth-child(even) td { background: var(--blue-pale); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     CAPA
+═══════════════════════════════════════ -->
+<div class="capa page">
+
+  <!-- Símbolo: diamante concêntrico -->
+  <svg class="capa-simbolo" width="290" height="290" viewBox="0 0 100 100" fill="none">
+    <polygon points="50,6 94,50 50,94 6,50" fill="white"/>
+    <polygon points="50,18 82,50 50,82 18,50" fill="none" stroke="white" stroke-width="1.5"/>
+    <polygon points="50,30 70,50 50,70 30,50" fill="none" stroke="white" stroke-width="1.5"/>
+    <polygon points="50,40 60,50 50,60 40,50" fill="none" stroke="white" stroke-width="1.5"/>
+    <circle cx="50" cy="50" r="3" fill="white" opacity="0.6"/>
+  </svg>
+
+  <div class="capa-topo">
+    <div class="capa-sistema">Diagnóstico Relacional · Padrão de Afastamento</div>
+    <div class="capa-perfil-num">Perfil 03 de 03</div>
+    <div class="capa-perfil">
+      <em>Você é</em>
+      A<br>Distante
+    </div>
+    <div class="capa-tipo">Workbook 7 Dias</div>
+    <div class="capa-desc">
+      Sete dias de prática direcionada para reconhecer o ciclo de afastamento, entender o que o dispara e começar a construir presença emocional — sem perder quem você é.
+    </div>
+  </div>
+
+  <div class="capa-rodape">
+    <div class="capa-dias">
+      <div class="num">07</div>
+      <div class="label">Dias de Prática</div>
+    </div>
+    <div class="capa-marca">
+      Diagnóstico Relacional<br>
+      Sistema de Perfis Emocionais<br>
+      <strong style="color:rgba(255,255,255,0.4);">Padrão de Ativação · Ciclo Emocional</strong>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════
+     PÁGINA INTRODUÇÃO
+═══════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">A Distante · Workbook</div>
+      <div class="ph-title">Como usar este material</div>
+    </div>
+    <div class="ph-right">
+      <div class="ph-num">00</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>Este workbook foi criado especificamente para o perfil <strong>A Distante</strong> — pessoas cujo padrão emocional diante de conflito, intensidade ou vulnerabilidade é o afastamento. Não por indiferença. Por proteção.</p>
+    <p>Ao longo de 7 dias, você vai mapear o seu ciclo de afastamento, identificar o que dispara o recolhimento e praticar ferramentas concretas para criar presença emocional — sem perder o que você precisa: espaço, autonomia, ritmo próprio.</p>
+  </div>
+
+  <div class="secao-titulo">O seu ciclo emocional</div>
+
+  <div class="mini-cards">
+    <div class="mini-card">
+      <div class="mc-icon">🌊</div>
+      <div class="mc-titulo">Conexão</div>
+      <div class="mc-desc">Presente, funcional, disponível enquanto a distância está mantida</div>
+    </div>
+    <div class="mini-card">
+      <div class="mc-icon">❄️</div>
+      <div class="mc-titulo">Gatilho</div>
+      <div class="mc-desc">Proximidade excessiva, cobrança emocional ou sensação de perda do self</div>
+    </div>
+    <div class="mini-card">
+      <div class="mc-icon">🔵</div>
+      <div class="mc-titulo">Afastamento</div>
+      <div class="mc-desc">Silêncio, frieza, recolhimento — às vezes sem explicação</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <strong>Padrão de Ativação</strong>
+    O afastamento de A Distante não é rejeição — é regulação. O problema é que, sem comunicação, o outro interpreta como abandono. Este workbook foca justamente nessa lacuna.
+  </div>
+
+  <div class="secao-titulo">Como funciona</div>
+
+  <table class="tabela-dias">
+    <thead>
+      <tr><th>Dia</th><th>Tema</th><th>Foco</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="td-dia">Dia 1</td><td>O Mapa do Afastamento</td><td>Entender quando e como o ciclo começa</td></tr>
+      <tr><td class="td-dia">Dia 2</td><td>O Medo de Depender</td><td>A raiz por trás do recolhimento</td></tr>
+      <tr><td class="td-dia">Dia 3</td><td>O Sinal Antes do Silêncio</td><td>Reconhecer os avisos internos antes de desaparecer</td></tr>
+      <tr><td class="td-dia">Dia 4</td><td>O Que Você Não Pede</td><td>Identificar necessidades não verbalizadas</td></tr>
+      <tr><td class="td-dia">Dia 5</td><td>Praticando Permanecer</td><td>Ficar presente mesmo quando o impulso é recuar</td></tr>
+      <tr><td class="td-dia">Dia 6</td><td>Uma Abertura Pequena</td><td>Comunicar o que sente, de forma controlada</td></tr>
+      <tr><td class="td-dia">Dia 7</td><td>O Próximo Ciclo</td><td>Integrar e planejar o que vem depois</td></tr>
+    </tbody>
+  </table>
+
+  <div class="insight-box">
+    <strong>Instrução Importante</strong>
+    Faça um dia por vez. Não pule. Não force. O trabalho de A Distante é sobre tolerância à proximidade — e isso inclui a proximidade com si mesma. Cada exercício é um passo dentro do ritmo que você precisa.
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Âncora do Workbook</div>
+    <div class="fa-texto">"Eu posso precisar de espaço e ainda assim escolher permanecer."</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">Diagnóstico Relacional · A Distante</span>
+    <span>Introdução · Como Usar</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 1 — O MAPA DO AFASTAMENTO
+═══════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">A Distante · Dia 1 de 7</div>
+      <div class="ph-title">O Mapa do Afastamento</div>
+    </div>
+    <div class="ph-right">
+      <div class="ph-num">01</div>
+    </div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia atual"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+  </div>
+
+  <div class="dia-header">
+    <div class="dia-num-badge">Dia 01</div>
+    <div>
+      <div class="dia-titulo">O Mapa do Afastamento</div>
+      <div class="dia-sub">Entendendo quando e como o seu ciclo começa</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>Antes de mudar qualquer coisa, você precisa <strong>ver o padrão com clareza</strong>. A Distante geralmente sabe que se afasta — mas não sabe exatamente o que dispara isso, nem como o processo começa antes que o silêncio já tenha chegado.</p>
+    <p>O afastamento tem uma estrutura. Um momento em que algo dentro de você muda. Uma sensação de que o outro está se aproximando demais, pedindo mais do que você quer dar, ou que a situação está saindo do seu controle. <mark>Hoje você vai mapear esse processo.</mark></p>
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Linha do Tempo do Último Afastamento</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Pense em um momento recente em que você se afastou emocionalmente. Reconstrua o que aconteceu antes, durante e depois.</div>
+      <table class="tabela-simples">
+        <thead>
+          <tr><th style="width:28%">Momento</th><th>O que aconteceu</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>O que veio antes</strong><br><span style="font-size:8pt;color:#999">situação ou fala</span></td><td><div class="linha-escrita larga"></div><div class="linha-escrita"></div></td></tr>
+          <tr><td><strong>O que senti internamente</strong><br><span style="font-size:8pt;color:#999">sensação no corpo/mente</span></td><td><div class="linha-escrita larga"></div><div class="linha-escrita"></div></td></tr>
+          <tr><td><strong>O que fiz</strong><br><span style="font-size:8pt;color:#999">ação, silêncio, fuga</span></td><td><div class="linha-escrita larga"></div><div class="linha-escrita"></div></td></tr>
+          <tr><td><strong>O que o outro interpretou</strong><br><span style="font-size:8pt;color:#999">reação percebida</span></td><td><div class="linha-escrita larga"></div><div class="linha-escrita"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">Os 3 Gatilhos Mais Frequentes</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">O que costuma aparecer antes do seu recolhimento? Marque os que se aplicam e adicione os seus:</div>
+      <div class="duas-colunas">
+        <div class="checklist">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Cobrança emocional direta</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Excesso de contato / presença</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Conflito ou tom elevado</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Sensação de perder o controle</div></div>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Pedidos de exclusividade</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Pressão para definir algo</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Muita vulnerabilidade do outro</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Crítica ou decepção percebida</div></div>
+        </div>
+      </div>
+      <div style="margin-top:3mm;font-size:9pt;color:#666;margin-bottom:1mm;">Meu gatilho mais forte é:</div>
+      <div class="linha-escrita larga"></div>
+    </div>
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora — Dia 1</div>
+    <div class="fa-texto">"Afastar-se é uma resposta aprendida. Aprender a ver o disparo é o primeiro passo para ter escolha."</div>
+  </div>
+
+  <div class="reflexao-box">
+    <div class="rf-label">Reflexão Final</div>
+    <div class="rf-pergunta">Quando você se afasta, o que você está protegendo?</div>
+    <div class="linhas-escrita">
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">Diagnóstico Relacional · A Distante</span>
+    <span>Dia 1 · O Mapa do Afastamento</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 2 — O MEDO DE DEPENDER
+═══════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">A Distante · Dia 2 de 7</div>
+      <div class="ph-title">O Medo de Depender</div>
+    </div>
+    <div class="ph-right">
+      <div class="ph-num">02</div>
+    </div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia atual"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+  </div>
+
+  <div class="dia-header">
+    <div class="dia-num-badge">Dia 02</div>
+    <div>
+      <div class="dia-titulo">O Medo de Depender</div>
+      <div class="dia-sub">A raiz por trás do recolhimento emocional</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>O afastamento de A Distante raramente é sobre o outro. Quase sempre é sobre o que <strong>dependência significa para você</strong>. Em algum momento da vida você aprendeu que precisar é perigoso. Que se abrir demais é perder algo essencial.</p>
+    <p>Hoje o trabalho é <mark>encontrar a crença por trás do padrão</mark>. Não para atacá-la — mas para entendê-la. Porque uma crença que você não vê, você não pode escolher.</p>
+  </div>
+
+  <div class="insight-box">
+    <strong>Padrão de Ativação</strong>
+    A Distante frequentemente foi bem-sucedida sendo autossuficiente. A independência virou identidade. Precisar do outro — emocionalmente — parece fraqueza, ou pior: uma porta para a decepção.
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">De onde vem o medo de depender?</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Complete as frases abaixo sem pensar demais. Escreva o que vier primeiro:</div>
+      <div class="linhas-escrita" style="margin-bottom:3mm;">
+        <div style="font-size:9pt;color:#555;padding:2mm 0;border-bottom:1px solid var(--blue-line);">Quando eu dependo de alguém, sinto que...</div>
+        <div class="linha-escrita larga"></div>
+        <div style="font-size:9pt;color:#555;padding:2mm 0 0;margin-top:3mm;border-bottom:1px solid var(--blue-line);">A última vez que confiei muito em alguém, aconteceu...</div>
+        <div class="linha-escrita larga"></div>
+        <div style="font-size:9pt;color:#555;padding:2mm 0 0;margin-top:3mm;border-bottom:1px solid var(--blue-line);">Ser autossuficiente me ensinou que...</div>
+        <div class="linha-escrita larga"></div>
+        <div style="font-size:9pt;color:#555;padding:2mm 0 0;margin-top:3mm;border-bottom:1px solid var(--blue-line);">Se eu realmente precisasse de alguém e essa pessoa falhasse, eu...</div>
+        <div class="linha-escrita larga"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">O Custo Real da Autossuficiência</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Ser autossuficiente tem vantagens — mas também tem um preço. Mapeie os dois lados:</div>
+      <table class="tabela-simples">
+        <thead>
+          <tr><th>O que a autossuficiência me dá</th><th>O que ela me custa</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><div class="linha-escrita"></div></td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td><div class="linha-escrita"></div></td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td><div class="linha-escrita"></div></td><td><div class="linha-escrita"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="alerta-box">
+    <strong>Ponto Cego</strong>
+    Autossuficiência levada ao extremo não é força — é isolamento disfuncional. Quando você nunca deixa o outro contribuir, você também nunca testa se é seguro. O afastamento vira profecias autorrealizadas: "Não posso contar com ninguém" — porque nunca tentou.
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora — Dia 2</div>
+    <div class="fa-texto">"Precisar não é fraqueza. É o pré-requisito para qualquer conexão real."</div>
+  </div>
+
+  <div class="reflexao-box">
+    <div class="rf-label">Reflexão Final</div>
+    <div class="rf-pergunta">Qual a diferença entre escolher estar sozinho e precisar estar sozinho para se sentir seguro?</div>
+    <div class="linhas-escrita">
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">Diagnóstico Relacional · A Distante</span>
+    <span>Dia 2 · O Medo de Depender</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 3 — O SINAL ANTES DO SILÊNCIO
+═══════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">A Distante · Dia 3 de 7</div>
+      <div class="ph-title">O Sinal Antes do Silêncio</div>
+    </div>
+    <div class="ph-right">
+      <div class="ph-num">03</div>
+    </div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia atual"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+  </div>
+
+  <div class="dia-header">
+    <div class="dia-num-badge">Dia 03</div>
+    <div>
+      <div class="dia-titulo">O Sinal Antes do Silêncio</div>
+      <div class="dia-sub">Reconhecendo os avisos internos antes de desaparecer</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>O silêncio de A Distante parece repentino para quem está fora — mas para quem está dentro, <strong>há sempre um sinal antes</strong>. Uma sensação no peito. Um pensamento que se repete. Uma mudança no tônus corporal. O problema é que esse sinal é tão familiar que você quase não o percebe mais.</p>
+    <p>Quando você aprende a reconhecer o sinal <mark>antes de agir sobre ele</mark>, você ganha um intervalo. E nesse intervalo existe escolha.</p>
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Inventário de Sinais Internos</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Quando você está prestes a se afastar, o que aparece primeiro? Marque tudo que reconhece:</div>
+      <div class="secao-titulo" style="margin-top:2mm;">No corpo</div>
+      <div class="duas-colunas">
+        <div class="checklist">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Tensão no peito ou mandíbula</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Respiração mais curta</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Vontade de sair do ambiente</div></div>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Frio ou entorpecimento</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Cansaço repentino</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Inquietação sem causa</div></div>
+        </div>
+      </div>
+      <div class="secao-titulo">Na mente</div>
+      <div class="duas-colunas">
+        <div class="checklist">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">"Preciso de espaço agora"</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">"Isso tá indo longe demais"</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Pensamentos acelerados</div></div>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Sensação de claustrofobia</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">"Não consigo pensar aqui"</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Irritação sem palavras</div></div>
+        </div>
+      </div>
+      <div style="margin-top:3mm;font-size:9pt;color:#555;margin-bottom:1mm;">O meu sinal mais claro é:</div>
+      <div class="linha-escrita larga"></div>
+    </div>
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">Protocolo do Intervalo</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Quando você percebe o sinal, o que pode fazer nos próximos 90 segundos antes de agir? Escreva 3 ações concretas (não "pensar melhor" — ações físicas):</div>
+      <table class="tabela-simples">
+        <thead><tr><th>#</th><th>Ação concreta nos próximos 90 segundos</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700;color:var(--blue-warm);">1</td><td><div class="linha-escrita larga"></div></td></tr>
+          <tr><td style="font-weight:700;color:var(--blue-warm);">2</td><td><div class="linha-escrita larga"></div></td></tr>
+          <tr><td style="font-weight:700;color:var(--blue-warm);">3</td><td><div class="linha-escrita larga"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora — Dia 3</div>
+    <div class="fa-texto">"Eu preciso de espaço — e posso pedir isso sem desaparecer."</div>
+  </div>
+
+  <div class="reflexao-box">
+    <div class="rf-label">Reflexão Final</div>
+    <div class="rf-pergunta">Se você soubesse que pedir espaço abertamente não afastaria o outro, como você pediria? Escreva a frase exata.</div>
+    <div class="linhas-escrita">
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">Diagnóstico Relacional · A Distante</span>
+    <span>Dia 3 · O Sinal Antes do Silêncio</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 4 — O QUE VOCÊ NÃO PEDE
+═══════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">A Distante · Dia 4 de 7</div>
+      <div class="ph-title">O Que Você Não Pede</div>
+    </div>
+    <div class="ph-right">
+      <div class="ph-num">04</div>
+    </div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia atual"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+  </div>
+
+  <div class="dia-header">
+    <div class="dia-num-badge">Dia 04</div>
+    <div>
+      <div class="dia-titulo">O Que Você Não Pede</div>
+      <div class="dia-sub">Identificando necessidades que ficaram sem voz</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>A Distante tende a ter necessidades reais — mas raramente as verbaliza. Em parte porque aprendeu a se virar. Em parte porque pedir parece expor demais. O resultado é uma tensão silenciosa: você espera que o outro perceba, e quando não percebe, <strong>o afastamento confirma que não vale abrir</strong>.</p>
+    <p>Hoje você vai fazer um inventário honesto do que você precisa — e que nunca pediu. <mark>Não para pedir agora. Para reconhecer que as necessidades existem.</mark></p>
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Inventário de Necessidades Não Ditas</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Para cada área, escreva o que você precisa mas raramente ou nunca pede:</div>
+      <table class="tabela-simples">
+        <thead><tr><th style="width:30%">Área</th><th>O que eu precisaria mas não peço</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tempo</strong></td><td><div class="linha-escrita larga"></div></td></tr>
+          <tr><td><strong>Reconhecimento</strong></td><td><div class="linha-escrita larga"></div></td></tr>
+          <tr><td><strong>Afeto físico</strong></td><td><div class="linha-escrita larga"></div></td></tr>
+          <tr><td><strong>Compreensão</strong></td><td><div class="linha-escrita larga"></div></td></tr>
+          <tr><td><strong>Espaço sem culpa</strong></td><td><div class="linha-escrita larga"></div></td></tr>
+          <tr><td><strong>Algo específico</strong></td><td><div class="linha-escrita larga"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">Por Que Você Não Pede?</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Para cada razão abaixo, avalie o quanto ela se aplica a você (1 = pouco, 5 = muito):</div>
+      <div class="escala-wrap">
+        <div class="escala-label">Tenho medo de parecer fraco/a ou dependente</div>
+        <div class="escala"><div class="escala-num">1</div><div class="escala-boxes"><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div></div><div class="escala-num">5</div></div>
+      </div>
+      <div class="escala-wrap">
+        <div class="escala-label">Acho que o outro deveria perceber sem eu dizer</div>
+        <div class="escala"><div class="escala-num">1</div><div class="escala-boxes"><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div></div><div class="escala-num">5</div></div>
+      </div>
+      <div class="escala-wrap">
+        <div class="escala-label">Tenho medo de ser recusado/a ou decepcionado/a</div>
+        <div class="escala"><div class="escala-num">1</div><div class="escala-boxes"><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div></div><div class="escala-num">5</div></div>
+      </div>
+      <div class="escala-wrap">
+        <div class="escala-label">Prefiro me virar sozinho/a a criar expectativa</div>
+        <div class="escala"><div class="escala-num">1</div><div class="escala-boxes"><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div></div><div class="escala-num">5</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora — Dia 4</div>
+    <div class="fa-texto">"Pedir não é criar dependência. É criar possibilidade de conexão."</div>
+  </div>
+
+  <div class="reflexao-box">
+    <div class="rf-label">Reflexão Final</div>
+    <div class="rf-pergunta">Se você soubesse que a pessoa vai responder bem, qual seria o primeiro pedido que você faria?</div>
+    <div class="linhas-escrita">
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">Diagnóstico Relacional · A Distante</span>
+    <span>Dia 4 · O Que Você Não Pede</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 5 — PRATICANDO PERMANECER
+═══════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">A Distante · Dia 5 de 7</div>
+      <div class="ph-title">Praticando Permanecer</div>
+    </div>
+    <div class="ph-right">
+      <div class="ph-num">05</div>
+    </div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia atual"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+  </div>
+
+  <div class="dia-header">
+    <div class="dia-num-badge">Dia 05</div>
+    <div>
+      <div class="dia-titulo">Praticando Permanecer</div>
+      <div class="dia-sub">Ficar presente mesmo quando o impulso é recuar</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>Permanecer não significa sufocar o impulso de sair. Significa <strong>criar a capacidade de tolerar a proximidade por um pouco mais</strong> — até que ela não pareça mais uma ameaça. É uma habilidade. E como toda habilidade, começa pequeno.</p>
+    <p>Hoje o trabalho não é "ficar para sempre". É identificar em que momentos você poderia ter ficado por mais <mark>10 minutos</mark> — e praticar esse intervalo deliberadamente.</p>
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Mapa de Tolerância à Proximidade</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Para cada situação, avalie o quanto você consegue permanecer presente (0 = foge imediatamente, 10 = fica totalmente presente):</div>
+      <table class="tabela-simples">
+        <thead><tr><th style="width:45%">Situação</th><th style="width:20%">Nota atual</th><th>O que me faz sair</th></tr></thead>
+        <tbody>
+          <tr><td>Conversa emocional intensa</td><td><div class="linha-escrita"></div></td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td>Silêncio compartilhado</td><td><div class="linha-escrita"></div></td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td>Discussão com tom elevado</td><td><div class="linha-escrita"></div></td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td>Pedido de carinho/afeto</td><td><div class="linha-escrita"></div></td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td>Conversa sobre o futuro</td><td><div class="linha-escrita"></div></td><td><div class="linha-escrita"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">A Técnica dos 10 Minutos</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Escolha a situação onde sua nota foi mais baixa. Descreva como seria ficar por 10 minutos a mais — o que você diria a si mesmo para aguentar esse intervalo:</div>
+      <div style="font-size:9pt;color:#555;margin-bottom:2mm;">Situação escolhida:</div>
+      <div class="linha-escrita"></div>
+      <div style="font-size:9pt;color:#555;margin:3mm 0 2mm;">O que eu diria a mim mesmo para ficar por mais 10 minutos:</div>
+      <div class="linhas-escrita">
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita"></div>
+      </div>
+      <div style="font-size:9pt;color:#555;margin:3mm 0 2mm;">O que eu descobriria se ficasse?</div>
+      <div class="linhas-escrita">
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <strong>Lembrança Importante</strong>
+    Permanecer não significa fingir que está bem. Significa dizer "Estou me sentindo sobrecarregado/a agora, mas não vou sumir — só preciso de um momento." Isso é presença real, não performance.
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora — Dia 5</div>
+    <div class="fa-texto">"Eu posso sentir o impulso de ir — e ainda assim escolher ficar por mais um pouco."</div>
+  </div>
+
+  <div class="reflexao-box">
+    <div class="rf-label">Reflexão Final</div>
+    <div class="rf-pergunta">O que você acha que aconteceria de diferente nas suas relações se você ficasse por 10 minutos a mais nos momentos difíceis?</div>
+    <div class="linhas-escrita">
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">Diagnóstico Relacional · A Distante</span>
+    <span>Dia 5 · Praticando Permanecer</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 6 — UMA ABERTURA PEQUENA
+═══════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">A Distante · Dia 6 de 7</div>
+      <div class="ph-title">Uma Abertura Pequena</div>
+    </div>
+    <div class="ph-right">
+      <div class="ph-num">06</div>
+    </div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia atual"></div>
+    <div class="prog-dia"></div>
+  </div>
+
+  <div class="dia-header">
+    <div class="dia-num-badge">Dia 06</div>
+    <div>
+      <div class="dia-titulo">Uma Abertura Pequena</div>
+      <div class="dia-sub">Comunicar o que sente — de forma controlada e segura</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>A Distante geralmente não tem problema em <em>pensar</em> suas emoções. O desafio é <strong>verbalizá-las</strong>. Hoje você vai trabalhar justamente isso: construir frases reais que comuniquem o que você está sentindo — sem precisar se expor completamente, sem precisar perder o controle do processo.</p>
+    <p>Uma abertura pequena e honesta vale mais do que uma performance de abertura. <mark>O objetivo não é desabafar — é conectar.</mark></p>
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Frases de Abertura Controlada</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Complete cada frase do jeito que faz sentido para você — sem exagerar, sem minimizar:</div>
+      <div class="linhas-escrita">
+        <div style="font-size:9pt;color:var(--blue-mid);padding:2mm 0;border-bottom:1px solid var(--blue-line);">Quando eu me afasto, geralmente é porque...</div>
+        <div class="linha-escrita larga"></div>
+        <div style="font-size:9pt;color:var(--blue-mid);padding:2mm 0 0;margin-top:3mm;border-bottom:1px solid var(--blue-line);">O que eu precisaria que você soubesse quando fico em silêncio é...</div>
+        <div class="linha-escrita larga"></div>
+        <div style="font-size:9pt;color:var(--blue-mid);padding:2mm 0 0;margin-top:3mm;border-bottom:1px solid var(--blue-line);">A forma que você pode me ajudar a voltar é...</div>
+        <div class="linha-escrita larga"></div>
+        <div style="font-size:9pt;color:var(--blue-mid);padding:2mm 0 0;margin-top:3mm;border-bottom:1px solid var(--blue-line);">Quando eu estiver pronto/a para conversar, vou...</div>
+        <div class="linha-escrita larga"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">Construindo Seu Protocolo de Comunicação</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Escreva uma frase curta que você pode usar da próxima vez que sentir o impulso de sumir — para comunicar antes de desaparecer:</div>
+      <div style="font-size:9pt;color:#555;margin-bottom:2mm;">Quando eu sentir que preciso me afastar, vou dizer:</div>
+      <div class="linhas-escrita">
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+      </div>
+      <div style="font-size:9pt;color:#555;margin:3mm 0 2mm;">Depois do espaço, quando eu voltar, vou dizer:</div>
+      <div class="linhas-escrita">
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <strong>Ponto de Virada</strong>
+    "Preciso de um tempo" dito em voz alta é completamente diferente de desaparecer. O primeiro é comunicação. O segundo é abandono percebido. A frase que você escreveu acima pode mudar completamente a dinâmica de uma relação.
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora — Dia 6</div>
+    <div class="fa-texto">"Eu posso abrir uma janela pequena. Não preciso abrir a porta inteira."</div>
+  </div>
+
+  <div class="reflexao-box">
+    <div class="rf-label">Reflexão Final</div>
+    <div class="rf-pergunta">Existe alguém na sua vida que merece ouvir essa abertura pequena? O que impede você de falar isso agora?</div>
+    <div class="linhas-escrita">
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">Diagnóstico Relacional · A Distante</span>
+    <span>Dia 6 · Uma Abertura Pequena</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 7 — O PRÓXIMO CICLO
+═══════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header green">
+    <div class="ph-left">
+      <div class="ph-label">A Distante · Dia 7 de 7</div>
+      <div class="ph-title">O Próximo Ciclo</div>
+    </div>
+    <div class="ph-right">
+      <div class="ph-num">07</div>
+    </div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia atual"></div>
+  </div>
+
+  <div class="dia-header">
+    <div class="dia-num-badge">Dia 07</div>
+    <div>
+      <div class="dia-titulo">O Próximo Ciclo</div>
+      <div class="dia-sub">Integrar o que foi visto e planejar o que vem</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>Você chegou ao Dia 7. Isso, por si só, é um ato de presença — exatamente o que A Distante mais pratica evitar. <strong>Você ficou. Você foi.</strong></p>
+    <p>Hoje o trabalho é integrar. O que você viu nestes 7 dias não desaparece quando você fechar este caderno. Ele passa a fazer parte do que você percebe — nos outros, em você, nos momentos em que o impulso de sumir aparece. <mark>A mudança começa quando você vê o que antes era invisível.</mark></p>
+  </div>
+
+  <div class="secao-titulo">O que você levou</div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Síntese dos 7 Dias</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Para cada dia, escreva a principal descoberta — em uma frase curta:</div>
+      <table class="tabela-simples">
+        <thead><tr><th style="width:30%">Dia</th><th>Principal aprendizado</th></tr></thead>
+        <tbody>
+          <tr><td><span style="color:var(--blue-warm);font-weight:700;">Dia 1</span> · O Mapa</td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td><span style="color:var(--blue-warm);font-weight:700;">Dia 2</span> · O Medo</td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td><span style="color:var(--blue-warm);font-weight:700;">Dia 3</span> · O Sinal</td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td><span style="color:var(--blue-warm);font-weight:700;">Dia 4</span> · Os Pedidos</td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td><span style="color:var(--blue-warm);font-weight:700;">Dia 5</span> · Permanecer</td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td><span style="color:var(--blue-warm);font-weight:700;">Dia 6</span> · A Abertura</td><td><div class="linha-escrita"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="exercicio">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">Plano de Continuidade — Próximos 30 Dias</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Escolha 3 práticas concretas que você vai manter — não perfeição, só intenção:</div>
+      <div class="checklist" style="margin-top:2mm;">
+        <div class="check-item"><div class="check-box"></div><div class="check-text">Quando sentir o gatilho, vou pausar por 90 segundos antes de agir</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text">Quando precisar de espaço, vou dizer em vez de desaparecer</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text">Uma vez por semana, vou verbalizar algo que normalmente ficaria em silêncio</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text">Vou praticar ficar 10 minutos a mais em situações desconfortáveis</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text">Vou perceber quando estou esperando que o outro adivinhe — e vou falar</div></div>
+      </div>
+      <div style="margin-top:4mm;font-size:9pt;color:#555;margin-bottom:1mm;">Minha prática prioritária para os próximos 30 dias:</div>
+      <div class="linha-escrita larga"></div>
+    </div>
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora — Dia 7</div>
+    <div class="fa-texto">"Presença não é perda de si. É a escolha mais corajosa que A Distante pode fazer."</div>
+  </div>
+
+  <div class="reflexao-box">
+    <div class="rf-label">Carta para o Próximo Ciclo</div>
+    <div class="rf-pergunta">Escreva para si mesmo/a: o que você quer que aconteça de diferente na próxima vez que o ciclo de afastamento aparecer?</div>
+    <div class="linhas-escrita">
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">Diagnóstico Relacional · A Distante</span>
+    <span>Dia 7 · O Próximo Ciclo</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PÁGINA FINAL
+═══════════════════════════════════════ -->
+<div class="page">
+
+  <div style="
+    background: linear-gradient(160deg, var(--blue-dark) 0%, var(--blue-mid) 60%, var(--blue-warm) 100%);
+    margin: -14mm -16mm -12mm;
+    padding: 20mm 18mm;
+    min-height: 297mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  ">
+
+    <!-- Diamante concêntrico de fundo -->
+    <svg style="position:absolute;right:-10mm;top:50%;transform:translateY(-50%);opacity:0.04;" width="300" height="300" viewBox="0 0 100 100" fill="none">
+      <polygon points="50,6 94,50 50,94 6,50" fill="white"/>
+      <polygon points="50,18 82,50 50,82 18,50" fill="none" stroke="white" stroke-width="1.5"/>
+      <polygon points="50,30 70,50 50,70 30,50" fill="none" stroke="white" stroke-width="1.5"/>
+      <polygon points="50,40 60,50 50,60 40,50" fill="none" stroke="white" stroke-width="1.5"/>
+      <circle cx="50" cy="50" r="3" fill="white" opacity="0.6"/>
+    </svg>
+
+    <div style="position:relative;z-index:2;max-width:150mm;">
+
+      <div style="font-size:7pt;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(133,193,233,0.6);margin-bottom:6mm;">
+        Workbook Completo · 7 Dias
+      </div>
+
+      <div style="font-family:'Playfair Display',Georgia,serif;font-size:36pt;font-weight:900;color:var(--blue-accent);line-height:0.9;margin-bottom:8mm;">
+        Você<br>
+        <span style="font-size:20pt;color:rgba(255,255,255,0.5);font-weight:700;font-style:italic;">ficou.</span>
+      </div>
+
+      <div style="font-size:11pt;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:10mm;border-left:2px solid rgba(133,193,233,0.3);padding-left:5mm;text-align:left;">
+        Sete dias de presença. Sete dias de ver o que normalmente fica invisível. Esse é o trabalho de A Distante — e você o fez.
+      </div>
+
+      <div style="
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 16px;
+        padding: 8mm 10mm;
+        margin-bottom: 10mm;
+        text-align:left;
+      ">
+        <div style="font-size:7pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(133,193,233,0.5);margin-bottom:4mm;">
+          O que você praticou
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:3mm;">
+          <div style="font-size:9pt;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:2mm;"><span style="color:var(--blue-accent);">◈</span> Mapear o afastamento</div>
+          <div style="font-size:9pt;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:2mm;"><span style="color:var(--blue-accent);">◈</span> Nomear o medo de depender</div>
+          <div style="font-size:9pt;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:2mm;"><span style="color:var(--blue-accent);">◈</span> Reconhecer os sinais internos</div>
+          <div style="font-size:9pt;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:2mm;"><span style="color:var(--blue-accent);">◈</span> Verbalizar o que não pedia</div>
+          <div style="font-size:9pt;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:2mm;"><span style="color:var(--blue-accent);">◈</span> Praticar permanecer presente</div>
+          <div style="font-size:9pt;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:2mm;"><span style="color:var(--blue-accent);">◈</span> Construir aberturas pequenas</div>
+        </div>
+      </div>
+
+      <div style="
+        background: var(--blue-dark);
+        border-radius: 12px;
+        padding: 6mm 8mm;
+        text-align: left;
+        border: 1px solid rgba(133,193,233,0.2);
+        margin-bottom: 10mm;
+      ">
+        <div style="font-size:7pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(133,193,233,0.5);margin-bottom:3mm;">Frase do Ciclo</div>
+        <div style="font-family:'Playfair Display',Georgia,serif;font-size:14pt;font-weight:700;font-style:italic;color:var(--blue-accent);line-height:1.35;">
+          "Presença não é perda de si. É a escolha mais corajosa que A Distante pode fazer."
+        </div>
+      </div>
+
+      <div style="font-size:8pt;color:rgba(255,255,255,0.2);letter-spacing:1.5px;text-transform:uppercase;">
+        Diagnóstico Relacional · Sistema de Perfis Emocionais<br>
+        <span style="color:rgba(133,193,233,0.3);">A Distante · Padrão de Ativação Emocional</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico Relacional</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #F9F6F2; }
+    #loading-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 40px 24px;
+      background: #F9F6F2;
+    }
+    #loading-screen.active { display: flex; }
+    .analyzing-steps {
+      list-style: none;
+      margin-top: 24px;
+      text-align: left;
+      width: 100%;
+      max-width: 320px;
+    }
+    .analyzing-steps li {
+      padding: 8px 0;
+      font-size: 0.9rem;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #EEE;
+    }
+    .analyzing-steps li.done { color: #333; }
+    .step-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #DDD;
+      flex-shrink: 0;
+    }
+    .step-dot.active { background: #8B1A2C; animation: pulse 0.8s ease infinite; }
+    .step-dot.done   { background: #2E7D32; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+  </style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="progress-wrap" id="progress-wrap">
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progress-fill" style="width: 5%"></div>
+  </div>
+  <p class="progress-label" id="progress-label">Pergunta 1 de 20</p>
+</div>
+
+<!-- QUIZ AREA -->
+<div class="quiz-wrap" id="quiz-area">
+  <div class="question-card" id="question-card">
+    <p class="question-text" id="question-text"></p>
+    <ul class="options-list" id="options-list"></ul>
+  </div>
+</div>
+
+<!-- LOADING SCREEN (shown after last question) -->
+<div id="loading-screen">
+  <div class="spinner"></div>
+  <h2 style="font-size:1.3rem; font-weight:800; color:#111; margin-bottom:8px;">Analisando suas respostas...</h2>
+  <p style="color:#888; font-size:0.95rem;">Identificando seu padrão relacional</p>
+  <ul class="analyzing-steps" id="analyzing-steps">
+    <li id="step1"><span class="step-dot" id="dot1"></span> Processando suas respostas</li>
+    <li id="step2"><span class="step-dot" id="dot2"></span> Identificando seu padrão</li>
+    <li id="step3"><span class="step-dot" id="dot3"></span> Gerando seu diagnóstico</li>
+    <li id="step4"><span class="step-dot" id="dot4"></span> Preparando seu plano de 7 dias</li>
+  </ul>
+</div>
+
+<script>
+// ============================================================
+// PERGUNTAS E SISTEMA DE PONTUAÇÃO
+// G = Guardiã | T = Tempestade | D = Distante
+// ============================================================
+const perguntas = [
+  {
+    texto: "Qual a sua faixa de idade?",
+    opcoes: [
+      { texto: "Menos de 25 anos",  pts: {g:1, t:1, d:1} },
+      { texto: "25 a 34 anos",      pts: {g:1, t:1, d:1} },
+      { texto: "35 a 44 anos",      pts: {g:1, t:1, d:1} },
+      { texto: "45 anos ou mais",   pts: {g:1, t:1, d:1} }
+    ]
+  },
+  {
+    texto: "Como você descreveria seu momento atual nos relacionamentos?",
+    opcoes: [
+      { texto: "Estou em um relacionamento com alguns desafios",              pts: {g:1, t:1, d:0} },
+      { texto: "Estou solteira e quero entender meus padrões",               pts: {g:1, t:0, d:1} },
+      { texto: "Acabei de sair de um relacionamento difícil",                pts: {g:1, t:1, d:0} },
+      { texto: "Tenho um histórico de relacionamentos que não funcionam",    pts: {g:0, t:1, d:1} }
+    ]
+  },
+  {
+    texto: "Quando alguém que você ama fica mais distante ou quieto, o que passa pela sua cabeça?",
+    opcoes: [
+      { texto: "Começo a imaginar o pior e fico em alerta",           pts: {g:3, t:0, d:0} },
+      { texto: "Fico com raiva e quero resolver na hora",             pts: {g:0, t:3, d:0} },
+      { texto: "Dou espaço, mas por dentro estou inquieta",           pts: {g:1, t:0, d:2} },
+      { texto: "Finjo que está tudo bem, mas me fecho também",        pts: {g:0, t:0, d:3} }
+    ]
+  },
+  {
+    texto: "Quando discordam de você em algo importante, você tende a...",
+    opcoes: [
+      { texto: "Ceder rapidamente para evitar conflito",                              pts: {g:3, t:0, d:0} },
+      { texto: "Defender meu ponto até o fim",                                        pts: {g:0, t:3, d:0} },
+      { texto: "Ficar em silêncio, mas o assunto fica ruminando internamente",       pts: {g:0, t:0, d:3} },
+      { texto: "Analisar antes de responder — raramente confronto diretamente",      pts: {g:1, t:0, d:2} }
+    ]
+  },
+  {
+    texto: "Quando você faz algo bonito pelo parceiro e ele não reconhece, você...",
+    opcoes: [
+      { texto: "Engole o sentimento e continua dando",                         pts: {g:3, t:0, d:0} },
+      { texto: "Fica magoada e acaba explodindo mais tarde",                   pts: {g:0, t:3, d:0} },
+      { texto: "Se afasta emocionalmente sem dizer o motivo",                  pts: {g:0, t:0, d:3} },
+      { texto: "Deixa passar, mas guarda aquele sentimento por dentro",        pts: {g:1, t:1, d:1} }
+    ]
+  },
+  {
+    texto: "Com que frequência você coloca as necessidades do outro antes das suas?",
+    opcoes: [
+      { texto: "Quase sempre — é difícil priorizar a mim mesma",       pts: {g:3, t:0, d:0} },
+      { texto: "Às vezes, quando percebo que estou cedendo demais",    pts: {g:1, t:1, d:0} },
+      { texto: "Raramente — preciso sentir que estou no controle",     pts: {g:0, t:0, d:3} },
+      { texto: "Depende: às vezes me anulo, às vezes me imponho",      pts: {g:0, t:2, d:1} }
+    ]
+  },
+  {
+    texto: "Quando um relacionamento começa a ficar muito intenso, você tende a...",
+    opcoes: [
+      { texto: "Me apegar mais — tenho medo de perder",                          pts: {g:3, t:0, d:0} },
+      { texto: "Ficar animada, mas logo começam os atritos",                     pts: {g:0, t:3, d:0} },
+      { texto: "Sentir um impulso de criar distância",                           pts: {g:0, t:0, d:3} },
+      { texto: "Ficar confusa — quero, mas tenho medo ao mesmo tempo",           pts: {g:1, t:1, d:1} }
+    ]
+  },
+  {
+    texto: "Quando está numa discussão e o outro fica em silêncio, você sente...",
+    opcoes: [
+      { texto: "Pânico — o silêncio me apavora",                               pts: {g:3, t:0, d:0} },
+      { texto: "Raiva — parece descaso ou punição",                             pts: {g:0, t:3, d:0} },
+      { texto: "Alívio — prefiro o silêncio ao confronto",                      pts: {g:0, t:0, d:3} },
+      { texto: "Ansiedade e vontade de entender o que está acontecendo",        pts: {g:1, t:1, d:0} }
+    ]
+  },
+  {
+    texto: "Você já se viu pedindo desculpas por algo que não foi sua culpa para manter a paz?",
+    opcoes: [
+      { texto: "Sim, com muita frequência",                                    pts: {g:3, t:0, d:0} },
+      { texto: "Sim, mas fico ressentida depois",                              pts: {g:1, t:2, d:0} },
+      { texto: "Raramente — tenho dificuldade até quando é minha culpa",       pts: {g:0, t:0, d:3} },
+      { texto: "Às vezes, quando a situação parece sem saída",                 pts: {g:1, t:0, d:1} }
+    ]
+  },
+  {
+    texto: "Quando um ex volta, como você reage internamente?",
+    opcoes: [
+      { texto: "Sinto esperança, mesmo sabendo que não deveria",               pts: {g:3, t:0, d:0} },
+      { texto: "Fico em conflito intenso — parte quer, parte rejeita",         pts: {g:0, t:3, d:0} },
+      { texto: "Me sinto indiferente ou aliviada que ele foi embora",           pts: {g:0, t:0, d:3} },
+      { texto: "Guardo muito rancor ou me apego muito — depende de como foi", pts: {g:1, t:1, d:1} }
+    ]
+  },
+  {
+    texto: "Olhando para seus relacionamentos passados, você percebe algum padrão se repetindo?",
+    opcoes: [
+      { texto: "Sim — sempre acabo me perdendo ou me apagando",                pts: {g:3, t:0, d:0} },
+      { texto: "Sim — começa bem, mas vira uma montanha-russa",                pts: {g:0, t:3, d:0} },
+      { texto: "Sim — afasto as pessoas antes que me machuquem",               pts: {g:0, t:0, d:3} },
+      { texto: "Sim, mas ainda não entendi exatamente qual é",                 pts: {g:1, t:1, d:1} }
+    ]
+  },
+  {
+    texto: "Como seu padrão de relacionamento afeta sua vida fora das relações amorosas?",
+    opcoes: [
+      { texto: "Me cansa — gasto muita energia cuidando dos outros",                    pts: {g:3, t:0, d:0} },
+      { texto: "Cria instabilidade — meu humor reflete o estado do relacionamento",     pts: {g:0, t:3, d:0} },
+      { texto: "Me isolo — prefiro minha própria companhia com frequência",             pts: {g:0, t:0, d:3} },
+      { texto: "É uma tensão constante que me impede de ser quem quero ser",            pts: {g:1, t:1, d:1} }
+    ]
+  },
+  {
+    texto: "Você já perdeu alguém importante por causa de um padrão que reconhecia, mas não conseguia mudar?",
+    opcoes: [
+      { texto: "Sim — e isso ainda dói muito",                                   pts: {g:2, t:1, d:0} },
+      { texto: "Sim, e me pergunto o que teria sido diferente",                  pts: {g:1, t:2, d:0} },
+      { texto: "Sim — mas aprendi a não me culpar por isso",                     pts: {g:0, t:0, d:3} },
+      { texto: "Provavelmente sim, mas ainda estou descobrindo",                  pts: {g:1, t:0, d:2} }
+    ]
+  },
+  {
+    texto: "Quando você pensa em um relacionamento verdadeiramente saudável, o que sente?",
+    opcoes: [
+      { texto: "Desejo imenso — mas não sei se é possível para mim",                      pts: {g:3, t:0, d:0} },
+      { texto: "Quero muito, mas tenho medo da intensidade que vem junto",               pts: {g:0, t:3, d:0} },
+      { texto: "Quero, mas tenho dificuldade de confiar que duraria",                    pts: {g:0, t:0, d:3} },
+      { texto: "Acredito que é possível, mas não sei por onde começar",                  pts: {g:1, t:1, d:1} }
+    ]
+  },
+  {
+    texto: "Como você classificaria o impacto do seu padrão nos seus relacionamentos hoje?",
+    opcoes: [
+      { texto: "Alto — já custou relacionamentos importantes",     pts: {g:2, t:1, d:0} },
+      { texto: "Muito alto — é o que mais me preocupa na vida",    pts: {g:1, t:2, d:0} },
+      { texto: "Médio — percebo, mas ainda não consegui mudar",    pts: {g:1, t:0, d:2} },
+      { texto: "Significativo — quero entender melhor para agir",  pts: {g:0, t:1, d:2} }
+    ]
+  },
+  {
+    texto: "Se você descobrisse exatamente seu padrão e tivesse um plano claro, estaria disposta a trabalhar nisso pelos próximos 7 dias?",
+    opcoes: [
+      { texto: "Sim, com certeza — estou pronta",                              pts: {g:1, t:1, d:1} },
+      { texto: "Sim — teria que ajustar minha rotina, mas faria",             pts: {g:1, t:1, d:1} },
+      { texto: "Tenho curiosidade — quero ver o que é antes de decidir",      pts: {g:0, t:1, d:1} }
+    ]
+  },
+  {
+    texto: "Você acredita que padrões de relacionamento podem ser identificados e mudados com as ferramentas certas?",
+    opcoes: [
+      { texto: "Sim, acredito totalmente",                                                pts: {g:1, t:1, d:1} },
+      { texto: "Acredito — mas nunca encontrei algo que realmente funcionasse para mim", pts: {g:1, t:1, d:0} },
+      { texto: "Tenho curiosidade — nunca tentei de forma estruturada",                  pts: {g:0, t:0, d:1} }
+    ]
+  },
+  {
+    texto: "O que mais te impede de ter o relacionamento que você quer hoje?",
+    opcoes: [
+      { texto: "Não entender meu próprio padrão",                          pts: {g:2, t:0, d:1} },
+      { texto: "Repetir as mesmas situações sem saber por quê",            pts: {g:1, t:2, d:0} },
+      { texto: "Não saber como agir diferente no momento certo",           pts: {g:0, t:1, d:2} },
+      { texto: "Todas acima — é um ciclo completo",                        pts: {g:1, t:1, d:1} }
+    ]
+  },
+  {
+    texto: "Se tivesse um diagnóstico preciso do seu padrão hoje, qual seria o próximo passo ideal?",
+    opcoes: [
+      { texto: "Um plano prático, dia a dia, que eu consiga seguir",                        pts: {g:2, t:1, d:0} },
+      { texto: "Entender como meu padrão interage com o padrão do parceiro",               pts: {g:1, t:0, d:2} },
+      { texto: "As duas coisas — diagnóstico completo + plano de ação",                    pts: {g:1, t:1, d:1} }
+    ]
+  },
+  {
+    texto: "Você está pronta para ver seu resultado?",
+    opcoes: [
+      { texto: "Sim — quero entender meu padrão agora",                         pts: {g:1, t:1, d:1} },
+      { texto: "Sim — mesmo que seja difícil de ouvir, preciso saber",          pts: {g:1, t:0, d:1} }
+    ]
+  }
+];
+
+// ============================================================
+// ESTADO DO QUIZ
+// ============================================================
+let atual = 0;
+let pontos = { g: 0, t: 0, d: 0 };
+let respondendo = false;
+
+// ============================================================
+// RENDER DA PERGUNTA
+// ============================================================
+function renderPergunta() {
+  const p = perguntas[atual];
+  const total = perguntas.length;
+  const pct = Math.max(5, Math.round(((atual) / total) * 100));
+
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `Pergunta ${atual + 1} de ${total}`;
+
+  const card = document.getElementById('question-card');
+  card.style.animation = 'none';
+  card.offsetHeight; // reflow
+  card.style.animation = 'fadeUp 0.3s ease';
+
+  document.getElementById('question-text').textContent = p.texto;
+
+  const lista = document.getElementById('options-list');
+  lista.innerHTML = '';
+  p.opcoes.forEach((op, i) => {
+    const li = document.createElement('li');
+    li.className = 'option-item';
+    li.textContent = op.texto;
+    li.addEventListener('click', () => selecionar(i));
+    lista.appendChild(li);
+  });
+
+  respondendo = false;
+}
+
+// ============================================================
+// SELEÇÃO DE OPÇÃO
+// ============================================================
+function selecionar(idx) {
+  if (respondendo) return;
+  respondendo = true;
+
+  const opcao = perguntas[atual].opcoes[idx];
+  pontos.g += opcao.pts.g;
+  pontos.t += opcao.pts.t;
+  pontos.d += opcao.pts.d;
+
+  // Feedback visual
+  const items = document.querySelectorAll('.option-item');
+  items[idx].classList.add('selected');
+
+  // Avança após delay
+  setTimeout(() => {
+    atual++;
+    if (atual < perguntas.length) {
+      renderPergunta();
+    } else {
+      mostrarLoading();
+    }
+  }, 380);
+}
+
+// ============================================================
+// TELA DE LOADING E REDIRECT
+// ============================================================
+function mostrarLoading() {
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('quiz-area').style.display = 'none';
+  const ls = document.getElementById('loading-screen');
+  ls.style.display = 'flex';
+
+  const steps = ['dot1','dot2','dot3','dot4'];
+  let s = 0;
+
+  function ativarStep() {
+    if (s > 0) {
+      document.getElementById(steps[s-1]).className = 'step-dot done';
+      document.getElementById('step' + s).classList.add('done');
+    }
+    if (s < steps.length) {
+      document.getElementById(steps[s]).className = 'step-dot active';
+      s++;
+      setTimeout(ativarStep, 700);
+    } else {
+      // Determinar resultado
+      setTimeout(redirecionar, 500);
+    }
+  }
+  ativarStep();
+}
+
+function redirecionar() {
+  const max = Math.max(pontos.g, pontos.t, pontos.d);
+  let destino;
+
+  if (pontos.g === max && pontos.g >= pontos.t && pontos.g >= pontos.d) {
+    destino = 'result-guardia.html';
+  } else if (pontos.t === max && pontos.t >= pontos.g && pontos.t >= pontos.d) {
+    destino = 'result-tempestade.html';
+  } else {
+    destino = 'result-distante.html';
+  }
+
+  // Salvar no sessionStorage + localStorage (backup se checkout abrir em nova aba)
+  try {
+    const perfilKey = destino.replace('result-','').replace('.html','');
+    sessionStorage.setItem('perfil', perfilKey);
+    sessionStorage.setItem('pontos', JSON.stringify(pontos));
+    localStorage.setItem('perfil', perfilKey);
+  } catch(e) {}
+
+  window.location.href = destino;
+}
+
+// ============================================================
+// INIT
+// ============================================================
+renderPergunta();
+</script>
+
+</body>
+</html>

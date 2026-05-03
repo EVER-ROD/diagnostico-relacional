@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seu Resultado: A Guardiã</title>
+  <meta name="description" content="Você é A Guardiã. Descubra seu padrão relacional e receba seu plano personalizado de 7 dias.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #F5EDE0; }
+    .theme-guardia { --primary: #C8956C; --light: #F5EDE0; --dark: #7A4E2D; }
+
+    .profile-hero {
+      background: linear-gradient(160deg, #C8956C 0%, #A67050 100%);
+      color: #FFF;
+      text-align: center;
+      padding: 52px 24px 44px;
+    }
+    .profile-hero .profile-emoji { font-size: 4rem; display:block; margin-bottom:16px; }
+    .profile-hero .profile-label {
+      font-size: 0.72rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:2px; opacity:0.7; margin-bottom:8px;
+    }
+    .profile-hero .profile-name { font-size:2.4rem; font-weight:900; letter-spacing:-0.5px; margin-bottom:12px; }
+    .profile-hero .profile-tagline { font-size:1rem; opacity:0.85; line-height:1.5; }
+
+    .content-wrap { background: #FFF; padding: 32px 24px; }
+
+    .section-title {
+      font-size: 0.72rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:1.5px; color:#C8956C; margin-bottom:16px;
+    }
+    .profile-text {
+      font-size: 1.05rem; line-height: 1.8; color: #2A2A2A;
+    }
+    .profile-text p { margin-bottom: 20px; }
+    .profile-text strong { color: #7A4E2D; }
+    .quote-block {
+      background: #F5EDE0;
+      border-left: 3px solid #C8956C;
+      border-radius: 0 12px 12px 0;
+      padding: 16px 18px;
+      margin: 24px 0;
+      font-size: 1rem;
+      font-style: italic;
+      color: #555;
+      line-height: 1.65;
+    }
+
+    /* Traços */
+    .traits-grid { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+    .trait-item {
+      display: flex; align-items: center; gap: 12px;
+      background: #FDF8F4;
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .trait-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .trait-text { font-size: 0.9rem; color: #333; line-height: 1.4; }
+
+    /* Share */
+    .share-section {
+      background: #F5EDE0;
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .share-title { font-size: 1rem; font-weight: 700; color: #333; margin-bottom: 8px; }
+    .share-sub { font-size: 0.88rem; color: #777; margin-bottom: 20px; line-height: 1.5; }
+    .share-text-box {
+      background: #FFF;
+      border: 1.5px solid #DDD;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      color: #333;
+      line-height: 1.5;
+      text-align: left;
+      margin-bottom: 14px;
+    }
+    .btn-share-action {
+      display: block; width: 100%;
+      padding: 16px;
+      background: #C8956C; color: #FFF;
+      border: none; border-radius: 12px;
+      font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; margin-bottom: 10px;
+      transition: transform 0.1s;
+    }
+    .btn-share-action:active { transform: scale(0.97); }
+
+    /* Offer */
+    .offer-wrap { background: #FFF; padding: 32px 24px; }
+    .offer-hook {
+      text-align: center;
+      padding: 24px;
+      background: #F5EDE0;
+      border-radius: 16px;
+      margin-bottom: 24px;
+    }
+    .offer-hook-title { font-size: 1.4rem; font-weight: 800; color: #111; margin-bottom: 8px; }
+    .offer-hook-sub { font-size: 0.95rem; color: #666; line-height: 1.5; }
+
+    .price-block {
+      text-align: center;
+      padding: 20px 0 4px;
+    }
+    .price-from { font-size: 0.8rem; color: #AAA; text-decoration: line-through; margin-bottom: 4px; }
+    .price-main { font-size: 3.2rem; font-weight: 900; color: #111; line-height: 1; }
+    .price-note { font-size: 0.78rem; color: #888; margin-top: 4px; }
+
+    .features-list { list-style: none; margin: 20px 0; }
+    .features-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #F5F5F5;
+      font-size: 0.93rem; color: #333; line-height: 1.4;
+    }
+    .features-list li:last-child { border-bottom: none; }
+    .fi-check { color: #2E7D32; font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+    .btn-buy {
+      display: block; width: 100%;
+      padding: 20px;
+      background: linear-gradient(135deg, #C8956C, #A67050);
+      color: #FFF;
+      border: none; border-radius: 16px;
+      font-size: 1.05rem; font-weight: 800;
+      text-align: center; cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(200,149,108,0.35);
+      transition: transform 0.1s, box-shadow 0.2s;
+      margin-top: 8px;
+    }
+    .btn-buy:active { transform: scale(0.97); }
+    .guarantee-text {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #AAA;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    /* Toast */
+    .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+      background:#111; color:#FFF; padding:12px 24px; border-radius:30px;
+      font-size:0.88rem; font-weight:600; opacity:0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      white-space:nowrap; z-index:999; pointer-events:none; }
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body class="theme-guardia">
+
+<!-- HERO DO PERFIL -->
+<div class="profile-hero">
+  <span class="profile-emoji">🤍</span>
+  <p class="profile-label">Seu padrão relacional é</p>
+  <h1 class="profile-name">A Guardiã</h1>
+  <p class="profile-tagline">Você cuida de todo mundo.<br>Mas quem cuida de você?</p>
+</div>
+
+<!-- CONTEÚDO DO DIAGNÓSTICO -->
+<div class="content-wrap">
+
+  <p class="section-title">Seu diagnóstico</p>
+
+  <div class="profile-text">
+    <p>A Guardiã aprendeu cedo que <strong>amor se prova com entrega</strong>. Você carrega relacionamentos. Sustenta emoções. Perdoa mais rápido do que deveria porque o silêncio te apavora mais do que qualquer briga.</p>
+
+    <div class="quote-block">
+      "Você não tem medo de amar. Você tem medo de que, se parar de dar, parem de ficar."
+    </div>
+
+    <p>O que você aprendeu a fazer tão bem — cuidar, suavizar, adaptar — é exatamente o que te invisibiliza. Você vai cedendo, ajustando, minimizando suas próprias necessidades. E um dia acorda sem saber mais onde você começa.</p>
+
+    <p>Não é fraqueza. É um padrão que foi programado em você por experiências reais. A boa notícia: <strong>o que tem lógica pode ser reprogramado</strong>.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <p class="section-title">Suas marcas do padrão</p>
+  <div class="traits-grid">
+    <div class="trait-item">
+      <span class="trait-icon">🫶</span>
+      <span class="trait-text">Coloca as necessidades do outro antes das suas com muita frequência</span>
+    </div>
+    <div class="trait-item">
+      <span class="trait-icon">😟</span>
+      <span class="trait-text">O silêncio e a distância do parceiro provocam ansiedade intensa</span>
+    </div>
+    <div class="trait-item">
+      <span class="trait-icon">🔄</span>
+      <span class="trait-text">Tende a pedir desculpas para manter a paz, mesmo sem culpa</span>
+    </div>
+    <div class="trait-item">
+      <span class="trait-icon">🌱</span>
+      <span class="trait-text">Tem um desejo genuíno de um amor saudável — mas duvida que seja possível</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- COMPARTILHAR -->
+<div class="share-section">
+  <p class="share-title">Compartilhe seu resultado</p>
+  <p class="share-sub">Quantas pessoas você conhece que também são A Guardiã? Marque elas.</p>
+  <div class="share-text-box" id="share-text">
+    🤍 Descobri que sou A Guardiã no Diagnóstico Relacional. Cuido de todo mundo mas esqueço de mim mesma nos relacionamentos. O resultado foi absurdamente preciso. Faz em 2 minutos: https://ever-rod.github.io/diagnostico-relacional/
+  </div>
+  <button class="btn-share-action" onclick="compartilhar()">
+    📤 Copiar e Compartilhar
+  </button>
+  <button class="btn-share-action" style="background:#25D366;" onclick="compartilharWhats()">
+    💬 Compartilhar no WhatsApp
+  </button>
+</div>
+
+<!-- OFERTA -->
+<div class="offer-wrap">
+
+  <div class="offer-hook">
+    <p class="offer-hook-title">Você descobriu seu padrão.</p>
+    <p class="offer-hook-sub">Agora você precisa de um plano para sair dele — personalizado para A Guardiã.</p>
+  </div>
+
+  <p class="section-title" style="text-align:center">O que você recebe</p>
+
+  <ul class="features-list">
+    <li><span class="fi-check">✓</span> Workbook A Guardiã — 7 dias de reprogramação do padrão</li>
+    <li><span class="fi-check">✓</span> 9 blocos práticos por dia (diagnóstico, exercício, reflexão e mais)</li>
+    <li><span class="fi-check">✓</span> Como agir diferente quando o gatilho aparecer — passo a passo</li>
+    <li><span class="fi-check">✓</span> Afirmações específicas para o padrão da Guardiã</li>
+    <li><span class="fi-check">✓</span> Acesso imediato em PDF — comece hoje</li>
+  </ul>
+
+  <div class="price-block">
+    <p class="price-from">De R$97</p>
+    <p class="price-main">R$37</p>
+    <p class="price-note">pagamento único · acesso imediato</p>
+  </div>
+
+  <!-- BUMP -->
+  <div style="background:#FDF8F4; border:1.5px dashed #C8956C; border-radius:14px; padding:16px 18px; margin:20px 0;">
+    <label style="display:flex; align-items:flex-start; gap:12px; cursor:pointer;">
+      <input type="checkbox" id="bump-check" style="margin-top:3px; width:18px; height:18px; flex-shrink:0; accent-color:#C8956C;">
+      <span>
+        <strong style="font-size:0.9rem; color:#333; display:block; margin-bottom:4px;">
+          ➕ Adicionar: Guia de Frases — R$17
+        </strong>
+        <span style="font-size:0.82rem; color:#777; line-height:1.45;">
+          O que dizer em cada momento do seu padrão. As frases certas para cada gatilho da Guardiã.
+        </span>
+      </span>
+    </label>
+  </div>
+
+  <a href="https://go.hotmart.com/F105587684Q" class="btn-buy" id="btn-comprar" onclick="registrarClique()">
+    QUERO MEU PLANO AGORA — R$37 →
+  </a>
+  <p class="guarantee-text">🔒 Pagamento seguro · Acesso imediato · Satisfação garantida</p>
+
+</div>
+
+<div class="toast" id="toast">✓ Copiado! Cole onde quiser.</div>
+
+<script>
+// Atualizar botão quando marcar bump
+document.getElementById('bump-check').addEventListener('change', function() {
+  const btn = document.getElementById('btn-comprar');
+  if (this.checked) {
+    btn.textContent = 'QUERO MEU PLANO AGORA — R$54 →';
+  } else {
+    btn.textContent = 'QUERO MEU PLANO AGORA — R$37 →';
+  }
+});
+
+function compartilhar() {
+  const texto = document.getElementById('share-text').textContent.trim();
+  if (navigator.share) {
+    navigator.share({ text: texto }).catch(() => copiarTexto(texto));
+  } else {
+    copiarTexto(texto);
+  }
+}
+
+function compartilharWhats() {
+  const texto = encodeURIComponent(document.getElementById('share-text').textContent.trim());
+  window.open('https://wa.me/?text=' + texto, '_blank');
+}
+
+function copiarTexto(txt) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(txt).then(() => mostrarToast());
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = txt; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    mostrarToast();
+  }
+}
+
+function mostrarToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function registrarClique() {
+  try { sessionStorage.setItem('iniciou_checkout', '1'); } catch(e) {}
+}
+</script>
+
+</body>
+</html>

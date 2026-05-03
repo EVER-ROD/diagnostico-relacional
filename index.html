@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico Relacional — Descubra Seu Padrão</title>
+  <meta name="description" content="Diagnóstico gratuito: descubra o padrão oculto que está sabotando seus relacionamentos. Resultado + plano personalizado de 7 dias.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #0D0D0D; font-family: 'Inter', -apple-system, sans-serif; }
+
+    /* HERO DARK */
+    .hero-section {
+      background: linear-gradient(170deg, #0D0D0D 0%, #1A0A0A 60%, #0D1F14 100%);
+      text-align: center;
+      padding: 52px 0 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%; transform: translateX(-50%);
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(200,149,108,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .logo-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 24px;
+    }
+    .hero-headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1.15;
+      color: #F5F0EB;
+      letter-spacing: -0.3px;
+      margin-bottom: 18px;
+    }
+    .hero-headline span {
+      background: linear-gradient(135deg, #C8956C, #E8A87C);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    /* Timer bar */
+    .timer-bar {
+      background: rgba(255,243,205,0.08);
+      border: 1px solid rgba(255,234,160,0.2);
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 600;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Profiles preview */
+    .profiles-preview {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 0;
+      padding: 0 0 36px;
+      background: linear-gradient(170deg, #0D1F14 0%, #0D0D0D 100%);
+    }
+    .profile-pill {
+      flex: 1;
+      text-align: center;
+      padding: 16px 8px;
+      border-radius: 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .pill-g { background: rgba(200,149,108,0.12); color: #E8B48A; }
+    .pill-t { background: rgba(139,26,44,0.15); color: #E88A9A; }
+    .pill-d { background: rgba(44,123,182,0.12); color: #85C1E9; }
+    .pill-emoji { display: block; font-size: 1.5rem; margin-bottom: 4px; }
+
+    /* Body sections below hero */
+    .page-body { background: #F9F6F2; }
+
+    /* What you discover */
+    .discover-card {
+      background: #FFF;
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .discover-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #999;
+      margin-bottom: 16px;
+    }
+    .discover-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #F5F5F5;
+    }
+    .discover-item:last-child { border-bottom: none; }
+    .discover-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .discover-text { font-size: 0.95rem; color: #333; line-height: 1.45; }
+
+    /* Main CTA */
+    .cta-section { margin: 8px 0 24px; }
+    .btn-cta {
+      display: block;
+      width: 100%;
+      padding: 20px 24px;
+      background: linear-gradient(135deg, #C8956C 0%, #A67050 100%);
+      color: #FFF;
+      border: none;
+      border-radius: 16px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.2px;
+      box-shadow: 0 6px 24px rgba(200,149,108,0.35);
+      transition: transform 0.1s, box-shadow 0.2s;
+    }
+    .btn-cta:active { transform: scale(0.97); }
+    .btn-sub {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #999;
+      margin-top: 10px;
+    }
+
+    /* Exclusivity warning */
+    .exclusivity-box {
+      background: linear-gradient(135deg, #FFF8F0, #FFF0F2);
+      border: 1px solid #FFDDD0;
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .exclusivity-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .exclusivity-text {
+      font-size: 0.87rem;
+      color: #555;
+      line-height: 1.5;
+    }
+    .exclusivity-text strong { color: #333; }
+
+    /* Social proof */
+    .social-proof-label {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #BBB;
+      margin-bottom: 16px;
+    }
+    .testimonials { display: flex; flex-direction: column; gap: 12px; }
+    .testi-card {
+      background: #FFF;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+    }
+    .testi-stars { color: #F4C430; font-size: 0.85rem; margin-bottom: 8px; }
+    .testi-text { font-size: 0.9rem; color: #333; line-height: 1.55; font-style: italic; }
+    .testi-author { font-size: 0.78rem; font-weight: 700; color: #999; margin-top: 8px; }
+
+    /* Footer */
+    .footer-bar {
+      text-align: center;
+      padding-top: 32px;
+      padding-bottom: 16px;
+      font-size: 0.75rem;
+      color: #AAA;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrap" style="padding: 0; max-width: 480px;">
+
+  <!-- HERO DARK -->
+  <section class="hero-section" style="padding: 52px 24px 32px;">
+    <p class="logo-label">Diagnóstico Relacional</p>
+    <h1 class="hero-headline">
+      Descubra o padrão oculto que está<br>
+      <span>sabotando seus relacionamentos</span>
+    </h1>
+    <p class="hero-sub">
+      Diagnóstico gratuito em 2 minutos +<br>plano personalizado de 7 dias
+    </p>
+  </section>
+
+  <!-- PROFILES PREVIEW (parte do dark hero) -->
+  <div class="profiles-preview" style="padding: 0 24px 36px;">
+    <div class="profile-pill pill-g">
+      <span class="pill-emoji">🤍</span>
+      A Guardiã
+    </div>
+    <div class="profile-pill pill-t">
+      <span class="pill-emoji">🌪️</span>
+      A Tempestade
+    </div>
+    <div class="profile-pill pill-d">
+      <span class="pill-emoji">🧊</span>
+      A Distante
+    </div>
+  </div>
+
+  <!-- BODY CLARO -->
+  <div class="page-body" style="padding: 28px 20px 48px;">
+
+  <!-- WHAT YOU DISCOVER -->
+  <div class="discover-card">
+    <p class="discover-title">Você vai descobrir</p>
+    <div class="discover-item">
+      <span class="discover-icon">🔍</span>
+      <span class="discover-text">Qual padrão você carrega inconscientemente nos relacionamentos</span>
+    </div>
+    <div class="discover-item">
+      <span class="discover-icon">💡</span>
+      <span class="discover-text">Por que seus relacionamentos se repetem — e o que está na raiz disso</span>
+    </div>
+    <div class="discover-item">
+      <span class="discover-icon">📋</span>
+      <span class="discover-text">Um plano personalizado de 7 dias para o <em>seu</em> perfil específico</span>
+    </div>
+  </div>
+
+  <!-- EXCLUSIVITY -->
+  <div class="exclusivity-box">
+    <span class="exclusivity-icon">🔒</span>
+    <p class="exclusivity-text">
+      <strong>Resultado gerado uma única vez.</strong>
+      Esse diagnóstico é personalizado com base nas suas respostas. Se você sair, perde o acesso ao resultado.
+    </p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <a href="quiz.html" class="btn-cta">
+      COMEÇAR MEU DIAGNÓSTICO GRATUITO →
+    </a>
+    <p class="btn-sub">✓ Gratuito &nbsp;·&nbsp; ✓ 2 minutos &nbsp;·&nbsp; ✓ Resultado imediato</p>
+  </div>
+
+  <!-- SOCIAL PROOF -->
+  <p class="social-proof-label">O que dizem quem já fez</p>
+  <div class="testimonials">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Fiz em 3 minutos e me vi em cada linha. Mostrei para minha terapeuta e ela confirmou tudo. Absurdamente preciso."</p>
+      <p class="testi-author">— Mariana C., 34 anos</p>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Descobri que sou A Tempestade. Finalmente entendi por que meus relacionamentos começam intensos e viram montanha-russa."</p>
+      <p class="testi-author">— Camila R., 28 anos</p>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"O resultado me fez chorar. Nunca tinha conseguido nomear o que eu faço. O plano de 7 dias está sendo transformador."</p>
+      <p class="testi-author">— Juliana M., 41 anos</p>
+    </div>
+  </div>
+
+  <!-- SECOND CTA -->
+  <div class="cta-section" style="margin-top: 32px;">
+    <a href="quiz.html" class="btn-cta">
+      QUERO DESCOBRIR MEU PADRÃO →
+    </a>
+  </div>
+
+  <div class="footer-bar">
+    Diagnóstico Relacional &nbsp;·&nbsp; Gratuito &nbsp;·&nbsp; Privado
+  </div>
+
+  </div><!-- /page-body -->
+</div>
+
+</body>
+</html>

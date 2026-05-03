@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Workbook 7 Dias — A Guardiã</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+@page { size: A4; margin: 0; }
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 10pt;
+  color: #1a1a1a;
+  background: #fff;
+  line-height: 1.55;
+}
+
+@media print {
+  .page { page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: avoid; break-after: avoid; }
+  .no-break, .exercicio, .reflexao-box, .frase-ancora, .insight-box,
+  .alerta-box, .dia-header, .tabela-simples, .tabela-dias, .mini-cards {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .capa, .page-header, .dia-header, .insight-box, .frase-ancora,
+  .callout, .progresso-bar, .tag-dia, .coluna-lateral,
+  .exercicio, .ex-header, .reflexao-box, .alerta-box,
+  .tabela-simples, .tabela-dias, .mini-cards, .progresso-strip,
+  .mini-card, .checklist, .escala-wrap {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* ─── VARIÁVEIS ─── */
+:root {
+  --brown-dark:  #2C1A0E;
+  --brown-mid:   #6B3A1F;
+  --brown-warm:  #C8956C;
+  --brown-pale:  #FDF8F4;
+  --brown-line:  #F0E4D8;
+  --green-brand: #1A4E2D;
+  --red-signal:  #8B1A2C;
+}
+
+/* ═══════════════════════════════════════
+   CAPA
+═══════════════════════════════════════ */
+.capa {
+  background: linear-gradient(160deg, var(--brown-dark) 0%, var(--brown-mid) 55%, var(--brown-warm) 100%);
+  width: 210mm;
+  height: 297mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18mm 18mm 16mm;
+  position: relative;
+  overflow: hidden;
+}
+
+.capa::before {
+  content: '';
+  position: absolute;
+  top: -40mm; right: -30mm;
+  width: 140mm; height: 140mm;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.capa::after {
+  content: '';
+  position: absolute;
+  bottom: 20mm; left: -30mm;
+  width: 100mm; height: 100mm;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.capa-topo {
+  position: relative;
+  z-index: 2;
+}
+
+.capa-sistema {
+  display: inline-block;
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10mm;
+}
+
+.capa-perfil-num {
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 4mm;
+}
+
+.capa-perfil {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 52pt;
+  font-weight: 900;
+  line-height: 0.88;
+  color: #F5CBA7;
+  margin-bottom: 6mm;
+}
+
+.capa-perfil em {
+  display: block;
+  font-size: 22pt;
+  color: rgba(255,255,255,0.5);
+  font-weight: 700;
+  font-style: italic;
+  margin-bottom: 2mm;
+}
+
+.capa-tipo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 8mm;
+}
+
+.capa-desc {
+  font-size: 10pt;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  max-width: 120mm;
+  border-left: 2px solid rgba(255,255,255,0.15);
+  padding-left: 4mm;
+}
+
+/* Símbolo central grande */
+.capa-simbolo {
+  position: absolute;
+  right: 10mm;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.06;
+  z-index: 1;
+}
+
+/* Rodapé da capa */
+.capa-rodape {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.capa-dias {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 5mm 8mm;
+  text-align: center;
+}
+
+.capa-dias .num { font-size: 28pt; font-weight: 900; color: #F5CBA7; line-height: 1; }
+.capa-dias .label { font-size: 8pt; color: rgba(255,255,255,0.5); letter-spacing: 1px; text-transform: uppercase; margin-top: 1mm; }
+
+.capa-marca { font-size: 8pt; color: rgba(255,255,255,0.25); text-align: right; line-height: 1.6; }
+
+/* ═══════════════════════════════════════
+   LAYOUT INTERNO
+═══════════════════════════════════════ */
+.page {
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  padding: 10mm 14mm 8mm;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ─── HEADER DE PÁGINA ─── */
+.page-header {
+  background: var(--brown-dark);
+  margin: -10mm -14mm 6mm;
+  padding: 5mm 14mm 4mm;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.page-header.green { background: var(--green-brand); }
+
+.ph-left {}
+.ph-label {
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 2px;
+}
+
+.ph-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18pt;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.ph-right {}
+.ph-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 36pt;
+  font-weight: 900;
+  color: rgba(255,255,255,0.08);
+  line-height: 1;
+}
+
+/* ─── HEADER DE DIA ─── */
+.dia-header {
+  display: flex;
+  align-items: center;
+  gap: 5mm;
+  background: var(--brown-pale);
+  border-left: 4mm solid var(--brown-warm);
+  padding: 3mm 5mm;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 4mm;
+}
+
+.dia-num-badge {
+  background: var(--brown-warm);
+  color: #fff;
+  font-size: 8pt;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dia-titulo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 14pt;
+  font-weight: 700;
+  color: var(--brown-dark);
+}
+
+.dia-sub {
+  font-size: 8.5pt;
+  color: var(--brown-mid);
+  font-style: italic;
+  margin-top: 1px;
+}
+
+/* ─── LEITURA ─── */
+.leitura {
+  font-size: 10pt;
+  color: #333;
+  line-height: 1.55;
+  margin-bottom: 3mm;
+}
+
+.leitura p + p { margin-top: 2mm; }
+
+.leitura strong { color: var(--brown-dark); }
+
+/* ─── CALLOUT / INSIGHT ─── */
+.insight-box {
+  background: var(--brown-pale);
+  border-left: 3px solid var(--brown-warm);
+  padding: 3mm 5mm;
+  border-radius: 0 8px 8px 0;
+  margin: 3mm 0;
+  font-size: 9.5pt;
+  color: var(--brown-dark);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.insight-box strong {
+  display: block;
+  font-size: 7.5pt;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--brown-warm);
+  margin-bottom: 2mm;
+}
+
+/* ─── FRASE ÂNCORA ─── */
+.frase-ancora {
+  background: var(--brown-dark);
+  color: #F5CBA7;
+  padding: 4mm 6mm;
+  border-radius: 10px;
+  margin: 3mm 0;
+}
+
+.frase-ancora .fa-label {
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(245,203,167,0.5);
+  margin-bottom: 3mm;
+}
+
+.frase-ancora .fa-texto {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 13pt;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.35;
+}
+
+/* ─── EXERCÍCIO ─── */
+.exercicio {
+  margin: 3mm 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ex-header {
+  background: var(--brown-mid);
+  color: #fff;
+  padding: 3mm 5mm;
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+}
+
+.ex-num {
+  width: 6mm; height: 6mm;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7pt;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.ex-titulo {
+  font-size: 9pt;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.ex-body {
+  background: #FAFAFA;
+  border: 1px solid var(--brown-line);
+  border-top: none;
+  padding: 3mm 4mm;
+}
+
+.ex-instrucao {
+  font-size: 9pt;
+  color: #555;
+  margin-bottom: 2mm;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* ─── LINHAS DE ESCRITA ─── */
+.linhas-escrita {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.linha-escrita {
+  height: 7mm;
+  border-bottom: 1px solid var(--brown-line);
+  width: 100%;
+}
+
+.linha-escrita.larga { height: 8mm; }
+
+/* ─── COLUNAS ─── */
+.duas-colunas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3mm;
+  margin: 2mm 0;
+}
+
+.tres-colunas {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2mm;
+  margin: 2mm 0;
+}
+
+/* ─── TABELA DE DIAS ─── */
+.tabela-dias {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0;
+  font-size: 9pt;
+}
+
+.tabela-dias th {
+  background: var(--brown-dark);
+  color: #F5CBA7;
+  padding: 2mm 3mm;
+  text-align: left;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.tabela-dias td {
+  padding: 2.5mm 3mm;
+  border-bottom: 1px solid var(--brown-line);
+  vertical-align: top;
+  line-height: 1.4;
+}
+
+.tabela-dias tr:last-child td { border-bottom: none; }
+.tabela-dias tr:nth-child(even) td { background: var(--brown-pale); }
+
+.tabela-dias .td-dia {
+  font-weight: 700;
+  color: var(--brown-warm);
+  white-space: nowrap;
+  font-size: 8.5pt;
+}
+
+/* ─── MINI-CARDS ─── */
+.mini-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2mm;
+  margin: 2mm 0;
+}
+
+.mini-card {
+  background: var(--brown-pale);
+  border: 1px solid var(--brown-line);
+  border-radius: 8px;
+  padding: 3mm;
+  text-align: center;
+}
+
+.mini-card .mc-icon { font-size: 18pt; margin-bottom: 2mm; }
+.mini-card .mc-titulo { font-size: 8.5pt; font-weight: 700; color: var(--brown-dark); margin-bottom: 1mm; }
+.mini-card .mc-desc { font-size: 8pt; color: #888; line-height: 1.4; }
+
+/* ─── PERFIL TAG ─── */
+.perfil-tag-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--brown-dark);
+  color: #F5CBA7;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ─── CHECKLIST ─── */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5mm;
+  margin: 2mm 0;
+}
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 3mm;
+}
+
+.check-box {
+  width: 4mm; height: 4mm;
+  border: 1.5px solid var(--brown-warm);
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.check-text {
+  font-size: 9.5pt;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* ─── ESCALA VISUAL ─── */
+.escala-wrap {
+  margin: 2mm 0 3mm;
+}
+
+.escala-label {
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: var(--brown-dark);
+  margin-bottom: 2mm;
+}
+
+.escala {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+
+.escala-num {
+  font-size: 8pt;
+  color: #999;
+  min-width: 4mm;
+  text-align: center;
+}
+
+.escala-boxes {
+  display: flex;
+  gap: 1.5mm;
+  flex: 1;
+}
+
+.escala-box {
+  flex: 1;
+  height: 8mm;
+  border: 1.5px solid var(--brown-line);
+  border-radius: 3px;
+  background: #fff;
+}
+
+/* ─── REFLEXÃO ─── */
+.reflexao-box {
+  background: #F7F0E8;
+  border: 1px solid var(--brown-line);
+  border-radius: 10px;
+  padding: 4mm 5mm;
+  margin-top: 3mm;
+}
+
+.reflexao-box .rf-label {
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--brown-warm);
+  margin-bottom: 2mm;
+}
+
+.reflexao-box .rf-pergunta {
+  font-size: 9.5pt;
+  color: var(--brown-dark);
+  font-weight: 600;
+  margin-bottom: 2mm;
+  line-height: 1.45;
+}
+
+/* ─── PROGRESSO ─── */
+.progresso-strip {
+  display: flex;
+  gap: 2mm;
+  margin: 2mm 0 4mm;
+}
+
+.prog-dia {
+  flex: 1;
+  height: 3mm;
+  border-radius: 2px;
+  background: var(--brown-line);
+}
+
+.prog-dia.ativo { background: var(--brown-warm); }
+.prog-dia.atual { background: var(--brown-dark); }
+
+/* ─── SEÇÃO TÍTULO ─── */
+.secao-titulo {
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--brown-warm);
+  margin-bottom: 2mm;
+  margin-top: 2mm;
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+}
+
+.secao-titulo::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--brown-line);
+}
+
+/* ─── RODAPÉ DE PÁGINA ─── */
+.page-footer {
+  margin-top: auto;
+  padding-top: 4mm;
+  border-top: 1px solid var(--brown-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 7.5pt;
+  color: #CCC;
+}
+
+.pf-marca { font-weight: 600; letter-spacing: 0.5px; }
+
+/* ─── DESTAQUE INLINE ─── */
+mark {
+  background: #FFF0E0;
+  color: var(--brown-dark);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* ─── CAIXA VERMELHO ─── */
+.alerta-box {
+  background: #FFF5F5;
+  border-left: 3px solid var(--red-signal);
+  padding: 4mm 5mm;
+  border-radius: 0 8px 8px 0;
+  margin: 4mm 0;
+  font-size: 9.5pt;
+  color: #5a1a24;
+  line-height: 1.5;
+}
+
+.alerta-box strong {
+  display: block;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--red-signal);
+  margin-bottom: 2mm;
+}
+
+/* ─── TABELA SIMPLES ─── */
+.tabela-simples {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 3mm 0;
+  font-size: 9pt;
+}
+
+.tabela-simples th {
+  text-align: left;
+  padding: 2.5mm 3mm;
+  background: var(--brown-mid);
+  color: #fff;
+  font-size: 7.5pt;
+  letter-spacing: 0.5px;
+}
+
+.tabela-simples td {
+  padding: 2mm 2.5mm;
+  border-bottom: 1px solid var(--brown-line);
+  vertical-align: top;
+}
+
+.tabela-simples tr:last-child td { border-bottom: none; }
+.tabela-simples tr:nth-child(even) td { background: var(--brown-pale); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     CAPA
+═══════════════════════════════════════ -->
+<div class="capa page">
+
+  <svg class="capa-simbolo" width="280" height="280" viewBox="0 0 80 80" fill="none">
+    <path d="M40 8 L68 20 L68 42 C68 56 55 68 40 72 C25 68 12 56 12 42 L12 20 Z" fill="white"/>
+    <path d="M40 50 C40 50 28 42 28 35 C28 31 31 28 35 28 C37.5 28 39.5 29.5 40 31 C40.5 29.5 42.5 28 45 28 C49 28 52 31 52 35 C52 42 40 50 40 50Z" fill="white"/>
+  </svg>
+
+  <div class="capa-topo">
+    <div class="capa-sistema">Diagnóstico Relacional · Padrão de Proteção</div>
+    <div class="capa-perfil-num">Perfil 01 de 03</div>
+    <div class="capa-perfil">
+      <em>Você é</em>
+      A<br>Guardiã
+    </div>
+    <div class="capa-tipo">Workbook 7 Dias</div>
+    <div class="capa-desc">
+      Sete dias de prática direcionada para reconhecer, nomear e transformar o seu padrão de proteção emocional — sem precisar mudar quem você é.
+    </div>
+  </div>
+
+  <div class="capa-rodape">
+    <div class="capa-dias">
+      <div class="num">07</div>
+      <div class="label">Dias de Prática</div>
+    </div>
+    <div class="capa-marca">
+      Diagnóstico Relacional<br>
+      Material de Uso Pessoal<br>
+      diagnosticorelacional.com.br
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     COMO USAR ESTE WORKBOOK
+═══════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header green">
+    <div class="ph-left">
+      <div class="ph-label">Introdução</div>
+      <div class="ph-title">Como usar este workbook</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">00</div></div>
+  </div>
+
+  <div class="leitura">
+    <p>Este workbook foi criado especificamente para o seu padrão: <strong>A Guardiã</strong>. Não é um livro para ler — é um espaço para trabalhar. A diferença entre quem lê e quem muda está nos minutos de atenção honesta que você dedica a cada dia.</p>
+    <p>Cada dia tem uma leitura curta (5 minutos), um exercício de reflexão e um exercício prático. Reserve 15 a 25 minutos diários — o suficiente para ir fundo sem sobrecarregar.</p>
+  </div>
+
+  <div class="mini-cards">
+    <div class="mini-card">
+      <div class="mc-icon">🕐</div>
+      <div class="mc-titulo">Ritmo</div>
+      <div class="mc-desc">Um dia por vez. Não avance antes de completar o exercício do dia anterior.</div>
+    </div>
+    <div class="mini-card">
+      <div class="mc-icon">🔦</div>
+      <div class="mc-titulo">Presença</div>
+      <div class="mc-desc">Você primeiro. Depois o outro. Este material é sobre você — não sobre consertar a relação.</div>
+    </div>
+    <div class="mini-card">
+      <div class="mc-icon">✍️</div>
+      <div class="mc-titulo">Honestidade</div>
+      <div class="mc-desc">Escreva o que é real — não o que parece bonito. Ninguém vai ler, a menos que você queira.</div>
+    </div>
+  </div>
+
+  <div class="secao-titulo">O que você vai trabalhar nos 7 dias</div>
+
+  <table class="tabela-dias">
+    <thead>
+      <tr>
+        <th style="width:20%;">Dia</th>
+        <th style="width:35%;">Tema</th>
+        <th>O que vai fazer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-dia">Dia 1</td>
+        <td><strong>O Mapa do Padrão</strong></td>
+        <td>Identificar em quais situações o padrão Guardiã se ativa e com que intensidade</td>
+      </tr>
+      <tr>
+        <td class="td-dia">Dia 2</td>
+        <td><strong>O Gatilho Por Trás</strong></td>
+        <td>Descobrir o medo específico que ativa o fechamento — não o comportamento, a raiz</td>
+      </tr>
+      <tr>
+        <td class="td-dia">Dia 3</td>
+        <td><strong>O Que o Silêncio Guarda</strong></td>
+        <td>Nomear o que você engole e entender o que esse silêncio está custando</td>
+      </tr>
+      <tr>
+        <td class="td-dia">Dia 4</td>
+        <td><strong>A Voz que Acumulou</strong></td>
+        <td>Escrever o que você não disse — para si mesma, não para o outro</td>
+      </tr>
+      <tr>
+        <td class="td-dia">Dia 5</td>
+        <td><strong>Praticando Receber</strong></td>
+        <td>Trabalhar a dificuldade de aceitar cuidado, presença e afeto sem esquivar</td>
+      </tr>
+      <tr>
+        <td class="td-dia">Dia 6</td>
+        <td><strong>Uma Conversa Real</strong></td>
+        <td>Planejar uma comunicação honesta — com frases reais, para uma situação real</td>
+      </tr>
+      <tr>
+        <td class="td-dia">Dia 7</td>
+        <td><strong>O Próximo Ciclo</strong></td>
+        <td>Definir um compromisso prático e mensurável para a próxima semana</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insight-box">
+    <strong>Princípio do Workbook</strong>
+    O padrão Guardiã não é um defeito — é uma estratégia que funcionou em algum momento. Este trabalho não é sobre se livrar de quem você é. É sobre dar a você mesma mais opções do que o fechamento automático.
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">A Guardiã · Workbook 7 Dias</span>
+    <span>Diagnóstico Relacional</span>
+    <span>pág. 2</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 1 — O MAPA DO PADRÃO
+═══════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">Workbook · A Guardiã</div>
+      <div class="ph-title">O Mapa do Padrão</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">01</div></div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia atual"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+  </div>
+
+  <div class="dia-header">
+    <div>
+      <div class="dia-num-badge">Dia 1</div>
+    </div>
+    <div>
+      <div class="dia-titulo">O Mapa do Padrão</div>
+      <div class="dia-sub">Identificando onde e como o fechamento acontece na sua vida</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>O padrão Guardiã funciona assim: antes de uma possível perda acontecer, você se fecha. Antes de alguém te decepcionar, você já diminui as expectativas. Antes de ser abandonada, você já cria distância. Parece proteção — e é. Mas proteção automática tem um custo: ela não distingue ameaça real de conexão real.</p>
+    <p>O primeiro passo não é mudar o padrão. É <strong>mapeá-lo</strong>. Você precisa saber onde ele aparece, com quem, e com qual intensidade — antes de conseguir fazer qualquer coisa diferente.</p>
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora do Dia</div>
+    <div class="fa-texto">"Não posso mudar o que não consigo ver. Então, hoje, eu olho."</div>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Onde o padrão aparece? — Mapa de ativação</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Em quais áreas da sua vida o fechamento acontece com mais frequência? Marque e escreva um exemplo específico de cada.</div>
+      <table class="tabela-simples">
+        <thead>
+          <tr><th style="width:30%;">Área</th><th>Exemplo concreto de quando você se fechou</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Relações íntimas</strong></td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td><strong>Amizades</strong></td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td><strong>Família</strong></td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td><strong>Trabalho</strong></td><td><div class="linha-escrita"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">Com qual intensidade? — Escala de fechamento</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Para cada área acima, marque de 1 a 5 como se fecha (1 = levemente, 5 = completamente). Circule ou rabisque os números.</div>
+      <div class="duas-colunas">
+        <div class="escala-wrap">
+          <div class="escala-label">Relações íntimas</div>
+          <div class="escala"><span class="escala-num">1</span><div class="escala-boxes"><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div></div><span class="escala-num">5</span></div>
+        </div>
+        <div class="escala-wrap">
+          <div class="escala-label">Amizades</div>
+          <div class="escala"><span class="escala-num">1</span><div class="escala-boxes"><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div></div><span class="escala-num">5</span></div>
+        </div>
+        <div class="escala-wrap">
+          <div class="escala-label">Família</div>
+          <div class="escala"><span class="escala-num">1</span><div class="escala-boxes"><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div></div><span class="escala-num">5</span></div>
+        </div>
+        <div class="escala-wrap">
+          <div class="escala-label">Trabalho</div>
+          <div class="escala"><span class="escala-num">1</span><div class="escala-boxes"><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div><div class="escala-box"></div></div><span class="escala-num">5</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reflexao-box no-break">
+    <div class="rf-label">✍️ Reflexão do Dia 1</div>
+    <div class="rf-pergunta">Qual é a área onde o fechamento mais te custa? O que você já perdeu (ou deixou de ganhar) por causa dele?</div>
+    <div class="linhas-escrita">
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">A Guardiã · Workbook 7 Dias</span>
+    <span>Diagnóstico Relacional</span>
+    <span>pág. 3</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 2 — O GATILHO POR TRÁS
+═══════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">Workbook · A Guardiã</div>
+      <div class="ph-title">O Gatilho Por Trás</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">02</div></div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia ativo"></div>
+    <div class="prog-dia atual"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+    <div class="prog-dia"></div>
+  </div>
+
+  <div class="dia-header">
+    <div><div class="dia-num-badge">Dia 2</div></div>
+    <div>
+      <div class="dia-titulo">O Gatilho Por Trás da Proteção</div>
+      <div class="dia-sub">O comportamento é o fechamento. A raiz é o medo.</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>Todo padrão de fechamento tem uma raiz — um medo específico que dispara antes de você perceber. Para a Guardiã, o gatilho quase nunca é "eu não gosto dessa pessoa". Geralmente é: <strong>"se eu me abrir demais, vou perder o controle."</strong></p>
+    <p>Mas "perder o controle" pode significar coisas diferentes para cada pessoa. Pode ser medo de ser abandonada depois de se mostrar. Pode ser medo de decepcionar o outro. Pode ser medo de precisar — e de não ter quem responda. Hoje você vai investigar qual é o SEU medo específico.</p>
+  </div>
+
+  <div class="alerta-box">
+    <strong>⚠️ Atenção antes de começar</strong>
+    O objetivo hoje não é resolver o medo. É nomeá-lo com precisão. Um medo nomeado tem menos poder do que um medo vago. A especificidade é o primeiro ato de coragem.
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Qual é o medo por trás do fechamento?</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Complete as frases abaixo com o que vier primeiro — sem editar ou censurar. A resposta mais rápida costuma ser a mais honesta.</div>
+      <div class="linhas-escrita">
+        <div style="font-size:9pt; color:#888; margin-bottom:1mm; margin-top:2mm; font-style:italic;">Se eu me mostrar de verdade, tenho medo de que...</div>
+        <div class="linha-escrita"></div>
+        <div class="linha-escrita"></div>
+        <div style="font-size:9pt; color:#888; margin-bottom:1mm; margin-top:3mm; font-style:italic;">A última vez que me fechei, o que estava sentindo por baixo era...</div>
+        <div class="linha-escrita"></div>
+        <div class="linha-escrita"></div>
+        <div style="font-size:9pt; color:#888; margin-bottom:1mm; margin-top:3mm; font-style:italic;">A pessoa que aprendi a não depender foi... e o que aconteceu foi...</div>
+        <div class="linha-escrita"></div>
+        <div class="linha-escrita"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">O gatilho em ação — linha do tempo</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Pense em uma situação recente em que você se fechou. Reconstrua o que aconteceu passo a passo:</div>
+      <table class="tabela-simples">
+        <thead><tr><th>Momento</th><th>O que aconteceu / o que você fez</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Situação</strong><br><span style="font-size:8pt;color:#999;">O que aconteceu que ativou o padrão?</span></td><td><div class="linha-escrita"></div><div class="linha-escrita"></div></td></tr>
+          <tr><td><strong>Sensação</strong><br><span style="font-size:8pt;color:#999;">O que sentiu no corpo antes de agir?</span></td><td><div class="linha-escrita"></div><div class="linha-escrita"></div></td></tr>
+          <tr><td><strong>Ação</strong><br><span style="font-size:8pt;color:#999;">O que você fez ou deixou de fazer?</span></td><td><div class="linha-escrita"></div><div class="linha-escrita"></div></td></tr>
+          <tr><td><strong>Resultado</strong><br><span style="font-size:8pt;color:#999;">O que aconteceu depois?</span></td><td><div class="linha-escrita"></div><div class="linha-escrita"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora do Dia</div>
+    <div class="fa-texto">"O medo que não tem nome governa. O medo que eu nomeio, eu negocio."</div>
+  </div>
+
+  <div class="reflexao-box no-break">
+    <div class="rf-label">✍️ Reflexão do Dia 2</div>
+    <div class="rf-pergunta">Se o medo que você descobriu hoje fosse uma pessoa, como ela seria? O que ela diria para você? O que você responderia?</div>
+    <div class="linhas-escrita">
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">A Guardiã · Workbook 7 Dias</span>
+    <span>Diagnóstico Relacional</span>
+    <span>pág. 4</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 3 — O QUE O SILÊNCIO GUARDA
+═══════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">Workbook · A Guardiã</div>
+      <div class="ph-title">O Que o Silêncio Guarda</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">03</div></div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia ativo"></div><div class="prog-dia ativo"></div><div class="prog-dia atual"></div>
+    <div class="prog-dia"></div><div class="prog-dia"></div><div class="prog-dia"></div><div class="prog-dia"></div>
+  </div>
+
+  <div class="dia-header">
+    <div><div class="dia-num-badge">Dia 3</div></div>
+    <div>
+      <div class="dia-titulo">O Que o Silêncio Guarda</div>
+      <div class="dia-sub">Nomear o que você engole — e entender o custo</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>A Guardiã raramente explode. Em vez disso, ela acumula. <strong>Ela engole</strong> — a decepção, a necessidade não dita, a mágoa que não virou conversa. E cada vez que engole, o silêncio vai ficando mais pesado.</p>
+    <p>O problema não é o silêncio em si. É que o silêncio acumulado vai virando ressentimento — e o ressentimento eventualmente vira distância, frieza, ou uma explosão que parece desproporcional porque o outro não viu a conta crescendo.</p>
+    <p>Hoje você vai olhar para o que está guardado no silêncio. Não para resolver, mas para <mark>colocar no papel o que você nunca disse.</mark></p>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Inventário do Silêncio — O que você não disse?</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Para cada coluna, liste até 3 coisas que você não disse — e que você sabe que ficaram guardadas.</div>
+      <div class="duas-colunas">
+        <div>
+          <div style="font-size:8pt; font-weight:700; color:var(--brown-warm); margin-bottom:2mm; text-transform:uppercase; letter-spacing:1px;">Precisa/Precisei de...</div>
+          <div class="linhas-escrita">
+            <div class="linha-escrita"></div>
+            <div class="linha-escrita"></div>
+            <div class="linha-escrita"></div>
+            <div class="linha-escrita"></div>
+            <div class="linha-escrita"></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:8pt; font-weight:700; color:var(--red-signal); margin-bottom:2mm; text-transform:uppercase; letter-spacing:1px;">Me machucou quando...</div>
+          <div class="linhas-escrita">
+            <div class="linha-escrita"></div>
+            <div class="linha-escrita"></div>
+            <div class="linha-escrita"></div>
+            <div class="linha-escrita"></div>
+            <div class="linha-escrita"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:4mm;">
+        <div style="font-size:8pt; font-weight:700; color:var(--brown-dark); margin-bottom:2mm; text-transform:uppercase; letter-spacing:1px;">Queria ter pedido, mas não pedi...</div>
+        <div class="linhas-escrita">
+          <div class="linha-escrita"></div>
+          <div class="linha-escrita"></div>
+          <div class="linha-escrita"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">O custo do silêncio — Avaliação honesta</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Cada coisa que você guarda tem um custo. Para os 3 principais silêncios do exercício acima, escreva o que aquele silêncio custou (ou está custando):</div>
+      <table class="tabela-simples">
+        <thead><tr><th>O que eu guardei</th><th>O que esse silêncio me custou</th></tr></thead>
+        <tbody>
+          <tr><td><div class="linha-escrita"></div></td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td><div class="linha-escrita"></div></td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td><div class="linha-escrita"></div></td><td><div class="linha-escrita"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora do Dia</div>
+    <div class="fa-texto">"Guardar não é proteger — é adiar o custo."</div>
+  </div>
+
+  <div class="reflexao-box no-break">
+    <div class="rf-label">✍️ Reflexão do Dia 3</div>
+    <div class="rf-pergunta">Se você soubesse que não seria julgada, o que você diria para quem mais está no seu inventário de silêncio? Escreva aqui — só para você.</div>
+    <div class="linhas-escrita">
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">A Guardiã · Workbook 7 Dias</span>
+    <span>Diagnóstico Relacional</span>
+    <span>pág. 5</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 4 — A VOZ QUE ACUMULOU
+═══════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">Workbook · A Guardiã</div>
+      <div class="ph-title">A Voz que Acumulou</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">04</div></div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia ativo"></div><div class="prog-dia ativo"></div><div class="prog-dia ativo"></div>
+    <div class="prog-dia atual"></div><div class="prog-dia"></div><div class="prog-dia"></div><div class="prog-dia"></div>
+  </div>
+
+  <div class="dia-header">
+    <div><div class="dia-num-badge">Dia 4</div></div>
+    <div>
+      <div class="dia-titulo">A Voz que Acumulou</div>
+      <div class="dia-sub">Escrever o não-dito — para si mesma, não para o outro</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>Escrever o que você não disse não é para mandar para o outro. É para você. Quando algo fica apenas na cabeça, fica como sentimento vago. Quando você escreve, ele vira linguagem — e linguagem pode ser examinada, questionada, transformada.</p>
+    <p>Hoje você vai escrever <strong>três cartas que nunca vão ser enviadas</strong>: uma para alguém que te magoou, uma para alguém que você magoou, e uma para a versão de você que começou a construir esse padrão.</p>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Carta para quem te magoou</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Sem filtro. Sem educação forçada. O que você nunca disse — e precisava ter dito. Comece com "Você nunca soube que..." ou "O que mais me machucou foi..."</div>
+      <div class="linhas-escrita">
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">Carta para quem você magoou (ao se fechar)</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">O fechamento muitas vezes machuca quem ficou do lado de fora. Quem ficou esperando uma abertura que não veio? O que você diria a essa pessoa hoje?</div>
+      <div class="linhas-escrita">
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">3</div>
+      <div class="ex-titulo">Carta para a você que aprendeu a se fechar</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Em algum momento, fechar-se fez sentido. Foi uma forma de sobreviver. O que você diria para aquela versão de você que aprendeu isso — com compaixão, não com julgamento?</div>
+      <div class="linhas-escrita">
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora do Dia</div>
+    <div class="fa-texto">"Escrever o que não pôde ser dito é o começo de não precisar mais guardar."</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">A Guardiã · Workbook 7 Dias</span>
+    <span>Diagnóstico Relacional</span>
+    <span>pág. 6</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 5 — PRATICANDO RECEBER
+═══════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">Workbook · A Guardiã</div>
+      <div class="ph-title">Praticando Receber</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">05</div></div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia ativo"></div><div class="prog-dia ativo"></div><div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div><div class="prog-dia atual"></div><div class="prog-dia"></div><div class="prog-dia"></div>
+  </div>
+
+  <div class="dia-header">
+    <div><div class="dia-num-badge">Dia 5</div></div>
+    <div>
+      <div class="dia-titulo">Praticando Receber</div>
+      <div class="dia-sub">A dificuldade de aceitar cuidado sem esquivar</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>A Guardiã é boa em dar. Ela cuida, ela está presente, ela resolve. Mas <strong>receber</strong> — cuidado, presença, elogio, ajuda — é muito mais difícil. Receber exige se permitir precisar. E precisar exige confiar. E confiar é exatamente o que o padrão Guardiã protege contra.</p>
+    <p>O trabalho de hoje é simples, mas não é fácil: <mark>você vai praticar receber — em pequenas doses, sem esquivar.</mark> Isso inclui receber um elogio sem minimizar, aceitar ajuda sem insistir que está tudo bem, e notar o desconforto sem fugir dele.</p>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Como você esquiva quando alguém te oferece algo?</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Marque os comportamentos que você reconhece em si mesma quando alguém tenta te cuidar ou elogiar:</div>
+      <div class="duas-colunas">
+        <div class="checklist">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Minimiza o elogio ("ah, não foi nada")</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Desvia o assunto rapidamente</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Recusa ajuda mesmo precisando</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Responde com humor para escapar</div></div>
+        </div>
+        <div class="checklist">
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Muda o foco para o outro</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Sente desconforto físico ao receber</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Duvida da intenção de quem deu</div></div>
+          <div class="check-item"><div class="check-box"></div><div class="check-text">Outro: ____________________</div></div>
+        </div>
+      </div>
+      <div style="margin-top:3mm; font-size:9pt; color:#555; font-style:italic;">O esquivo que mais acontece comigo é:</div>
+      <div class="linhas-escrita">
+        <div class="linha-escrita"></div>
+        <div class="linha-escrita"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">Desafio prático — Receba algo hoje</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Hoje, quando alguém te elogiar, ajudar, ou demonstrar cuidado: não esquive. Simplesmente diga "obrigada" e permita o silêncio que vem depois. Depois escreva:</div>
+      <div class="linhas-escrita">
+        <div style="font-size:9pt; color:#888; margin-bottom:1mm; font-style:italic;">O que aconteceu? (quem, o que fizeram/disseram)</div>
+        <div class="linha-escrita"></div>
+        <div class="linha-escrita"></div>
+        <div style="font-size:9pt; color:#888; margin-bottom:1mm; margin-top:3mm; font-style:italic;">O que você sentiu no corpo quando não esquivou?</div>
+        <div class="linha-escrita"></div>
+        <div class="linha-escrita"></div>
+        <div style="font-size:9pt; color:#888; margin-bottom:1mm; margin-top:3mm; font-style:italic;">O que foi mais difícil?</div>
+        <div class="linha-escrita"></div>
+        <div class="linha-escrita"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora do Dia</div>
+    <div class="fa-texto">"Receber com graça é uma forma de deixar o outro ser generoso. Isso também é cuidado."</div>
+  </div>
+
+  <div class="reflexao-box no-break">
+    <div class="rf-label">✍️ Reflexão do Dia 5</div>
+    <div class="rf-pergunta">O que seria diferente na sua vida se você soubesse receber tão bem quanto dá?</div>
+    <div class="linhas-escrita">
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">A Guardiã · Workbook 7 Dias</span>
+    <span>Diagnóstico Relacional</span>
+    <span>pág. 7</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 6 — UMA CONVERSA REAL
+═══════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">Workbook · A Guardiã</div>
+      <div class="ph-title">Uma Conversa Real</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">06</div></div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia ativo"></div><div class="prog-dia ativo"></div><div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div><div class="prog-dia ativo"></div><div class="prog-dia atual"></div><div class="prog-dia"></div>
+  </div>
+
+  <div class="dia-header">
+    <div><div class="dia-num-badge">Dia 6</div></div>
+    <div>
+      <div class="dia-titulo">Uma Conversa Real</div>
+      <div class="dia-sub">Planejar a comunicação honesta — com frases reais</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>Você passou 5 dias mapeando, nomeando e escrevendo. Hoje o trabalho sai do papel e entra na vida. <strong>Não de forma dramática</strong> — você não vai mandar todas as cartas que escreveu ontem. Mas vai planejar uma comunicação específica, com uma pessoa real, sobre uma coisa real que ficou no silêncio.</p>
+    <p>O objetivo não é resolver tudo. É <mark>praticar dizer uma coisa verdadeira</mark> de um jeito que não seja ataque nem pedido de desculpas. Simplesmente verdade.</p>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Escolhendo a conversa certa</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Pense em uma situação pendente — algo que ficou no ar, uma mágoa que não foi nomeada, uma necessidade que você não expressou. Não a mais pesada. A que parece possível:</div>
+      <table class="tabela-simples">
+        <tbody>
+          <tr><td style="width:35%; font-weight:600;">Com quem é a conversa?</td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td style="font-weight:600;">Sobre o que?</td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td style="font-weight:600;">O que você quer que o outro saiba?</td><td><div class="linha-escrita"></div><div class="linha-escrita"></div></td></tr>
+          <tr><td style="font-weight:600;">O que você precisa depois de dizer?</td><td><div class="linha-escrita"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">Construindo a frase de abertura</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">A primeira frase é a mais difícil. Use a estrutura abaixo para montar a sua — adapte com suas palavras:</div>
+      <div class="insight-box" style="margin-bottom:4mm;">
+        <strong>Estrutura sugerida</strong>
+        "Quero te contar algo que fiquei guardando. Não é uma acusação — é sobre o que eu senti quando [situação]. O que eu precisaria é [necessidade específica]."
+      </div>
+      <div style="font-size:9.5pt; color:#555; margin-bottom:2mm;">A minha versão desta frase é:</div>
+      <div class="linhas-escrita">
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+        <div class="linha-escrita larga"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">3</div>
+      <div class="ex-titulo">Preparação para a reação do outro</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">A Guardiã frequentemente não diz porque teme a reação do outro. Antecipe as possibilidades e decida o que fazer em cada caso:</div>
+      <table class="tabela-simples">
+        <thead><tr><th>Reação possível do outro</th><th>O que eu farei / direi</th></tr></thead>
+        <tbody>
+          <tr><td>Fica na defensiva</td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td>Fica em silêncio</td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td>Responde com afeto</td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td>Não entende o ponto</td><td><div class="linha-escrita"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Frase Âncora do Dia</div>
+    <div class="fa-texto">"Uma coisa verdadeira dita com cuidado vale mais do que mil coisas perfeitas guardadas."</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">A Guardiã · Workbook 7 Dias</span>
+    <span>Diagnóstico Relacional</span>
+    <span>pág. 8</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DIA 7 — O PRÓXIMO CICLO
+═══════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="ph-left">
+      <div class="ph-label">Workbook · A Guardiã</div>
+      <div class="ph-title">O Próximo Ciclo</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">07</div></div>
+  </div>
+
+  <div class="progresso-strip">
+    <div class="prog-dia ativo"></div><div class="prog-dia ativo"></div><div class="prog-dia ativo"></div>
+    <div class="prog-dia ativo"></div><div class="prog-dia ativo"></div><div class="prog-dia ativo"></div>
+    <div class="prog-dia atual"></div>
+  </div>
+
+  <div class="dia-header">
+    <div><div class="dia-num-badge">Dia 7</div></div>
+    <div>
+      <div class="dia-titulo">O Próximo Ciclo</div>
+      <div class="dia-sub">Fechar a semana — e definir o que vem depois</div>
+    </div>
+  </div>
+
+  <div class="leitura">
+    <p>Você chegou ao dia 7. Sete dias de atenção honesta ao seu padrão. Isso não é pouco — a maioria das pessoas passa a vida inteira sem fazer esse trabalho.</p>
+    <p>O padrão Guardiã não some em 7 dias. Mas você agora tem o que o padrão nunca deixou você ter antes: <strong>consciência de onde está, como funciona, e o que custa.</strong> Isso é o suficiente para começar a fazer diferente — não sempre, não perfeitamente, mas progressivamente.</p>
+    <p>Hoje você vai fechar a semana e definir <mark>um único compromisso concreto</mark> para as próximas 4 semanas.</p>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">1</div>
+      <div class="ex-titulo">Retrospectiva dos 7 dias</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Complete as frases com honestidade — não com o que parece bonito dizer:</div>
+      <div class="linhas-escrita">
+        <div style="font-size:9pt; color:#888; margin-bottom:1mm; font-style:italic;">O que me surpreendeu sobre mim mesma nessa semana foi...</div>
+        <div class="linha-escrita"></div>
+        <div class="linha-escrita"></div>
+        <div style="font-size:9pt; color:#888; margin-bottom:1mm; margin-top:3mm; font-style:italic;">O exercício que mais me incomodou foi o Dia ___ porque...</div>
+        <div class="linha-escrita"></div>
+        <div class="linha-escrita"></div>
+        <div style="font-size:9pt; color:#888; margin-bottom:1mm; margin-top:3mm; font-style:italic;">A coisa que quero carregar daqui para frente é...</div>
+        <div class="linha-escrita"></div>
+        <div class="linha-escrita"></div>
+        <div style="font-size:9pt; color:#888; margin-bottom:1mm; margin-top:3mm; font-style:italic;">Ainda não resolvi, mas agora vejo com mais clareza que...</div>
+        <div class="linha-escrita"></div>
+        <div class="linha-escrita"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercicio no-break">
+    <div class="ex-header">
+      <div class="ex-num">2</div>
+      <div class="ex-titulo">O compromisso das próximas 4 semanas</div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-instrucao">Escolha UM comportamento específico e mensurável para praticar nas próximas semanas. Não "ser mais aberta" — mas algo concreto como "quando X acontecer, eu vou fazer Y em vez de me fechar".</div>
+      <table class="tabela-simples">
+        <tbody>
+          <tr><td style="width:40%; font-weight:600;">Situação gatilho:</td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td style="font-weight:600;">O que eu faria antes:</td><td><div class="linha-escrita"></div></td></tr>
+          <tr><td style="font-weight:600;">O que vou tentar fazer:</td><td><div class="linha-escrita"></div><div class="linha-escrita"></div></td></tr>
+          <tr><td style="font-weight:600;">Como saberei que funcionou?</td><td><div class="linha-escrita"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="frase-ancora">
+    <div class="fa-label">Sua Frase Âncora — Escreva a sua</div>
+    <div class="fa-texto" style="color:rgba(245,203,167,0.4); font-style:normal; font-size:11pt;">
+      _______________________________________________<br>
+      _______________________________________________
+    </div>
+  </div>
+
+  <div class="reflexao-box no-break">
+    <div class="rf-label">✍️ Carta para você daqui a 30 dias</div>
+    <div class="rf-pergunta">O que você quer que a versão de você daqui a um mês lembre desta semana?</div>
+    <div class="linhas-escrita">
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+      <div class="linha-escrita larga"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-marca">A Guardiã · Workbook 7 Dias</span>
+    <span>Diagnóstico Relacional</span>
+    <span>pág. 9</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     ENCERRAMENTO
+═══════════════════════════════════════ -->
+<div class="capa page" style="background: linear-gradient(160deg, #1A4E2D 0%, #2E7D32 60%, var(--brown-warm) 100%);">
+
+  <svg class="capa-simbolo" width="280" height="280" viewBox="0 0 80 80" fill="none">
+    <path d="M40 8 L68 20 L68 42 C68 56 55 68 40 72 C25 68 12 56 12 42 L12 20 Z" fill="white"/>
+    <path d="M40 50 C40 50 28 42 28 35 C28 31 31 28 35 28 C37.5 28 39.5 29.5 40 31 C40.5 29.5 42.5 28 45 28 C49 28 52 31 52 35 C52 42 40 50 40 50Z" fill="white"/>
+  </svg>
+
+  <div class="capa-topo">
+    <div style="font-size:8pt; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:12mm;">Diagnóstico Relacional · A Guardiã</div>
+
+    <div style="font-family:'Playfair Display',Georgia,serif; font-size:32pt; font-weight:900; color:#F5CBA7; line-height:1.15; margin-bottom:8mm;">
+      Você fez o<br>
+      <em style="font-style:italic; color:rgba(255,255,255,0.6);">trabalho difícil.</em>
+    </div>
+
+    <div style="font-size:11pt; color:rgba(255,255,255,0.6); line-height:1.7; max-width:130mm; border-left:2px solid rgba(255,255,255,0.15); padding-left:5mm; margin-bottom:12mm;">
+      Sete dias de atenção honesta ao seu padrão. Isso não é pouco — é exatamente o tipo de coisa que muda relacionamentos: não um gesto grandioso, mas sete dias de consistência consigo mesma.
+    </div>
+
+    <div style="font-size:10pt; color:rgba(255,255,255,0.5); line-height:1.6; max-width:130mm;">
+      O padrão Guardiã não some. Mas agora você tem o que ele nunca deixou você ter: <strong style="color:rgba(255,255,255,0.8);">consciência de onde está, como funciona, e o que custa.</strong><br><br>
+      Continue o trabalho. Continue se notando. Continue escolhendo — mesmo quando o padrão quiser escolher por você.
+    </div>
+  </div>
+
+  <div class="capa-rodape">
+    <div style="font-size:9pt; color:rgba(255,255,255,0.3); line-height:1.6;">
+      A Guardiã · Workbook 7 Dias<br>
+      Diagnóstico Relacional · Material de Uso Pessoal
+    </div>
+    <div style="font-size:9pt; color:rgba(255,255,255,0.25); text-align:right;">
+      diagnosticorelacional.com.br
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

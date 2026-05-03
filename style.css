@@ -1,0 +1,362 @@
+/* ================================================
+   FUNIL QUIZ — DIAGNÓSTICO RELACIONAL
+   style.css — Mobile First
+   ================================================ */
+
+/* --- Reset & Base --- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: #F9F6F2;
+  color: #1A1A1A;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* --- Layout --- */
+.page-wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+  min-height: 100vh;
+}
+.page-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px 20px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* --- Typography --- */
+.headline {
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #111;
+  letter-spacing: -0.3px;
+}
+.subheadline {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: #555;
+}
+.body-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #333;
+}
+.small-text {
+  font-size: 0.8rem;
+  color: #888;
+  line-height: 1.4;
+}
+.label-text {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+/* --- Cards --- */
+.card {
+  background: #FFF;
+  border-radius: 20px;
+  padding: 28px 24px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+}
+.card-sm {
+  background: #FFF;
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+}
+
+/* --- Buttons --- */
+.btn {
+  display: block;
+  width: 100%;
+  padding: 18px 24px;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+  letter-spacing: 0.2px;
+  line-height: 1.2;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-dark {
+  background: #111;
+  color: #FFF;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+.btn-dark:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.28); }
+
+.btn-outline {
+  background: transparent;
+  color: #111;
+  border: 2px solid #DDD;
+}
+
+.btn-profile {
+  background: var(--primary);
+  color: #FFF;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.btn-share {
+  background: #F2F2F2;
+  color: #333;
+  border: 1.5px solid #E0E0E0;
+  font-size: 0.95rem;
+}
+
+/* --- Badge --- */
+.badge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 30px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.badge-neutral { background: #F0F0F0; color: #666; }
+
+/* --- Spacers --- */
+.mt-4  { margin-top: 4px; }
+.mt-8  { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+.mt-16 { margin-top: 16px; }
+.mt-20 { margin-top: 20px; }
+.mt-24 { margin-top: 24px; }
+.mt-32 { margin-top: 32px; }
+.mt-40 { margin-top: 40px; }
+.mb-8  { margin-bottom: 8px; }
+.mb-16 { margin-bottom: 16px; }
+.mb-24 { margin-bottom: 24px; }
+
+/* --- Divider --- */
+.divider {
+  height: 1px;
+  background: #EEE;
+  margin: 28px 0;
+}
+
+/* --- Utility --- */
+.text-center { text-align: center; }
+.text-muted   { color: #888; }
+.w-full { width: 100%; }
+.flex-center { display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+/* --- Progress Bar (Quiz) --- */
+.progress-wrap {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: #FFF;
+  padding: 12px 20px 10px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+}
+.progress-bar-bg {
+  background: #EEE;
+  border-radius: 10px;
+  height: 6px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #C8956C, #8B1A2C);
+  transition: width 0.4s ease;
+}
+.progress-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #999;
+  text-align: right;
+  margin-top: 5px;
+}
+
+/* --- Quiz Question --- */
+.quiz-wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 100px 20px 48px;
+}
+.question-card {
+  background: #FFF;
+  border-radius: 24px;
+  padding: 32px 24px 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  animation: fadeUp 0.3s ease;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.question-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #111;
+  margin-bottom: 24px;
+}
+.options-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.option-item {
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 2px solid #EEE;
+  background: #FFF;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #222;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  user-select: none;
+}
+.option-item:active { transform: scale(0.98); }
+.option-item.selected {
+  border-color: #111;
+  background: #111;
+  color: #FFF;
+}
+.option-item:hover:not(.selected) { border-color: #BBB; background: #FAFAFA; }
+
+/* --- Profile Page Hero --- */
+.profile-hero {
+  background: var(--primary);
+  color: #FFF;
+  text-align: center;
+  padding: 48px 24px 40px;
+}
+.profile-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+  display: block;
+}
+.profile-name {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.profile-tagline {
+  font-size: 1rem;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+/* --- Profile Colors --- */
+.theme-guardia  { --primary: #C8956C; --light: #F5EDE0; --dark: #7A4E2D; }
+.theme-tempestade { --primary: #8B1A2C; --light: #FDEEF0; --dark: #5C0F1C; }
+.theme-distante  { --primary: #2C5F8A; --light: #E8F4FD; --dark: #1A3D5C; }
+
+/* --- Offer Section --- */
+.offer-section {
+  background: #FFF;
+  border-radius: 20px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  text-align: center;
+}
+.price-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  margin: 16px 0;
+}
+.price-currency { font-size: 1.1rem; font-weight: 700; color: #111; }
+.price-value    { font-size: 3rem; font-weight: 800; color: #111; line-height: 1; }
+.price-original { font-size: 0.9rem; text-decoration: line-through; color: #AAA; }
+.offer-features { list-style: none; text-align: left; margin: 20px 0; }
+.offer-features li {
+  padding: 8px 0;
+  font-size: 0.95rem;
+  color: #333;
+  border-bottom: 1px solid #F5F5F5;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.offer-features li:last-child { border-bottom: none; }
+.check { color: #2E7D32; font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+/* --- Testimonial --- */
+.testimonial {
+  background: #FFF;
+  border-radius: 16px;
+  padding: 20px;
+  border-left: 3px solid var(--primary, #111);
+}
+.testimonial-text { font-size: 0.95rem; font-style: italic; color: #333; line-height: 1.6; }
+.testimonial-author { font-size: 0.8rem; font-weight: 700; color: #888; margin-top: 8px; }
+
+/* --- Loading Screen --- */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 40px 24px;
+  background: #F9F6F2;
+}
+.spinner {
+  width: 48px; height: 48px;
+  border: 4px solid #EEE;
+  border-top-color: #8B1A2C;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 24px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* --- Entrega Page --- */
+.entrega-hero {
+  text-align: center;
+  padding: 40px 24px 32px;
+}
+.entrega-icon { font-size: 4rem; margin-bottom: 16px; }
+
+/* --- Share Toast --- */
+.toast {
+  position: fixed;
+  bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: #111;
+  color: #FFF;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  white-space: nowrap;
+  z-index: 999;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* --- Responsive tweaks for slightly larger screens --- */
+@media (min-width: 481px) {
+  .page-wrap, .quiz-wrap, .page-center {
+    border-radius: 0;
+  }
+}
