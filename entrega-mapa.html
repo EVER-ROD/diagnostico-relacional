@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso Liberado — Mapa de Compatibilidade Relacional</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #0F0C29; }
+    .hero { background: linear-gradient(160deg, #2D1B69 0%, #1A1035 50%, #0F0C29 100%); color:#FFF; text-align:center; padding:52px 24px 44px; position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%, rgba(123,79,224,0.25) 0%, transparent 70%); pointer-events:none; }
+    .hero-emoji { font-size:3.5rem; display:block; margin-bottom:16px; }
+    .hero-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:#C9A8FF; opacity:0.85; margin-bottom:8px; }
+    .hero-title { font-size:2rem; font-weight:900; line-height:1.2; margin-bottom:12px; color:#F0E8FF; }
+    .hero-sub { font-size:1rem; color:#B8A0DD; line-height:1.55; }
+    .content { background:#1A1035; padding:32px 24px; }
+    .section-title { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:#9B6BDA; margin-bottom:16px; }
+    .confirm-box { background:#12102A; border:1.5px solid #3D2880; border-radius:16px; padding:20px; margin-bottom:24px; }
+    .confirm-box p { font-size:1rem; color:#C8B8E8; line-height:1.7; margin:0; }
+    .confirm-box strong { color:#E0D0F8; }
+    .steps { display:flex; flex-direction:column; gap:12px; margin-bottom:24px; }
+    .step { display:flex; gap:14px; align-items:flex-start; padding:14px 16px; background:#12102A; border-radius:12px; }
+    .step-num { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,#7B4FE0,#5B2FBF); color:#FFF; font-weight:800; font-size:0.85rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .step-text { font-size:0.93rem; color:#C0A8E0; line-height:1.5; }
+    .step-text strong { color:#E0D0F8; }
+    .divider { height:1px; background:#2A1F50; margin:28px 0; }
+
+    /* ── O QUE VOCÊ RECEBEU ─────────────────── */
+    .reveal-section { background:#12102A; border-radius:20px; padding:28px 20px; margin:0 0 28px; text-align:center; border:1px solid #3D2880; }
+    .reveal-title { font-size:1.35rem; font-weight:900; color:#F0E8FF; margin-bottom:10px; line-height:1.3; }
+    .reveal-sub { font-size:0.93rem; color:#9A85C0; line-height:1.6; margin-bottom:20px; }
+    .reveal-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .reveal-card { background:#1E1545; border-radius:12px; padding:14px 10px; text-align:center; border:1px solid #2D2060; }
+    .reveal-card-emoji { font-size:1.5rem; display:block; margin-bottom:6px; }
+    .reveal-card-label { font-size:0.78rem; font-weight:700; color:#C9A8FF; line-height:1.3; }
+
+    /* ── OTO: WORKBOOKS ─────────────────────── */
+    .oto-section { background:#1A1035; padding:32px 24px; }
+    .oto-hook { background:#12102A; border:1px solid #3D2880; border-radius:16px; padding:22px; text-align:center; margin-bottom:24px; }
+    .oto-hook-title { font-size:1.3rem; font-weight:800; color:#F0E8FF; margin-bottom:8px; }
+    .oto-hook-sub { font-size:0.93rem; color:#9A85C0; line-height:1.55; }
+    .perfil-cards { display:flex; flex-direction:column; gap:14px; margin-bottom:24px; }
+    .perfil-card { border-radius:14px; padding:18px; display:flex; align-items:center; gap:14px; text-decoration:none; }
+    .perfil-card-guardia { background:linear-gradient(135deg,#C8956C22,#A6705022); border:1px solid #C8956C55; }
+    .perfil-card-tempestade { background:linear-gradient(135deg,#8B1A2C22,#6B0F1E22); border:1px solid #8B1A2C55; }
+    .perfil-card-distante { background:linear-gradient(135deg,#2C5F8A22,#1A3D5C22); border:1px solid #2C5F8A55; }
+    .perfil-emoji { font-size:1.8rem; flex-shrink:0; }
+    .perfil-info { flex:1; }
+    .perfil-name { font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:3px; }
+    .perfil-guardia .perfil-name { color:#C8956C; }
+    .perfil-tempestade .perfil-name { color:#E87090; }
+    .perfil-distante .perfil-name { color:#5B9FD4; }
+    .perfil-desc { font-size:0.88rem; color:#B8A0DD; line-height:1.35; margin-bottom:6px; }
+    .perfil-price { font-size:1rem; font-weight:900; color:#F0E8FF; }
+    .perfil-cta { font-size:0.72rem; font-weight:700; color:#C9A8FF; text-transform:uppercase; letter-spacing:0.5px; }
+
+    .guarantee { text-align:center; font-size:0.78rem; color:#5A4A7A; margin-top:12px; }
+    .footer { text-align:center; padding:28px 24px 16px; font-size:0.75rem; color:#3D2880; }
+
+    /* stars bg decorative */
+    .stars { position:fixed; top:0; left:0; width:100%; height:200px; pointer-events:none; z-index:0; overflow:hidden; }
+  </style>
+</head>
+<body>
+
+<div class="page-wrap" style="padding:0;max-width:480px;position:relative;z-index:1;">
+
+  <div class="hero">
+    <span class="hero-emoji">🧭</span>
+    <p class="hero-label">Acesso liberado</p>
+    <h1 class="hero-title">Seu Mapa de Compatibilidade está chegando</h1>
+    <p class="hero-sub">Você acabou de dar o passo mais raro — decidiu entender antes de sentir.</p>
+  </div>
+
+  <div class="content">
+    <p class="section-title">O que acontece agora</p>
+
+    <div class="confirm-box">
+      <p>Sua compra foi confirmada. A Hotmart vai enviar o <strong>Mapa de Compatibilidade Relacional</strong> diretamente para o seu e-mail em instantes. Verifique também a caixa de spam.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <p class="step-text"><strong>Abra o e-mail da Hotmart</strong> com o assunto "Seu produto está disponível"</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <p class="step-text"><strong>Baixe o PDF</strong> do Mapa de Compatibilidade Relacional</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <p class="step-text"><strong>Leia a seção do seu perfil primeiro</strong> — depois explore os perfis com quem você se relaciona</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal-section">
+      <p class="reveal-title">O que o Mapa revela sobre você</p>
+      <p class="reveal-sub">Quatro dimensões que determinam com quem você realmente conecta — e por que certos padrões se repetem.</p>
+      <div class="reveal-grid">
+        <div class="reveal-card">
+          <span class="reveal-card-emoji">💞</span>
+          <p class="reveal-card-label">Estilo de Apego Dominante</p>
+        </div>
+        <div class="reveal-card">
+          <span class="reveal-card-emoji">⚡</span>
+          <p class="reveal-card-label">Ritmo Emocional Natural</p>
+        </div>
+        <div class="reveal-card">
+          <span class="reveal-card-emoji">🔥</span>
+          <p class="reveal-card-label">Padrão de Conflito</p>
+        </div>
+        <div class="reveal-card">
+          <span class="reveal-card-emoji">🌊</span>
+          <p class="reveal-card-label">Compatibilidade por Perfil</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- OTO — WORKBOOKS 7 DIAS                    -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="oto-section">
+    <div class="oto-hook">
+      <p class="oto-hook-title">Você descobriu o mapa.<br>Agora quer mudar o padrão?</p>
+      <p class="oto-hook-sub">Os Workbooks 7 Dias trabalham exatamente o padrão que o Mapa revelou — em exercícios práticos de menos de 15 minutos por dia.</p>
+    </div>
+
+    <p class="section-title" style="text-align:center;">Escolha o seu Workbook</p>
+
+    <div class="perfil-cards">
+      <a href="https://go.hotmart.com/F105587684Q" class="perfil-card perfil-card-guardia perfil-guardia" style="text-decoration:none;">
+        <span class="perfil-emoji">🤍</span>
+        <div class="perfil-info">
+          <p class="perfil-name">A Guardiã</p>
+          <p class="perfil-desc">Para quem cuida demais e esquece de si. 7 dias para reequilibrar sem perder a essência.</p>
+          <p class="perfil-price">R$27 <span class="perfil-cta">→ Quero este</span></p>
+        </div>
+      </a>
+
+      <a href="https://go.hotmart.com/Q105649433F" class="perfil-card perfil-card-tempestade perfil-tempestade" style="text-decoration:none;">
+        <span class="perfil-emoji">🌪️</span>
+        <div class="perfil-info">
+          <p class="perfil-name">A Tempestade</p>
+          <p class="perfil-desc">Para quem sente tudo intensamente. 7 dias para canalizar sem destruir o que é bom.</p>
+          <p class="perfil-price">R$27 <span class="perfil-cta">→ Quero este</span></p>
+        </div>
+      </a>
+
+      <a href="https://go.hotmart.com/S105649435F" class="perfil-card perfil-card-distante perfil-distante" style="text-decoration:none;">
+        <span class="perfil-emoji">🧊</span>
+        <div class="perfil-info">
+          <p class="perfil-name">A Distante</p>
+          <p class="perfil-desc">Para quem se fecha antes de se machucar. 7 dias para criar espaço sem perder conexão.</p>
+          <p class="perfil-price">R$27 <span class="perfil-cta">→ Quero este</span></p>
+        </div>
+      </a>
+    </div>
+
+    <p class="guarantee">🔒 Pagamento seguro · Acesso imediato via Hotmart</p>
+  </div>
+
+  <div class="footer">Diagnóstico Relacional &nbsp;·&nbsp; Privado &nbsp;·&nbsp; Seguro</div>
+</div>
+
+</body>
+</html>
