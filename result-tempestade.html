@@ -104,6 +104,23 @@
       transition: transform 0.3s ease, opacity 0.3s ease;
       white-space:nowrap; z-index:999; pointer-events:none; }
     .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+    .oto2-result { background:linear-gradient(180deg,#0F0C29 0%,#1A1035 60%,#2D1B69 100%); padding:36px 24px 44px; }
+    .oto2-tag { text-align:center; font-size:0.68rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:#C9A8FF; margin-bottom:20px; }
+    .oto2-hook { text-align:center; margin-bottom:24px; }
+    .oto2-emoji { font-size:2.8rem; display:block; margin-bottom:12px; }
+    .oto2-title { font-size:1.45rem; font-weight:900; color:#F0E8FF; line-height:1.25; margin-bottom:10px; }
+    .oto2-sub { font-size:0.93rem; color:#B8A0DD; line-height:1.6; }
+    .oto2-list { list-style:none; margin:18px 0 20px; }
+    .oto2-list li { display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid #2A1F50; font-size:0.9rem; color:#D4C0F0; line-height:1.4; }
+    .oto2-list li:last-child { border-bottom:none; }
+    .oto2-check { color:#9B6BDA; flex-shrink:0; }
+    .oto2-price { text-align:center; padding:14px 0 4px; }
+    .oto2-from { font-size:0.8rem; color:#5A4A7A; text-decoration:line-through; margin-bottom:4px; }
+    .oto2-main { font-size:3rem; font-weight:900; color:#C9A8FF; line-height:1; }
+    .oto2-note { font-size:0.78rem; color:#7A6A9A; margin-top:4px; }
+    .btn-oto2 { display:block; width:100%; padding:20px; background:linear-gradient(135deg,#7B4FE0,#5B2FBF); color:#FFF; border:none; border-radius:16px; font-size:1rem; font-weight:800; text-align:center; text-decoration:none; box-shadow:0 6px 24px rgba(108,63,199,0.5); margin-top:8px; }
+    .oto2-guarantee { text-align:center; font-size:0.76rem; color:#5A4A7A; margin-top:10px; }
+    .btn-oto2-skip { display:block; text-align:center; font-size:0.8rem; color:#3D2A60; margin-top:12px; text-decoration:none; }
   </style>
 </head>
 <body>
@@ -193,10 +210,10 @@
       <input type="checkbox" id="bump-check" style="margin-top:3px; width:18px; height:18px; flex-shrink:0; accent-color:#8B1A2C;">
       <span>
         <strong style="font-size:0.9rem; color:#333; display:block; margin-bottom:4px;">
-          ➕ Adicionar: Guia de Frases — R$17
+          ➕ Adicionar: Manual de Conversas Emocionais — R$17
         </strong>
         <span style="font-size:0.82rem; color:#777; line-height:1.45;">
-          O que dizer em cada momento do seu padrão. As frases que conectam em vez de afastar.
+          Frases prontas para os momentos difíceis do padrão Tempestade — antes de explodir e depois da crise.
         </span>
       </span>
     </label>
@@ -207,6 +224,31 @@
   </a>
   <p class="guarantee-text">🔒 Pagamento seguro · Acesso imediato · Satisfação garantida</p>
 
+</div>
+
+<!-- OTO2: MAPA DE COMPATIBILIDADE -->
+<div class="oto2-result">
+  <div class="oto2-tag">✦ Oferta especial para quem acabou de descobrir seu perfil</div>
+  <div class="oto2-hook">
+    <span class="oto2-emoji">🧭</span>
+    <h2 class="oto2-title">Agora descubra com quem você realmente combina</h2>
+    <p class="oto2-sub">O Workbook mostra o seu padrão. O Mapa mostra com quem ele se encaixa — e com quem ele colide. São informações completamente diferentes.</p>
+  </div>
+  <ul class="oto2-list">
+    <li><span class="oto2-check">✦</span> Compatibilidade emocional entre o padrão Tempestade e os outros perfis</li>
+    <li><span class="oto2-check">✦</span> Por que você se atrai por quem amplifica sua intensidade em vez de estabilizá-la</li>
+    <li><span class="oto2-check">✦</span> Os padrões invisíveis que se repetem nos seus relacionamentos</li>
+    <li><span class="oto2-check">✦</span> O que priorizar antes de se abrir emocionalmente para alguém</li>
+    <li><span class="oto2-check">✦</span> PDF imediato — acesso via Hotmart</li>
+  </ul>
+  <div class="oto2-price">
+    <p class="oto2-from">De R$47</p>
+    <p class="oto2-main">R$27</p>
+    <p class="oto2-note">oferta única · acesso imediato</p>
+  </div>
+  <a href="https://go.hotmart.com/L105624307I" class="btn-oto2">QUERO MEU MAPA DE COMPATIBILIDADE — R$27 →</a>
+  <p class="oto2-guarantee">🔒 Pagamento seguro · Acesso imediato via Hotmart</p>
+  <a href="#" class="btn-oto2-skip" onclick="return false;">Não, prefiro descobrir sozinha</a>
 </div>
 
 <div class="toast" id="toast">✓ Copiado! Cole onde quiser.</div>
