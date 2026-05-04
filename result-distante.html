@@ -4,16 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Seu Resultado: A Distante</title>
-  <meta name="description" content="Você é A Distante. Descubra seu padrão relacional e receba seu plano personalizado de 7 dias.">
+  <meta name="description" content="Você é A Distante. Descubra seu padrão relacional e receba seu protocolo personalizado de 7 dias.">
   <link rel="stylesheet" href="style.css">
   <style>
     body { background: #E8F4FD; }
 
     .profile-hero {
       background: linear-gradient(160deg, #2C5F8A 0%, #1A3D5C 100%);
-      color: #FFF;
-      text-align: center;
-      padding: 52px 24px 44px;
+      color: #FFF; text-align: center; padding: 52px 24px 44px;
     }
     .profile-hero .profile-emoji { font-size: 4rem; display:block; margin-bottom:16px; }
     .profile-hero .profile-label {
@@ -21,7 +19,7 @@
       letter-spacing:2px; opacity:0.7; margin-bottom:8px;
     }
     .profile-hero .profile-name { font-size:2.4rem; font-weight:900; letter-spacing:-0.5px; margin-bottom:12px; }
-    .profile-hero .profile-tagline { font-size:1rem; opacity:0.85; line-height:1.5; }
+    .profile-hero .profile-tagline { font-size:1rem; opacity:0.85; line-height:1.6; }
 
     .content-wrap { background: #FFF; padding: 32px 24px; }
 
@@ -32,59 +30,96 @@
     .profile-text { font-size: 1.05rem; line-height: 1.8; color: #2A2A2A; }
     .profile-text p { margin-bottom: 20px; }
     .profile-text strong { color: #1A3D5C; }
+
     .quote-block {
-      background: #E8F4FD;
-      border-left: 3px solid #2C5F8A;
-      border-radius: 0 12px 12px 0;
-      padding: 16px 18px; margin: 24px 0;
-      font-size: 1rem; font-style: italic; color: #555; line-height: 1.65;
+      background: #E8F4FD; border-left: 3px solid #2C5F8A;
+      border-radius: 0 12px 12px 0; padding: 16px 18px; margin: 24px 0;
+      font-size: 1.05rem; font-style: italic; color: #1A3040;
+      line-height: 1.7; font-weight: 500;
     }
+
     .traits-grid { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
     .trait-item {
-      display: flex; align-items: center; gap: 12px;
+      display: flex; align-items: flex-start; gap: 12px;
       background: #F4F9FD; border-radius: 12px; padding: 14px 16px;
     }
-    .trait-icon { font-size: 1.2rem; flex-shrink: 0; }
-    .trait-text { font-size: 0.9rem; color: #333; line-height: 1.4; }
+    .trait-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .trait-text { font-size: 0.9rem; color: #333; line-height: 1.5; }
 
+    /* Consequência */
+    .consequence-block {
+      background: #0A1520; border-radius: 16px;
+      padding: 26px 22px; margin: 8px 0 28px;
+    }
+    .consequence-label {
+      font-size: 0.68rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:2px; color:#7AB8E8; margin-bottom:14px; display:block;
+    }
+    .consequence-block p { font-size: 0.97rem; line-height: 1.85; color: #DDD; margin-bottom: 14px; }
+    .consequence-block p:last-child { margin-bottom: 0; }
+    .consequence-block strong { color: #A8D4F0; }
+
+    /* Mecanismo */
+    .mechanism-block {
+      background: #F4F9FD; border: 1px solid #C0D8EE;
+      border-radius: 16px; padding: 26px 22px; margin: 8px 0 28px;
+    }
+    .mechanism-label {
+      font-size: 0.68rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:2px; color:#2C5F8A; margin-bottom:14px; display:block;
+    }
+    .mechanism-block p { font-size: 0.97rem; line-height: 1.85; color: #2A2A2A; margin-bottom: 14px; }
+    .mechanism-block p:last-child { margin-bottom: 0; }
+    .mechanism-block strong { color: #1A3D5C; }
+
+    /* Esperança */
+    .hope-block {
+      background: linear-gradient(135deg, #2C5F8A 0%, #1A3D5C 100%);
+      border-radius: 16px; padding: 28px 22px; margin: 8px 0 0;
+    }
+    .hope-block p { font-size: 1rem; line-height: 1.75; color: #FFF; margin-bottom: 14px; }
+    .hope-block p:last-child { margin-bottom: 0; }
+    .hope-block strong { color: #C8E8FF; }
+
+    /* Share */
     .share-section { background: #E8F4FD; padding: 28px 24px; text-align: center; }
     .share-title { font-size: 1rem; font-weight: 700; color: #333; margin-bottom: 8px; }
     .share-sub { font-size: 0.88rem; color: #777; margin-bottom: 20px; line-height: 1.5; }
     .share-text-box {
       background: #FFF; border: 1.5px solid #DDD; border-radius: 12px;
-      padding: 14px 16px; font-size: 0.9rem; color: #333; line-height: 1.5;
-      text-align: left; margin-bottom: 14px;
+      padding: 14px 16px; font-size: 0.9rem; color: #333;
+      line-height: 1.5; text-align: left; margin-bottom: 14px;
     }
     .btn-share-action {
       display: block; width: 100%; padding: 16px;
-      background: #2C5F8A; color: #FFF;
-      border: none; border-radius: 12px;
-      font-size: 0.95rem; font-weight: 700;
-      cursor: pointer; margin-bottom: 10px; transition: transform 0.1s;
+      background: #2C5F8A; color: #FFF; border: none; border-radius: 12px;
+      font-size: 0.95rem; font-weight: 700; cursor: pointer;
+      margin-bottom: 10px; transition: transform 0.1s;
     }
     .btn-share-action:active { transform: scale(0.97); }
 
+    /* Oferta */
     .offer-wrap { background: #FFF; padding: 32px 24px; }
-    .offer-hook {
-      text-align: center; padding: 24px;
-      background: #E8F4FD; border-radius: 16px; margin-bottom: 24px;
+    .offer-bridge {
+      text-align: center; padding: 24px 20px;
+      background: #E8F4FD; border-radius: 16px; margin-bottom: 28px;
     }
-    .offer-hook-title { font-size: 1.4rem; font-weight: 800; color: #111; margin-bottom: 8px; }
-    .offer-hook-sub { font-size: 0.95rem; color: #666; line-height: 1.5; }
+    .offer-bridge-title { font-size: 1.35rem; font-weight: 900; color: #111; line-height: 1.3; margin-bottom: 10px; }
+    .offer-bridge-sub { font-size: 0.95rem; color: #666; line-height: 1.6; }
+
+    .features-list { list-style: none; margin: 20px 0; }
+    .features-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 11px 0; border-bottom: 1px solid #F5F5F5;
+      font-size: 0.93rem; color: #333; line-height: 1.45;
+    }
+    .features-list li:last-child { border-bottom: none; }
+    .fi-check { color: #2E7D32; font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
 
     .price-block { text-align: center; padding: 20px 0 4px; }
     .price-from { font-size: 0.8rem; color: #AAA; text-decoration: line-through; margin-bottom: 4px; }
     .price-main { font-size: 3.2rem; font-weight: 900; color: #111; line-height: 1; }
     .price-note { font-size: 0.78rem; color: #888; margin-top: 4px; }
-
-    .features-list { list-style: none; margin: 20px 0; }
-    .features-list li {
-      display: flex; align-items: flex-start; gap: 10px;
-      padding: 10px 0; border-bottom: 1px solid #F5F5F5;
-      font-size: 0.93rem; color: #333; line-height: 1.4;
-    }
-    .features-list li:last-child { border-bottom: none; }
-    .fi-check { color: #2E7D32; font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
 
     .btn-buy {
       display: block; width: 100%; padding: 20px;
@@ -92,7 +127,7 @@
       color: #FFF; border: none; border-radius: 16px;
       font-size: 1.05rem; font-weight: 800;
       text-align: center; cursor: pointer; text-decoration: none;
-      box-shadow: 0 6px 20px rgba(44,95,138,0.35);
+      box-shadow: 0 6px 20px rgba(44,95,138,0.4);
       transition: transform 0.1s, box-shadow 0.2s; margin-top: 8px;
     }
     .btn-buy:active { transform: scale(0.97); }
@@ -108,53 +143,92 @@
 </head>
 <body>
 
+<!-- HERO -->
 <div class="profile-hero">
   <span class="profile-emoji">🧊</span>
-  <p class="profile-label">Seu padrão relacional é</p>
+  <p class="profile-label">Análise do seu padrão relacional</p>
   <h1 class="profile-name">A Distante</h1>
-  <p class="profile-tagline">Você não tem medo de amor.<br>Você tem medo de precisar.</p>
+  <p class="profile-tagline">Você não tem medo de amar.<br>Você tem medo do que acontece<br>quando você realmente precisa de alguém.</p>
 </div>
 
+<!-- PARTE 1: IDENTIFICAÇÃO -->
 <div class="content-wrap">
 
-  <p class="section-title">Seu diagnóstico</p>
+  <p class="section-title">O que seus resultados revelam</p>
 
   <div class="profile-text">
-    <p>A Distante aprendeu, em algum momento, que <strong>confiar custa caro</strong>. E desde então, parte de você mantém uma distância segura de tudo que parece importante demais.</p>
+    <p>A Distante aprendeu, em algum momento, que <strong>confiar custa caro</strong>. Que depender de alguém é se colocar em risco. E desde então, uma parte de você mantém uma distância segura de tudo que parece importante demais.</p>
+
+    <p>Você construiu uma autossuficiência que impressiona. Resolve sozinha. Não pede ajuda. Não demonstra que está sofrendo. Parece forte — e parte de você acredita que é isso.</p>
 
     <div class="quote-block">
       "Você quer conexão. Profundamente. Mas quando alguém se aproxima de verdade, algo em você recua — não por falta de sentimento, mas por excesso de proteção."
     </div>
 
-    <p>Você construiu uma autossuficiência que impressiona. Mas essa mesma autossuficiência vai se tornando uma parede — <strong>não para os outros chegarem, mas para você mesma sair</strong>.</p>
-
-    <p>O que você chama de independência, às vezes é isolamento disfarçado de força. Esse padrão tem um motivo. E esse motivo pode ser ressignificado.</p>
+    <p>O que você chama de independência, às vezes é <strong>isolamento disfarçado de força</strong>. Esse padrão tem um motivo. E esse motivo pode ser ressignificado — sem que você precise abrir mão de quem você é.</p>
   </div>
 
   <div class="divider"></div>
 
-  <p class="section-title">Suas marcas do padrão</p>
+  <p class="section-title">Marcas do padrão Distante</p>
   <div class="traits-grid">
     <div class="trait-item">
       <span class="trait-icon">🧊</span>
-      <span class="trait-text">Quando o relacionamento fica intenso, você sente impulso de criar distância</span>
+      <span class="trait-text">Quando o relacionamento fica intenso ou próximo demais, você sente impulso de recuar</span>
     </div>
     <div class="trait-item">
       <span class="trait-icon">🔐</span>
-      <span class="trait-text">É difícil pedir ajuda ou admitir que precisa de alguém</span>
+      <span class="trait-text">É difícil pedir ajuda ou admitir que precisa de alguém — mesmo quando precisa</span>
     </div>
     <div class="trait-item">
       <span class="trait-icon">🤫</span>
-      <span class="trait-text">Prefere o silêncio ao confronto — guarda muito internamente</span>
+      <span class="trait-text">Prefere silêncio ao confronto — guarda muito internamente, processa sozinha</span>
+    </div>
+    <div class="trait-item">
+      <span class="trait-icon">🔁</span>
+      <span class="trait-text">Atrai pessoas que empurram para se aproximar — o que aumenta ainda mais o impulso de afastar</span>
     </div>
     <div class="trait-item">
       <span class="trait-icon">💙</span>
-      <span class="trait-text">Tem uma profundidade emocional real que poucos chegam a conhecer</span>
+      <span class="trait-text">Tem uma profundidade emocional real que poucos chegam a conhecer de verdade</span>
     </div>
   </div>
 
 </div>
 
+<!-- PARTE 2: CONSEQUÊNCIA INVISÍVEL -->
+<div style="background:#FFF; padding: 0 24px 32px;">
+  <p class="section-title" style="padding-top:0;">O custo invisível desse padrão</p>
+  <div class="consequence-block">
+    <span class="consequence-label">⚠ O que está acontecendo por baixo</span>
+    <p>A armadura que protege também <strong>isola</strong>. E com o tempo, o custo de mantê-la vai aumentando — enquanto a distância entre você e o que você mais quer vai crescendo.</p>
+    <p>As pessoas que tentam se aproximar eventualmente desistem. Não porque você não importa — mas porque o sinal que você transmite é "não preciso de você". E as pessoas acreditam nisso.</p>
+    <p>O resultado: uma <strong>solidão paradoxal</strong> — você está rodeada de pessoas, mas raramente se sente realmente vista. E cada vez que isso acontece, a armadura fica um pouco mais grossa.</p>
+  </div>
+</div>
+
+<!-- PARTE 3: MECANISMO -->
+<div style="background:#FFF; padding: 0 24px 32px;">
+  <p class="section-title">Por que esse padrão existe</p>
+  <div class="mechanism-block">
+    <span class="mechanism-label">🔬 Mecanismo de proteção emocional</span>
+    <p>O distanciamento emocional raramente é escolha consciente. Ele surge como <strong>resposta adaptativa a experiências de perda, abandono ou decepção</strong> — onde abrir o coração custou caro.</p>
+    <p>O sistema aprendeu: quanto menos eu dependo, menos eu me machuco. E passou a <strong>interpretar proximidade como ameaça</strong> — mesmo quando a pessoa na sua frente é segura.</p>
+    <p>O problema: esse filtro não distingue perigo real de proximidade saudável. Ele bloqueia os dois igualmente. E você paga o preço de uma proteção que já não é mais necessária.</p>
+  </div>
+</div>
+
+<!-- PARTE 4: ESPERANÇA -->
+<div style="background:#FFF; padding: 0 24px 40px;">
+  <p class="section-title">O que muda a partir daqui</p>
+  <div class="hope-block">
+    <p>A Distante não precisa "se abrir mais" ou "confiar às cegas". Esses conselhos não funcionam porque ignoram o mecanismo real por trás do padrão.</p>
+    <p>O que funciona é aprender a <strong>distinguir ameaça real de proximidade segura</strong> — e praticar micro-aproximações que constroem confiança sem desmontar a proteção de uma vez.</p>
+    <p>Não é sobre se tornar outra pessoa. É sobre expandir quem você já é — <strong>sem precisar desaparecer para se proteger</strong>. Isso é o que os próximos sete dias foram desenhados para construir.</p>
+  </div>
+</div>
+
+<!-- COMPARTILHAR -->
 <div class="share-section">
   <p class="share-title">Compartilhe seu resultado</p>
   <p class="share-sub">Você conhece alguém que também é A Distante? Compartilhe e vejam o que têm em comum.</p>
@@ -165,21 +239,23 @@
   <button class="btn-share-action" style="background:#25D366;" onclick="compartilharWhats()">💬 Compartilhar no WhatsApp</button>
 </div>
 
+<!-- PARTE 5: OFERTA -->
 <div class="offer-wrap">
 
-  <div class="offer-hook">
-    <p class="offer-hook-title">Você descobriu seu padrão.</p>
-    <p class="offer-hook-sub">Agora você precisa aprender a se aproximar — sem perder a si mesma no processo.</p>
+  <div class="offer-bridge">
+    <p class="offer-bridge-title">Você entendeu de onde vem o padrão.<br>Agora você precisa de um protocolo para começar a mudar.</p>
+    <p class="offer-bridge-sub">Não "dicas para se abrir mais". Um sistema de 7 dias construído especificamente para o padrão da Distante — com exercícios práticos para expandir conexão no seu próprio ritmo.</p>
   </div>
 
-  <p class="section-title" style="text-align:center">O que você recebe</p>
+  <p class="section-title" style="text-align:center">O que está no protocolo</p>
 
   <ul class="features-list">
-    <li><span class="fi-check">✓</span> Workbook A Distante — 7 dias de reprogramação do padrão</li>
-    <li><span class="fi-check">✓</span> 9 blocos práticos por dia para abrir espaço para conexão real</li>
-    <li><span class="fi-check">✓</span> Como agir diferente quando o impulso de recuar aparecer</li>
-    <li><span class="fi-check">✓</span> Afirmações específicas para o padrão da Distante</li>
-    <li><span class="fi-check">✓</span> Acesso imediato em PDF — comece hoje</li>
+    <li><span class="fi-check">✓</span> <strong>Protocolo A Distante</strong> — 7 dias de reconfiguração do padrão emocional</li>
+    <li><span class="fi-check">✓</span> Diagnóstico diário + exercício prático + reflexão guiada — 9 blocos por dia</li>
+    <li><span class="fi-check">✓</span> Como reconhecer o impulso de recuar — e escolher diferente no momento certo</li>
+    <li><span class="fi-check">✓</span> Micro-aproximações seguras que constroem confiança sem forçar abertura</li>
+    <li><span class="fi-check">✓</span> Afirmações de reconfiguração específicas para o padrão Distante</li>
+    <li><span class="fi-check">✓</span> Acesso imediato em PDF — comece ainda hoje</li>
   </ul>
 
   <div class="price-block">
@@ -189,7 +265,7 @@
   </div>
 
   <a href="https://pay.hotmart.com/S105649435F?checkoutMode=10" class="btn-buy" id="btn-comprar">
-    QUERO MEU PLANO AGORA — R$37 →
+    QUERO MEU PROTOCOLO AGORA — R$37 →
   </a>
   <p class="guarantee-text">🔒 Pagamento seguro · Acesso imediato · Satisfação garantida</p>
   <p style="text-align:center; font-size:0.82rem; color:#888; margin-top:8px; line-height:1.5;">
@@ -197,7 +273,6 @@
   </p>
 
 </div>
-
 
 <div class="toast" id="toast">✓ Copiado! Cole onde quiser.</div>
 
@@ -211,10 +286,10 @@ function compartilharWhats() {
   window.open('https://wa.me/?text=' + encodeURIComponent(document.getElementById('share-text').textContent.trim()), '_blank');
 }
 function copiar(txt) {
-  if (navigator.clipboard) { navigator.clipboard.writeText(txt).then(() => toastFn()); }
-  else { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); toastFn(); }
+  if (navigator.clipboard) { navigator.clipboard.writeText(txt).then(() => showToast()); }
+  else { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast(); }
 }
-function toastFn() {
+function showToast() {
   const t = document.getElementById('toast'); t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
