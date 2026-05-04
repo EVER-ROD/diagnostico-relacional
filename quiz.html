@@ -29,33 +29,43 @@
       font-weight: 600;
     }
 
-    /* ── PROGRESS ─────────────────────────────── */
+    /* ── PROGRESS — override style.css fixed+white ── */
     .progress-wrap {
-      background: #0D0D0D;
-      padding: 12px 24px 0;
+      position: relative !important;
+      top: auto !important;
+      background: #0D0D0D !important;
+      padding: 10px 24px 0 !important;
+      box-shadow: none !important;
     }
     .progress-bar-bg {
-      background: rgba(255,255,255,0.08);
-      border-radius: 4px;
-      height: 3px;
-      overflow: hidden;
+      background: rgba(255,255,255,0.08) !important;
+      border-radius: 4px !important;
+      height: 3px !important;
     }
     .progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #C8956C, #E8B480);
-      border-radius: 4px;
-      transition: width 0.4s ease;
+      height: 100% !important;
+      background: linear-gradient(90deg, #C8956C, #E8B480) !important;
+      border-radius: 4px !important;
+      transition: width 0.4s ease !important;
     }
+    .progress-label { display: none !important; }
 
-    /* ── QUIZ ÁREA ────────────────────────────── */
+    /* ── QUIZ WRAP — override style.css 100px top padding ── */
     .quiz-wrap {
-      background: #0D0D0D;
-      padding: 28px 24px 48px;
+      background: #0D0D0D !important;
+      padding: 28px 24px 60px !important;
+      max-width: 480px !important;
+      margin: 0 auto !important;
       min-height: calc(100vh - 80px);
     }
 
+    /* Override style.css global card */
     .question-card {
       animation: fadeUp 0.3s ease;
+      background: transparent !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
     }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(14px); }
@@ -101,21 +111,26 @@
       margin-top: 4px;
     }
     .option-item {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
-      padding: 16px 18px;
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.75);
-      line-height: 1.45;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      background: rgba(255,255,255,0.05) !important;
+      border: 1px solid rgba(255,255,255,0.09) !important;
+      border-radius: 14px !important;
+      padding: 16px 18px !important;
+      font-size: 0.95rem !important;
+      color: rgba(255,255,255,0.72) !important;
+      line-height: 1.45 !important;
+      cursor: pointer !important;
+      transition: background 0.15s, border-color 0.15s, color 0.15s !important;
     }
     .option-item:active,
     .option-item.selected {
-      background: rgba(200,149,108,0.18);
-      border-color: rgba(200,149,108,0.5);
-      color: #F0C090;
+      background: rgba(200,149,108,0.18) !important;
+      border-color: rgba(200,149,108,0.55) !important;
+      color: #F0C090 !important;
+      transform: none !important;
+    }
+    .option-item:hover:not(.selected) {
+      background: rgba(255,255,255,0.08) !important;
+      border-color: rgba(255,255,255,0.15) !important;
     }
 
     /* ── LOADING ──────────────────────────────── */
