@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Mapa de Compatibilidade Relacional — Diagnóstico Relacional</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; color: #1A1A2E; background: #fff; line-height: 1.6; font-size: 10pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* ───── CAPA ───── */
+  .capa {
+    background: linear-gradient(170deg, #080812 0%, #0F0C29 40%, #1A1035 75%, #0D0D1A 100%);
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    padding: 60px 48px; page-break-after: always; position: relative; overflow: hidden;
+  }
+  .capa::before {
+    content: ''; position: absolute; top: -60px; left: -60px;
+    width: 340px; height: 340px;
+    background: radial-gradient(circle, rgba(201,165,90,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .capa::after {
+    content: ''; position: absolute; bottom: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(108,63,199,0.07) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .capa-sistema { font-family: 'Inter', sans-serif; font-size: 7pt; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #C9A55A; margin-bottom: 40px; }
+  .capa-divider { width: 40px; height: 1px; background: rgba(201,165,90,0.4); margin: 0 auto 40px; }
+  .capa-titulo { font-family: 'Playfair Display', serif; font-size: 38pt; font-weight: 900; color: #F5F0E8; line-height: 1.1; margin-bottom: 20px; }
+  .capa-titulo em { color: #C9A55A; font-style: italic; }
+  .capa-sub { font-family: 'Inter', sans-serif; font-size: 11pt; font-weight: 300; color: rgba(245,240,232,0.6); line-height: 1.7; margin-bottom: 48px; max-width: 360px; }
+  .capa-badge { display: inline-block; border: 1px solid rgba(201,165,90,0.3); color: rgba(201,165,90,0.8); font-size: 7.5pt; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 8px 20px; border-radius: 2px; }
+  .capa-rodape { position: absolute; bottom: 32px; left: 0; right: 0; text-align: center; font-size: 7pt; color: rgba(255,255,255,0.2); letter-spacing: 1.5px; text-transform: uppercase; }
+
+  /* ───── ESTRUTURA GERAL ───── */
+  .pagina { padding: 18mm 20mm; page-break-before: always; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ───── CABEÇALHOS DE PÁGINA ───── */
+  .pg-header { margin-bottom: 22px; }
+  .pg-tag { font-size: 6.5pt; font-weight: 700; letter-spacing: 3.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .pg-titulo { font-family: 'Playfair Display', serif; font-size: 20pt; font-weight: 700; line-height: 1.2; color: #0D0D1A; }
+  .pg-sub { font-size: 10pt; font-weight: 300; color: #666; margin-top: 6px; line-height: 1.5; }
+
+  /* ───── CORES POR PERFIL ───── */
+  .c-guardia   { color: #6B4226; }
+  .c-tempestade { color: #8B2020; }
+  .c-distante  { color: #1E4D72; }
+  .c-ouro      { color: #C9A55A; }
+  .c-sistema   { color: #4A2070; }
+
+  .bg-guardia   { background: #6B4226; }
+  .bg-tempestade { background: #8B2020; }
+  .bg-distante  { background: #1E4D72; }
+  .bg-sistema   { background: #0F0C29; }
+
+  /* ───── PREFÁCIO ───── */
+  .prefacio-intro {
+    background: linear-gradient(160deg, #0D0D1A 0%, #1A1035 100%);
+    border-radius: 8px; padding: 28px 32px; color: #F5F0E8; margin-bottom: 24px;
+  }
+  .prefacio-intro h3 { font-family: 'Playfair Display', serif; font-size: 14pt; font-weight: 700; color: #C9A55A; margin-bottom: 14px; }
+  .prefacio-intro p { font-size: 10pt; line-height: 1.75; color: rgba(245,240,232,0.82); margin-bottom: 10px; }
+  .prefacio-intro p:last-child { margin-bottom: 0; }
+
+  .axioma-lista { list-style: none; margin: 20px 0; }
+  .axioma-lista li { padding: 10px 0 10px 24px; position: relative; font-size: 10pt; border-bottom: 1px solid #F0EDE8; color: #333; line-height: 1.55; }
+  .axioma-lista li:last-child { border-bottom: none; }
+  .axioma-lista li::before { content: '◆'; position: absolute; left: 0; font-size: 7pt; color: #C9A55A; top: 14px; }
+
+  /* ───── ARQUITETURA DOS PERFIS ───── */
+  .perfil-card {
+    border-radius: 8px; padding: 18px 20px; margin-bottom: 14px;
+    display: flex; gap: 18px; align-items: flex-start;
+  }
+  .perfil-card.guardia   { background: #FDF8F3; border-left: 4px solid #6B4226; }
+  .perfil-card.tempestade { background: #FDF3F3; border-left: 4px solid #8B2020; }
+  .perfil-card.distante  { background: #F2F6FB; border-left: 4px solid #1E4D72; }
+  .perfil-sigla {
+    font-family: 'Playfair Display', serif; font-size: 22pt; font-weight: 900;
+    line-height: 1; flex-shrink: 0; width: 36px;
+  }
+  .perfil-conteudo h4 { font-size: 10pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .perfil-conteudo .perfil-mecanismo { font-size: 8.5pt; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.6; margin-bottom: 6px; }
+  .perfil-conteudo p { font-size: 9.5pt; color: #444; line-height: 1.6; }
+
+  /* ───── MATRIZ ───── */
+  .matriz-titulo { font-family: 'Playfair Display', serif; font-size: 13pt; font-weight: 700; color: #0D0D1A; margin-bottom: 16px; }
+  .matriz-intro { font-size: 9.5pt; color: #555; line-height: 1.65; margin-bottom: 20px; }
+  table.matriz { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  table.matriz th, table.matriz td { padding: 10px 12px; text-align: center; font-size: 8.5pt; }
+  table.matriz th { background: #0D0D1A; color: #F5F0E8; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 7.5pt; }
+  table.matriz td { border: 1px solid #E8E4DF; line-height: 1.4; }
+  table.matriz td.label-col { font-weight: 700; text-align: left; background: #F9F7F4; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.5px; color: #333; border: 1px solid #E8E4DF; }
+  .tag-dinamica { display: inline-block; padding: 3px 8px; border-radius: 3px; font-size: 7pt; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+  .tag-alto-risco { background: #FDE8E8; color: #8B2020; }
+  .tag-risco-medio { background: #FEF3E2; color: #7A5500; }
+  .tag-regulacao { background: #E8F0FB; color: #1E4D72; }
+  .tag-estabilizador { background: #EDF7ED; color: #1A4E2D; }
+  .tag-amplificador { background: #F4EDF8; color: #4A2070; }
+
+  .legenda-matriz { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .legenda-item { display: flex; align-items: center; gap: 6px; font-size: 7.5pt; color: #555; }
+  .legenda-dot { width: 8px; height: 8px; border-radius: 2px; }
+
+  /* ───── COMBINAÇÕES ───── */
+  .combo-header { padding: 22px 24px; border-radius: 8px; margin-bottom: 20px; }
+  .combo-header.gg { background: linear-gradient(135deg, #4A2E1A 0%, #6B4226 100%); }
+  .combo-header.gt { background: linear-gradient(135deg, #5C2A1A 0%, #8B3A1A 100%); }
+  .combo-header.gd { background: linear-gradient(135deg, #1A3A4E 0%, #2A5E6B 100%); }
+  .combo-header.tt { background: linear-gradient(135deg, #6B1010 0%, #8B2020 100%); }
+  .combo-header.td { background: linear-gradient(135deg, #3A1A3A 0%, #6B2A5C 100%); }
+  .combo-header.dd { background: linear-gradient(135deg, #0D2640 0%, #1E4D72 100%); }
+  .combo-num { font-size: 6.5pt; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 6px; }
+  .combo-nome { font-family: 'Playfair Display', serif; font-size: 18pt; font-weight: 900; color: #F5F0E8; line-height: 1.1; margin-bottom: 6px; }
+  .combo-subtitulo { font-size: 9pt; font-style: italic; color: rgba(245,240,232,0.65); margin-bottom: 12px; }
+  .combo-badge { display: inline-block; border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); font-size: 7pt; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 2px; }
+
+  .secao-bloco { margin-bottom: 18px; }
+  .secao-label { font-size: 6.5pt; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding-bottom: 6px; border-bottom: 1.5px solid; margin-bottom: 10px; }
+  .secao-label.s-guardia   { color: #6B4226; border-color: #6B4226; }
+  .secao-label.s-tempestade { color: #8B2020; border-color: #8B2020; }
+  .secao-label.s-distante  { color: #1E4D72; border-color: #1E4D72; }
+  .secao-label.s-neutro    { color: #4A2070; border-color: #4A2070; }
+  .secao-label.s-ouro      { color: #C9A55A; border-color: #C9A55A; }
+
+  .secao-texto { font-size: 10pt; color: #333; line-height: 1.72; }
+
+  .linha-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .mini-bloco { background: #F9F7F4; border-radius: 6px; padding: 14px 16px; }
+  .mini-bloco h5 { font-size: 7pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #999; margin-bottom: 8px; }
+  .mini-bloco ul { list-style: none; }
+  .mini-bloco ul li { font-size: 9.5pt; color: #333; padding: 4px 0 4px 16px; position: relative; border-bottom: 1px solid #EEE; line-height: 1.45; }
+  .mini-bloco ul li:last-child { border-bottom: none; }
+  .mini-bloco ul li::before { content: '–'; position: absolute; left: 0; color: #BBB; }
+  .mini-bloco.alerta { background: #FDF5F2; }
+  .mini-bloco.alerta h5 { color: #8B2020; }
+  .mini-bloco.alerta ul li::before { color: #C9503A; }
+
+  .previsao-box {
+    background: linear-gradient(135deg, #0D0D1A 0%, #1A1035 100%);
+    border-radius: 8px; padding: 16px 20px; margin-top: 4px;
+  }
+  .previsao-box .pb-label { font-size: 6.5pt; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #C9A55A; margin-bottom: 8px; }
+  .previsao-box p { font-size: 9.5pt; color: rgba(245,240,232,0.82); line-height: 1.7; font-style: italic; }
+
+  /* ───── SINAIS ───── */
+  .sinais-grid { display: flex; flex-direction: column; gap: 10px; margin: 14px 0; }
+  .sinal-row { display: flex; gap: 14px; align-items: flex-start; padding: 10px 14px; background: #F9F7F4; border-radius: 6px; }
+  .sinal-row.vermelho { background: #FDF5F2; }
+  .sinal-row.verde { background: #F3FAF3; }
+  .sinal-icone { font-size: 12pt; flex-shrink: 0; margin-top: 1px; }
+  .sinal-row p { font-size: 9.5pt; color: #333; line-height: 1.55; }
+  .sinal-row strong { display: block; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; color: #666; }
+
+  /* ───── LEITURA POR PERFIL ───── */
+  .perfil-leitura { border-radius: 8px; padding: 18px 20px; margin-bottom: 16px; }
+  .perfil-leitura.guardia   { background: #FDF8F3; border: 1px solid #D4B896; }
+  .perfil-leitura.tempestade { background: #FDF3F3; border: 1px solid #D4A0A0; }
+  .perfil-leitura.distante  { background: #F2F6FB; border: 1px solid #9ABCD4; }
+  .pl-titulo { font-family: 'Playfair Display', serif; font-size: 12pt; font-weight: 700; margin-bottom: 12px; }
+  .pl-combo-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
+  .pl-badge { font-size: 6.5pt; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .pl-texto { font-size: 9.5pt; color: #444; line-height: 1.55; }
+
+  /* ───── PROTOCOLO FINAL ───── */
+  .protocolo-box { background: linear-gradient(160deg, #0D0D1A 0%, #1A1035 100%); border-radius: 10px; padding: 28px 32px; color: #F5F0E8; margin-bottom: 20px; }
+  .protocolo-box h3 { font-family: 'Playfair Display', serif; font-size: 15pt; font-weight: 700; color: #C9A55A; margin-bottom: 16px; }
+  .protocolo-etapa { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+  .pe-num { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid rgba(201,165,90,0.5); display: flex; align-items: center; justify-content: center; font-size: 8.5pt; font-weight: 700; color: #C9A55A; flex-shrink: 0; }
+  .pe-texto h4 { font-size: 9.5pt; font-weight: 700; color: #F5F0E8; margin-bottom: 4px; }
+  .pe-texto p { font-size: 9pt; color: rgba(245,240,232,0.7); line-height: 1.6; }
+
+  .fechamento { text-align: center; padding: 20px 0 0; }
+  .fechamento p { font-size: 9.5pt; color: #666; line-height: 1.7; font-style: italic; max-width: 380px; margin: 0 auto 8px; }
+  .fechamento .marca { font-size: 7.5pt; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: #C9A55A; }
+
+  /* ───── RODAPÉ ───── */
+  .pg-footer { margin-top: auto; padding-top: 16px; border-top: 1px solid #E8E4DF; display: flex; justify-content: space-between; align-items: center; font-size: 7pt; color: #BBB; letter-spacing: 0.5px; }
+
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- CAPA                                       -->
+<!-- ══════════════════════════════════════════ -->
+<div class="capa">
+  <div class="capa-sistema">Diagnóstico Relacional · Sistema de Inteligência</div>
+  <div class="capa-divider"></div>
+  <div class="capa-titulo">MAPA DE<br><em>COMPATIBILIDADE</em><br>RELACIONAL</div>
+  <div class="capa-sub">Uma análise estratégica das dinâmicas entre padrões emocionais — com quem constróis, com quem desgastas, e como antecipar o que o tempo revelaria tarde demais.</div>
+  <div class="capa-badge">Inteligência Relacional Estratégica</div>
+  <div class="capa-rodape">Diagnóstico Relacional &nbsp;·&nbsp; Uso Pessoal &nbsp;·&nbsp; Confidencial</div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PREFÁCIO                                   -->
+<!-- ══════════════════════════════════════════ -->
+<div class="pagina">
+  <div class="pg-header">
+    <div class="pg-tag c-ouro">Prefácio do Sistema</div>
+    <div class="pg-titulo">Compatibilidade não é sorte.<br>É padrão.</div>
+    <div class="pg-sub">Por que certos vínculos constróem e outros desgastam — independente de sentimento ou intenção.</div>
+  </div>
+
+  <div class="prefacio-intro">
+    <h3>O que este documento é</h3>
+    <p>A maioria das pessoas avalia compatibilidade pelo que sente na fase de aproximação. Esse é exatamente o momento em que os padrões emocionais estão mais disfarçados — a atração mascara o mecanismo.</p>
+    <p>Este Mapa opera na camada que o sentimento não alcança: a dinâmica estrutural entre padrões de vínculo. Como dois sistemas emocionais interagem, onde naturalmente colidem, o que ativa no outro o pior e o melhor de cada padrão.</p>
+    <p>Não é sobre encontrar o "perfil certo". É sobre entender o terreno antes de investir — e reconhecer os sinais que o entusiasmo inicial encobre.</p>
+  </div>
+
+  <ul class="axioma-lista">
+    <li><strong>Padrão amplificador:</strong> uma combinação que intensifica os traços defensivos de ambos — cada um ativa o mecanismo do outro, criando um ciclo de reforço mútuo.</li>
+    <li><strong>Dinâmica de desgaste:</strong> vínculo emocionalmente custoso que exige trabalho constante de regulação. Pode funcionar, mas cobra um preço invisível e crescente.</li>
+    <li><strong>Vínculo de regulação:</strong> combinação em que os perfis se complementam em ritmo emocional — um acomoda onde o outro tensiona. Exige consciência, mas tem potencial estrutural.</li>
+    <li><strong>Tendência de colisão emocional:</strong> padrão previsível de conflito gerado pela intersecção de dois mecanismos de proteção. Não é culpa de ninguém — é arquitetura.</li>
+    <li><strong>Estabilidade de longo prazo:</strong> capacidade estrutural de um vínculo sustentar profundidade ao longo do tempo — distinta de intensidade inicial ou ausência de conflito.</li>
+  </ul>
+
+  <div class="pg-footer">
+    <span>Mapa de Compatibilidade Relacional</span>
+    <span>Diagnóstico Relacional &nbsp;·&nbsp; 2</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- ARQUITETURA DOS PERFIS                     -->
+<!-- ══════════════════════════════════════════ -->
+<div class="pagina">
+  <div class="pg-header">
+    <div class="pg-tag c-sistema">Arquitetura dos Padrões</div>
+    <div class="pg-titulo">Os três sistemas emocionais</div>
+    <div class="pg-sub">Cada perfil é um mecanismo de proteção que aprendeu a se parecer com uma forma de amar.</div>
+  </div>
+
+  <div class="perfil-card guardia">
+    <div class="perfil-sigla c-guardia">G</div>
+    <div class="perfil-conteudo">
+      <div class="perfil-mecanismo c-guardia">mecanismo central</div>
+      <h4 class="c-guardia">A Guardiã — Proteção pelo Controle</h4>
+      <p>Ama com intensidade mas distribui acesso com critério. Testa antes de confiar. Antecipa abandono. O vínculo é um território que ela gere — e quando sente que vai perder o controle, fecha. A lealdade é genuína; a abertura, condicionada.</p>
+    </div>
+  </div>
+
+  <div class="perfil-card tempestade">
+    <div class="perfil-sigla c-tempestade">T</div>
+    <div class="perfil-conteudo">
+      <div class="perfil-mecanismo c-tempestade">mecanismo central</div>
+      <h4 class="c-tempestade">A Tempestade — Regulação pela Intensidade</h4>
+      <p>Sente antes de pensar. A intensidade não é exagero — é o único volume em que se sente real. Oscila porque a conexão é usada para regular o estado interno. O outro é âncora e alvo. Quando a intensidade cai, sente que o vínculo morreu.</p>
+    </div>
+  </div>
+
+  <div class="perfil-card distante">
+    <div class="perfil-sigla c-distante">D</div>
+    <div class="perfil-conteudo">
+      <div class="perfil-mecanismo c-distante">mecanismo central</div>
+      <h4 class="c-distante">A Distante — Proteção pela Autonomia</h4>
+      <p>Não se afasta porque não sente — afasta-se porque sente demais. A autossuficiência não é força: é estratégia de sobrevivência aprendida. Aproximação ativa o medo de dissolução. Quanto mais alguém insiste, mais a Distante recua. O vínculo é seguro apenas quando ela controla a distância.</p>
+    </div>
+  </div>
+
+  <div style="background:#F9F7F4; border-radius:8px; padding:16px 20px; margin-top:8px;">
+    <div class="pg-tag c-sistema" style="margin-bottom:8px;">Nota metodológica</div>
+    <p style="font-size:9.5pt; color:#444; line-height:1.7;">Este Mapa analisa combinações entre os três padrões do Diagnóstico Relacional. O perfil do outro pode ser identificado por observação comportamental nos primeiros encontros — não por pergunta direta. A seção de Leitura de Sinais (pág. 10) oferece o protocolo de observação.</p>
+  </div>
+
+  <div class="pg-footer">
+    <span>Mapa de Compatibilidade Relacional</span>
+    <span>Diagnóstico Relacional &nbsp;·&nbsp; 3</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- MATRIZ DE RISCO                            -->
+<!-- ══════════════════════════════════════════ -->
+<div class="pagina">
+  <div class="pg-header">
+    <div class="pg-tag c-ouro">Mapa de Risco Relacional</div>
+    <div class="pg-titulo">Matriz de Dinâmicas</div>
+    <div class="pg-sub">Classificação estrutural de todas as combinações possíveis entre os três padrões emocionais.</div>
+  </div>
+
+  <table class="matriz">
+    <thead>
+      <tr>
+        <th style="background:#1A1035; width:18%;">Você \ Outro</th>
+        <th style="background:#4A2E1A;">A Guardiã</th>
+        <th style="background:#6B1010;">A Tempestade</th>
+        <th style="background:#0D2640;">A Distante</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="label-col" style="color:#6B4226;">A Guardiã</td>
+        <td><span class="tag-dinamica tag-risco-medio">Espelho Fechado</span><br><span style="font-size:7.5pt;color:#888;margin-top:4px;display:block;">Lealdade alta · Abertura lenta</span></td>
+        <td><span class="tag-dinamica tag-risco-medio">Atrito Regulatório</span><br><span style="font-size:7.5pt;color:#888;margin-top:4px;display:block;">Potencial alto · Custo emocional</span></td>
+        <td><span class="tag-dinamica tag-alto-risco">Ciclo de Perseguição</span><br><span style="font-size:7.5pt;color:#888;margin-top:4px;display:block;">Colisão estrutural · Desgaste lento</span></td>
+      </tr>
+      <tr>
+        <td class="label-col" style="color:#8B2020;">A Tempestade</td>
+        <td><span class="tag-dinamica tag-risco-medio">Atrito Regulatório</span><br><span style="font-size:7.5pt;color:#888;margin-top:4px;display:block;">Potencial alto · Custo emocional</span></td>
+        <td><span class="tag-dinamica tag-alto-risco">Colisão de Alta Intensidade</span><br><span style="font-size:7.5pt;color:#888;margin-top:4px;display:block;">Conexão intensa · Desgaste rápido</span></td>
+        <td><span class="tag-dinamica tag-amplificador">Ativação Oposta</span><br><span style="font-size:7.5pt;color:#888;margin-top:4px;display:block;">Tensão estrutural · Exige maturidade</span></td>
+      </tr>
+      <tr>
+        <td class="label-col" style="color:#1E4D72;">A Distante</td>
+        <td><span class="tag-dinamica tag-alto-risco">Ciclo de Perseguição</span><br><span style="font-size:7.5pt;color:#888;margin-top:4px;display:block;">Colisão estrutural · Desgaste lento</span></td>
+        <td><span class="tag-dinamica tag-amplificador">Ativação Oposta</span><br><span style="font-size:7.5pt;color:#888;margin-top:4px;display:block;">Tensão estrutural · Exige maturidade</span></td>
+        <td><span class="tag-dinamica tag-regulacao">Fusão de Autonomia</span><br><span style="font-size:7.5pt;color:#888;margin-top:4px;display:block;">Estabilidade calma · Risco de estagnação</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="legenda-matriz">
+    <div class="legenda-item"><div class="legenda-dot" style="background:#FDE8E8;border:1px solid #D4A0A0;"></div> Alto Risco — colisão estrutural</div>
+    <div class="legenda-item"><div class="legenda-dot" style="background:#FEF3E2;border:1px solid #D4C080;"></div> Risco Médio — navegável com consciência</div>
+    <div class="legenda-item"><div class="legenda-dot" style="background:#F4EDF8;border:1px solid #C5A0D4;"></div> Amplificador — ativa mecanismos de defesa mútuos</div>
+    <div class="legenda-item"><div class="legenda-dot" style="background:#E8F0FB;border:1px solid #9ABCD4;"></div> Regulação — complementação emocional possível</div>
+  </div>
+
+  <div style="background:#FDF8F3; border-left:4px solid #C9A55A; border-radius:0 6px 6px 0; padding:14px 18px; margin-top:16px;">
+    <p style="font-size:9pt; color:#555; line-height:1.7; font-style:italic;">"Nenhuma combinação é sentença. A matriz mostra o terreno padrão — não o destino inevitável. O que você faz com essa informação é o que muda o resultado."</p>
+  </div>
+
+  <div class="pg-footer">
+    <span>Mapa de Compatibilidade Relacional</span>
+    <span>Diagnóstico Relacional &nbsp;·&nbsp; 4</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- COMBO 1: GUARDIÃ + GUARDIÃ                 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="pagina">
+  <div class="combo-header gg">
+    <div class="combo-num">Dinâmica 01 de 06</div>
+    <div class="combo-nome">Guardiã + Guardiã</div>
+    <div class="combo-subtitulo">Dois sistemas de proteção em negociação silenciosa</div>
+    <span class="combo-badge">Espelho Fechado</span>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-guardia">Mecanismo de Aproximação</div>
+    <div class="secao-texto">Esta é uma das relações mais leais que existem — e uma das mais lentas a se abrir. Dois perfis que aprenderam que abertura emocional é risco não chegam facilmente à profundidade. A fase inicial parece estável porque nenhum dos dois pressiona. Mas essa estabilidade é, muitas vezes, distância disfarçada de respeito mútuo. A abertura de uma Guardiã só acontece quando ela sente que não vai perder — e a única pessoa que pode convencê-la disso é outra Guardiã, que também está esperando o mesmo sinal.</div>
+  </div>
+
+  <div class="linha-duo">
+    <div class="mini-bloco">
+      <h5>Forças estruturais</h5>
+      <ul>
+        <li>Lealdade e compromisso excepcionalmente altos</li>
+        <li>Respeito natural pelos limites do outro</li>
+        <li>Estabilidade e previsibilidade no vínculo</li>
+        <li>Nenhum dos dois abandona facilmente</li>
+      </ul>
+    </div>
+    <div class="mini-bloco alerta">
+      <h5>Padrão de Colisão</h5>
+      <ul>
+        <li>Conflitos enterrados, nunca resolvidos</li>
+        <li>Distância emocional crescente camuflada</li>
+        <li>Nenhum inicia a vulnerabilidade primeiro</li>
+        <li>Relação que esfria sem que ninguém perceba</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-ouro">Sinais de Alerta Invisíveis</div>
+    <div class="sinais-grid">
+      <div class="sinal-row vermelho">
+        <div class="sinal-icone">⚑</div>
+        <div><strong>Sinal de Congelamento</strong><p>A conversa sobre o que os dois realmente sentem nunca acontece. Substituída por temas práticos, planos e rotina.</p></div>
+      </div>
+      <div class="sinal-row vermelho">
+        <div class="sinal-icone">⚑</div>
+        <div><strong>Testagem Mútua Silenciosa</strong><p>Cada uma testa se a outra vai ficar — sem verbalizar. O teste sempre passa, mas nenhuma das duas sente que passou de verdade.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="previsao-box">
+    <div class="pb-label">Previsão de Longo Prazo</div>
+    <p>Esta relação tem potencial de durar décadas — e de ser profunda nos bastidores, mas fria para quem observa de fora. O maior risco não é conflito: é a lentidão com que a intimidade real é construída. Se uma das duas decidir iniciar a abertura emocional ativamente — criar rituais de conexão deliberada, compartilhar vulnerabilidade sem esperar que a outra vá primeiro — a relação muda de nível rapidamente. Sem esse movimento, ela pode estagnar numa lealdade confortável que nunca vira profundidade real.</p>
+  </div>
+
+  <div class="pg-footer">
+    <span>Mapa de Compatibilidade Relacional</span>
+    <span>Diagnóstico Relacional &nbsp;·&nbsp; 5</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- COMBO 2: GUARDIÃ + TEMPESTADE              -->
+<!-- ══════════════════════════════════════════ -->
+<div class="pagina">
+  <div class="combo-header gt">
+    <div class="combo-num">Dinâmica 02 de 06</div>
+    <div class="combo-nome">Guardiã + Tempestade</div>
+    <div class="combo-subtitulo">O controle que encontra a intensidade — e nenhum dos dois sabe o que fazer com o outro</div>
+    <span class="combo-badge">Atrito Regulatório</span>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-guardia">Mecanismo de Aproximação</div>
+    <div class="secao-texto">Esta é uma das combinações mais comuns — e mais mal compreendidas. A Tempestade sente que a Guardiã é "fria" ou "distante emocionalmente". A Guardiã sente que a Tempestade é "drama" ou "exigente demais". Ambas estão descrevendo o mesmo fenômeno de posições opostas: a Tempestade usa a intensidade para criar conexão; a Guardiã usa a distância para se proteger de perder o controle. A fase inicial é eletrizante porque a Tempestade confunde o controle da Guardiã com mistério, e a Guardiã confunde a intensidade da Tempestade com profundidade.</div>
+  </div>
+
+  <div class="linha-duo">
+    <div class="mini-bloco">
+      <h5>Quando funciona</h5>
+      <ul>
+        <li>Guardiã oferece estrutura que regula a Tempestade</li>
+        <li>Tempestade abre o que a Guardiã não abriria sozinha</li>
+        <li>Alta atração — polaridade cria tensão real</li>
+        <li>Guardiã com consciência emocional pode acomodar bem</li>
+      </ul>
+    </div>
+    <div class="mini-bloco alerta">
+      <h5>Ciclo de Desgaste</h5>
+      <ul>
+        <li>Tempestade escala para testar se Guardiã ainda está</li>
+        <li>Guardiã fecha mais quanto mais a Tempestade escalona</li>
+        <li>Cada crise aumenta a desconfiança mútua</li>
+        <li>Guardiã "pune" com silêncio; Tempestade entra em pânico</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-ouro">Sinais de Alerta Invisíveis</div>
+    <div class="sinais-grid">
+      <div class="sinal-row vermelho">
+        <div class="sinal-icone">⚑</div>
+        <div><strong>O Ciclo Punição-Pânico</strong><p>A Guardiã se fecha após conflito. A Tempestade interpreta como abandono e escalona a intensidade para forçar uma resposta. A Guardiã fecha mais. Esse ciclo, repetido, corrói o vínculo sem que ninguém entenda por quê.</p></div>
+      </div>
+      <div class="sinal-row vermelho">
+        <div class="sinal-icone">⚑</div>
+        <div><strong>Narrativa de Culpa Cruzada</strong><p>Guardiã convence-se de que a Tempestade "é instável demais". Tempestade convence-se de que a Guardiã "nunca está realmente presente". Ambas estão certas — e ambas estão descrevendo apenas metade do sistema.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="previsao-box">
+    <div class="pb-label">Previsão de Longo Prazo</div>
+    <p>Combinação de médio-alto potencial que exige um ingrediente específico: a Guardiã precisa aprender a permanecer emocionalmente presente durante a intensidade da Tempestade — sem se fechar. A Tempestade precisa aprender que silêncio não é abandono. Sem esse aprendizado bilateral, a dinâmica tende a produzir distância crescente intercalada com reconciliações intensas — um padrão emocionalmente custoso que pode durar anos sem evoluir.</p>
+  </div>
+
+  <div class="pg-footer">
+    <span>Mapa de Compatibilidade Relacional</span>
+    <span>Diagnóstico Relacional &nbsp;·&nbsp; 6</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- COMBO 3: GUARDIÃ + DISTANTE                -->
+<!-- ══════════════════════════════════════════ -->
+<div class="pagina">
+  <div class="combo-header gd">
+    <div class="combo-num">Dinâmica 03 de 06</div>
+    <div class="combo-nome">Guardiã + Distante</div>
+    <div class="combo-subtitulo">A que persegue e a que recua — sem que nenhuma das duas saiba que está fazendo isso</div>
+    <span class="combo-badge">Ciclo de Perseguição Silenciosa</span>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-guardia">Mecanismo de Aproximação</div>
+    <div class="secao-texto">Esta é a combinação de mais alto risco estrutural entre os três perfis. O mecanismo da Guardiã é manter controle sobre o vínculo — ela precisa sentir que o outro está lá. O mecanismo da Distante é manter autonomia — ela recua quando sente que a presença do outro está invadindo seu espaço interno. Resultado: quanto mais a Guardiã busca confirmação, mais a Distante recua. Quanto mais a Distante recua, mais a Guardiã sente ameaça de abandono e intensifica a busca. É um ciclo de perseguição-fuga que se autoalimenta — e nenhuma das duas está errada. Estão simplesmente ativando o mecanismo da outra.</div>
+  </div>
+
+  <div class="linha-duo">
+    <div class="mini-bloco">
+      <h5>O que atrai inicialmente</h5>
+      <ul>
+        <li>Distante parece "misteriosa" para a Guardiã</li>
+        <li>Guardiã parece "segura" e "presente" para a Distante</li>
+        <li>Fase inicial: Distante está disponível; Guardiã não pressiona</li>
+        <li>Atração real — mas baseada em projeção mútua</li>
+      </ul>
+    </div>
+    <div class="mini-bloco alerta">
+      <h5>Como o ciclo se instala</h5>
+      <ul>
+        <li>Guardiã começa a precisar de mais presença</li>
+        <li>Distante sente pressão implícita e recua</li>
+        <li>Guardiã interpreta como rejeição e pressiona mais</li>
+        <li>Distante confirma: "relacionamento = perda de si"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-ouro">Sinais de Alerta Invisíveis</div>
+    <div class="sinais-grid">
+      <div class="sinal-row vermelho">
+        <div class="sinal-icone">⚑</div>
+        <div><strong>Necessidade de provar valor constante</strong><p>A Guardiã começa a fazer mais, ser mais, justificar mais — numa tentativa de "merecer" a presença que a Distante restringe. Isso nunca funciona: a Distante não recua por falta de valor — recua por excesso de proximidade.</p></div>
+      </div>
+      <div class="sinal-row vermelho">
+        <div class="sinal-icone">⚑</div>
+        <div><strong>Silêncio que gera ansiedade</strong><p>O silêncio da Distante é neutro para ela — é apenas espaço. Para a Guardiã, silêncio é sinal de ameaça. Esse desencontro de linguagem emocional cria crises onde não havia crise nenhuma.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="previsao-box">
+    <div class="pb-label">Previsão de Longo Prazo</div>
+    <p>Esta dinâmica, sem intervenção consciente, tende a produzir um padrão de desgaste lento e assimétrico: a Guardiã investe emocionalmente cada vez mais enquanto a Distante se sente cada vez mais sufocada. O desenlace mais comum não é conflito aberto — é a Distante simplesmente sair sem explicação suficiente, e a Guardiã ficar sem conseguir entender o que fez de errado. A resposta é: não foi nada que ela fez. Foi a arquitetura da combinação.</p>
+  </div>
+
+  <div class="pg-footer">
+    <span>Mapa de Compatibilidade Relacional</span>
+    <span>Diagnóstico Relacional &nbsp;·&nbsp; 7</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- COMBO 4: TEMPESTADE + TEMPESTADE           -->
+<!-- ══════════════════════════════════════════ -->
+<div class="pagina">
+  <div class="combo-header tt">
+    <div class="combo-num">Dinâmica 04 de 06</div>
+    <div class="combo-nome">Tempestade + Tempestade</div>
+    <div class="combo-subtitulo">Quando dois sistemas de regulação emocional tentam se regular um pelo outro</div>
+    <span class="combo-badge">Colisão de Alta Intensidade</span>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-tempestade">Mecanismo de Aproximação</div>
+    <div class="secao-texto">Esta combinação é eletricamente atraente e estruturalmente instável. Dois perfis Tempestade se reconhecem instantaneamente — a mesma intensidade, o mesmo volume emocional, a mesma capacidade de sentir tudo ao máximo. A fase inicial é das mais intensas possíveis: a conexão parece única, o entendimento parece total. O problema é que os dois usam o relacionamento para regular o estado interno — e quando os dois precisam de regulação ao mesmo tempo, não há ninguém para ancorar o sistema. A intensidade que cria a conexão é a mesma que produz as crises.</div>
+  </div>
+
+  <div class="linha-duo">
+    <div class="mini-bloco">
+      <h5>O que funciona</h5>
+      <ul>
+        <li>Entendimento emocional profundo e imediato</li>
+        <li>Nenhum se sente "exagerado" pelo outro</li>
+        <li>Conexão intensa e real — não é ilusão</li>
+        <li>Capaz de criar momentos de profundidade genuína</li>
+      </ul>
+    </div>
+    <div class="mini-bloco alerta">
+      <h5>Padrão de Escalada</h5>
+      <ul>
+        <li>Conflitos amplificados mutuamente — sem regulação</li>
+        <li>Reconciliações tão intensas quanto as crises</li>
+        <li>Ciclo de ruptura-reconciliação que se repete</li>
+        <li>Exaustão emocional invisível que se acumula</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-ouro">Sinais de Alerta Invisíveis</div>
+    <div class="sinais-grid">
+      <div class="sinal-row vermelho">
+        <div class="sinal-icone">⚑</div>
+        <div><strong>Intensidade substitui intimidade</strong><p>As crises passam a ser o principal canal de conexão emocional. Quando está calmo, o vínculo parece morto. Ambas precisam da crise para sentir que ainda estão conectadas.</p></div>
+      </div>
+      <div class="sinal-row vermelho">
+        <div class="sinal-icone">⚑</div>
+        <div><strong>Disputa de quem sente mais</strong><p>Quando os dois têm o padrão Tempestade, emerge uma competição implícita por protagonismo emocional. Cada uma quer que sua intensidade seja reconhecida primeiro — e quando as duas precisam disso ao mesmo tempo, a crise é inevitável.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="previsao-box">
+    <div class="pb-label">Previsão de Longo Prazo</div>
+    <p>Esta relação tem alta probabilidade de ser inesquecível — e emocionalmente custosa. O ciclo de intensidade cria memórias afetivas muito fortes que dificultam a saída mesmo quando o desgaste já é evidente. Para funcionar a longo prazo, as duas precisam desenvolver, de forma independente, capacidade de regulação emocional — de modo a não depender do relacionamento como única fonte de estabilidade. Sem isso, a relação tende a se esgotar pelo excesso do que a faz funcionar.</p>
+  </div>
+
+  <div class="pg-footer">
+    <span>Mapa de Compatibilidade Relacional</span>
+    <span>Diagnóstico Relacional &nbsp;·&nbsp; 8</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- COMBO 5: TEMPESTADE + DISTANTE             -->
+<!-- ══════════════════════════════════════════ -->
+<div class="pagina">
+  <div class="combo-header td">
+    <div class="combo-num">Dinâmica 05 de 06</div>
+    <div class="combo-nome">Tempestade + Distante</div>
+    <div class="combo-subtitulo">A que precisa de presença e a que precisa de espaço — em colisão permanente</div>
+    <span class="combo-badge">Ativação Oposta</span>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-tempestade">Mecanismo de Aproximação</div>
+    <div class="secao-texto">Esta combinação ativa, de forma quase automática, o pior mecanismo de cada perfil. A Tempestade usa a presença do outro como regulador emocional — precisa de disponibilidade, de resposta, de saber que o vínculo está vivo. A Distante usa a distância como proteção — a proximidade emocional intensa ativa o medo de dissolução da identidade. Resultado: a intensidade da Tempestade ativa a fuga da Distante. A fuga da Distante ativa a ansiedade da Tempestade. O ciclo é estruturalmente inevitável — a não ser que haja trabalho consciente dos dois lados.</div>
+  </div>
+
+  <div class="linha-duo">
+    <div class="mini-bloco">
+      <h5>O que cria a atração</h5>
+      <ul>
+        <li>Distante parece "profunda e inacessível" para a Tempestade</li>
+        <li>Tempestade parece "viva e presente" para a Distante</li>
+        <li>Cada uma tem o que a outra mais quer sentir</li>
+        <li>Atração real — mas baseada na diferença que vai colidir</li>
+      </ul>
+    </div>
+    <div class="mini-bloco alerta">
+      <h5>O Ciclo de Ativação</h5>
+      <ul>
+        <li>Tempestade escalona quando Distante some ou se fecha</li>
+        <li>Escalada da Tempestade confirma medo da Distante</li>
+        <li>Distante recua mais; Tempestade escalona mais</li>
+        <li>Cada ciclo aumenta a convicção de incompatibilidade</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-ouro">Sinais de Alerta Invisíveis</div>
+    <div class="sinais-grid">
+      <div class="sinal-row vermelho">
+        <div class="sinal-icone">⚑</div>
+        <div><strong>Conversas que viram perseguição</strong><p>A Tempestade tenta resolver em tempo real. A Distante precisa de dias para processar. Esse desencontro de ritmo transforma qualquer conversa difícil em perseguição — mesmo quando nenhuma das duas quer conflito.</p></div>
+      </div>
+      <div class="sinal-row vermelho">
+        <div class="sinal-icone">⚑</div>
+        <div><strong>A fase calma parece "fria" para a Tempestade</strong><p>Quando a Distante está bem, parece distante. A Tempestade interpreta calma como desinteresse e começa a criar intensidade para testar o vínculo — ativando exatamente o que faz a Distante recuar.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="previsao-box">
+    <div class="pb-label">Previsão de Longo Prazo</div>
+    <p>Esta é a combinação que mais frequentemente produz relacionamentos longos e profundamente insatisfatórios — porque a atração inicial é muito forte e o desgaste instala-se de forma lenta e gradual. A Tempestade aprende a interpretar o recuo da Distante como mensagem sobre seu valor. A Distante aprende a se sentir culpada pela intensidade que não consegue corresponder. Sem trabalho individual prévio dos dois perfis, a probabilidade de desgaste assimétrico é alta.</p>
+  </div>
+
+  <div class="pg-footer">
+    <span>Mapa de Compatibilidade Relacional</span>
+    <span>Diagnóstico Relacional &nbsp;·&nbsp; 9</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- COMBO 6: DISTANTE + DISTANTE              -->
+<!-- ══════════════════════════════════════════ -->
+<div class="pagina">
+  <div class="combo-header dd">
+    <div class="combo-num">Dinâmica 06 de 06</div>
+    <div class="combo-nome">Distante + Distante</div>
+    <div class="combo-subtitulo">Dois sistemas de autonomia que precisam aprender a querer presença</div>
+    <span class="combo-badge">Fusão de Autonomia</span>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-distante">Mecanismo de Aproximação</div>
+    <div class="secao-texto">Esta é a combinação que se parece mais com estabilidade — e que pode ser a mais silenciosamente vazia. Duas Distantes criam um vínculo de baixa pressão: ninguém invade o espaço do outro, ninguém cobra presença que o outro não consegue dar. A relação se instala com conforto. O problema é que a intimidade real exige tolerância à proximidade — e os dois perfis têm, exatamente nisso, sua maior dificuldade. O que parece "respeito mútuo" pode ser dois sistemas de evitação que encontraram um acordo implícito para nunca se aproximar de verdade.</div>
+  </div>
+
+  <div class="linha-duo">
+    <div class="mini-bloco">
+      <h5>O que funciona bem</h5>
+      <ul>
+        <li>Espaço genuíno — nenhuma pressiona a outra</li>
+        <li>Ausência de drama e jogos de intensidade</li>
+        <li>Comunicação direta quando acontece</li>
+        <li>Relação de calma real, não de esforço constante</li>
+      </ul>
+    </div>
+    <div class="mini-bloco alerta">
+      <h5>Risco de Estagnação</h5>
+      <ul>
+        <li>Profundidade emocional que nunca aprofunda</li>
+        <li>Ausência de conflito que encobre ausência de conexão</li>
+        <li>Cada uma espera que a outra vá primeiro</li>
+        <li>Relação que dura mas não cresce</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-ouro">Sinais de Alerta Invisíveis</div>
+    <div class="sinais-grid">
+      <div class="sinal-row vermelho">
+        <div class="sinal-icone">⚑</div>
+        <div><strong>Parceiros de vida que são estranhos emocionais</strong><p>Após anos juntas, cada uma sabe muito sobre os hábitos da outra e pouco sobre o que ela sente de verdade. A relação funciona "bem" no dia a dia — mas nenhuma sente que é verdadeiramente conhecida pela outra.</p></div>
+      </div>
+      <div class="sinal-row verde">
+        <div class="sinal-icone">✦</div>
+        <div><strong>Quando funciona com excelência</strong><p>Quando uma das duas (ou as duas) passou por trabalho emocional e desenvolveu tolerância à intimidade. Nesse caso, a combinação oferece o que ambas mais precisam: presença sem pressão, proximidade sem sufocamento.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="previsao-box">
+    <div class="pb-label">Previsão de Longo Prazo</div>
+    <p>Esta relação tem trajetórias muito distintas dependendo do nível de consciência emocional de cada uma. Sem trabalho individual, tende a se tornar uma parceria funcional emocionalmente fria — confortável, mas vazia. Com consciência e intenção deliberada de criar intimidade (ao invés de esperar que aconteça naturalmente), pode se tornar um dos vínculos mais sólidos e respeitosos possíveis. A chave é que uma das duas decida ser a primeira a se aproximar — sem que a outra fuja.</p>
+  </div>
+
+  <div class="pg-footer">
+    <span>Mapa de Compatibilidade Relacional</span>
+    <span>Diagnóstico Relacional &nbsp;·&nbsp; 10</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- LEITURA POR PERFIL                         -->
+<!-- ══════════════════════════════════════════ -->
+<div class="pagina">
+  <div class="pg-header">
+    <div class="pg-tag c-ouro">Síntese Estratégica</div>
+    <div class="pg-titulo">Leitura por Perfil</div>
+    <div class="pg-sub">Para quem é você, com quem o vínculo constrói — e com quem ele cobra mais do que entrega.</div>
+  </div>
+
+  <div class="perfil-leitura guardia">
+    <div class="pl-titulo c-guardia">Se você é A Guardiã</div>
+    <div class="pl-combo-row">
+      <span class="pl-badge tag-regulacao">Vínculo Estrutural</span>
+      <div class="pl-texto"><strong>Com outra Guardiã:</strong> Lealdade profunda, mas abertura lenta. Requer que uma das duas assuma a iniciativa da vulnerabilidade. Potencial alto — exige esforço deliberado.</div>
+    </div>
+    <div class="pl-combo-row">
+      <span class="pl-badge tag-risco-medio">Custo Médio</span>
+      <div class="pl-texto"><strong>Com a Tempestade:</strong> A intensidade abre você — o que pode ser transformador. Mas o ciclo fechamento-pânico é real. Funciona se você aprender a permanecer presente durante a turbulência dela.</div>
+    </div>
+    <div class="pl-combo-row">
+      <span class="pl-badge tag-alto-risco">Alto Risco</span>
+      <div class="pl-texto"><strong>Com a Distante:</strong> Seu mecanismo ativa o dela — e vice-versa. Quanto mais você busca confirmação, mais ela recua. Exige que você desenvolva segurança interna antes de exigir presença.</div>
+    </div>
+  </div>
+
+  <div class="perfil-leitura tempestade">
+    <div class="pl-titulo c-tempestade">Se você é A Tempestade</div>
+    <div class="pl-combo-row">
+      <span class="pl-badge tag-risco-medio">Custo Médio</span>
+      <div class="pl-texto"><strong>Com a Guardiã:</strong> A estrutura dela pode te ancorar — se você não confundir controle com rejeição. O fechamento dela não é abandono: é processamento. Aprender a diferença muda o jogo.</div>
+    </div>
+    <div class="pl-combo-row">
+      <span class="pl-badge tag-alto-risco">Alto Custo</span>
+      <div class="pl-texto"><strong>Com outra Tempestade:</strong> A conexão é real e intensa. O desgaste também. Funciona quando as duas têm trabalho emocional próprio — caso contrário, o ciclo de crises é inevitável.</div>
+    </div>
+    <div class="pl-combo-row">
+      <span class="pl-badge tag-alto-risco">Alto Risco</span>
+      <div class="pl-texto"><strong>Com a Distante:</strong> A combinação mais ativadora que existe para o seu padrão. O recuo dela confirma seu medo de abandono. Sua intensidade confirma o medo de dissolução dela. Requer trabalho extenso de ambas.</div>
+    </div>
+  </div>
+
+  <div class="perfil-leitura distante">
+    <div class="pl-titulo c-distante">Se você é A Distante</div>
+    <div class="pl-combo-row">
+      <span class="pl-badge tag-alto-risco">Alto Risco</span>
+      <div class="pl-texto"><strong>Com a Guardiã:</strong> Ela vai precisar de presença que você restringe. Cada restrição sua aumenta a ansiedade dela. Funciona se ela tiver segurança interna suficiente para não interpretar seu espaço como rejeição.</div>
+    </div>
+    <div class="pl-combo-row">
+      <span class="pl-badge tag-alto-risco">Alto Risco</span>
+      <div class="pl-texto"><strong>Com a Tempestade:</strong> Sua calma vai ser lida como desinteresse. Sua necessidade de espaço vai ser lida como fuga. Requer que ela tenha regulação própria — caso contrário, você vai entrar em colapso de fechamento progressivo.</div>
+    </div>
+    <div class="pl-combo-row">
+      <span class="pl-badge tag-regulacao">Potencial Alto</span>
+      <div class="pl-texto"><strong>Com outra Distante:</strong> Espaço respeitado, sem pressão. O risco é a estagnação emocional. Se uma das duas decidir criar intimidade ativamente, esta combinação tem tudo para ser a mais sustentável para o seu padrão.</div>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <span>Mapa de Compatibilidade Relacional</span>
+    <span>Diagnóstico Relacional &nbsp;·&nbsp; 11</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PROTOCOLO DE SINAIS                        -->
+<!-- ══════════════════════════════════════════ -->
+<div class="pagina">
+  <div class="pg-header">
+    <div class="pg-tag c-ouro">Protocolo de Campo</div>
+    <div class="pg-titulo">Leitura de Sinais<br>nas Primeiras Semanas</div>
+    <div class="pg-sub">Como identificar o padrão emocional do outro antes que a atração inicial encubra os mecanismos reais.</div>
+  </div>
+
+  <div style="background:#F9F7F4; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+    <p style="font-size:9.5pt; color:#555; line-height:1.7; font-style:italic;">O padrão de vínculo do outro se revela nos primeiros conflitos, nas primeiras ausências, e em como ele reage quando você precisa de algo que ele não consegue dar facilmente. Observe antes de interpretar.</p>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-guardia">Sinais de padrão Guardiã</div>
+    <div class="sinais-grid">
+      <div class="sinal-row">
+        <div class="sinal-icone" style="color:#6B4226;">◆</div>
+        <div><strong>Lealdade exibida antes de intimidade criada</strong><p>Fala de compromisso, confiabilidade, e "ser de palavra" ainda na fase inicial — antes que haja base real para isso. É o mecanismo: oferece lealdade para criar segurança antes de arriscar abertura.</p></div>
+      </div>
+      <div class="sinal-row">
+        <div class="sinal-icone" style="color:#6B4226;">◆</div>
+        <div><strong>Testagem implícita de fidelidade</strong><p>Cria situações — consciente ou não — para ver se você vai "passar na prova". Chega atrasada para ver se você fica. Conta algo levemente vulnerável para ver se você usa contra ela.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-tempestade">Sinais de padrão Tempestade</div>
+    <div class="sinais-grid">
+      <div class="sinal-row">
+        <div class="sinal-icone" style="color:#8B2020;">◆</div>
+        <div><strong>Intensidade que escala mais rápido que o tempo de vínculo justificaria</strong><p>Na segunda ou terceira conversa já compartilha algo profundo demais, ou demonstra envolvimento além do que o tempo justifica. A Tempestade sente antes de avaliar — e a intensidade chega antes da intimidade real.</p></div>
+      </div>
+      <div class="sinal-row">
+        <div class="sinal-icone" style="color:#8B2020;">◆</div>
+        <div><strong>Reação desproporcional à primeira ambiguidade</strong><p>Uma mensagem sem resposta vira sinal de desinteresse. Uma mudança de planos vira potencial abandono. A Tempestade lê ameaça onde há apenas ausência — e a reação revela o padrão antes de qualquer conflito real.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="secao-bloco">
+    <div class="secao-label s-distante">Sinais de padrão Distante</div>
+    <div class="sinais-grid">
+      <div class="sinal-row">
+        <div class="sinal-icone" style="color:#1E4D72;">◆</div>
+        <div><strong>Demora estrutural para responder — mesmo quando está disponível</strong><p>Não é descuido: é controle de ritmo. A Distante mantém o tempo de resposta longo como forma de preservar a sensação de autonomia no vínculo. O intervalo é estratégico, não casual.</p></div>
+      </div>
+      <div class="sinal-row">
+        <div class="sinal-icone" style="color:#1E4D72;">◆</div>
+        <div><strong>Redirecionamento quando o assunto fica íntimo demais</strong><p>No momento em que a conversa toca algo emocionalmente vulnerável, a Distante muda de assunto, usa humor, ou se torna de repente "ocupada". O recuo não é falta de interesse — é ativação do mecanismo de proteção.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <span>Mapa de Compatibilidade Relacional</span>
+    <span>Diagnóstico Relacional &nbsp;·&nbsp; 12</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PROTOCOLO FINAL DE DECISÃO                 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="pagina">
+  <div class="pg-header">
+    <div class="pg-tag c-ouro">Protocolo de Decisão</div>
+    <div class="pg-titulo">O que fazer com esta informação</div>
+    <div class="pg-sub">Inteligência relacional não é sobre evitar dinâmicas difíceis. É sobre entrar nelas de olhos abertos.</div>
+  </div>
+
+  <div class="protocolo-box">
+    <h3>Protocolo de Avaliação Relacional</h3>
+    <div class="protocolo-etapa">
+      <div class="pe-num">1</div>
+      <div class="pe-texto">
+        <h4>Identifique o padrão do outro</h4>
+        <p>Use a seção de Leitura de Sinais como guia de observação nos primeiros encontros. Não pergunte — observe. O padrão se revela nos momentos de tensão, não nos momentos de conforto.</p>
+      </div>
+    </div>
+    <div class="protocolo-etapa">
+      <div class="pe-num">2</div>
+      <div class="pe-texto">
+        <h4>Mapeie a dinâmica provável</h4>
+        <p>Consulte a combinação correspondente neste documento. Não para desistir — mas para identificar com antecedência qual será o padrão de colisão mais provável entre vocês.</p>
+      </div>
+    </div>
+    <div class="protocolo-etapa">
+      <div class="pe-num">3</div>
+      <div class="pe-texto">
+        <h4>Antecipe o ciclo antes que ele se instale</h4>
+        <p>Conhecer o mecanismo não o desativa automaticamente — mas cria a distância mínima necessária para não reagir no piloto automático quando ele aparecer.</p>
+      </div>
+    </div>
+    <div class="protocolo-etapa">
+      <div class="pe-num">4</div>
+      <div class="pe-texto">
+        <h4>Decida com consciência, não com esperança</h4>
+        <p>Toda combinação pode funcionar — com as condições certas. A pergunta não é "isso vai funcionar?" mas "o que cada um de nós precisaria ser diferente para que funcionasse — e isso é possível agora?"</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="fechamento">
+    <p>Compatibilidade não é a ausência de tensão entre dois padrões. É a presença de consciência suficiente para transformar o que seria colisão em construção.</p>
+    <div class="marca">Diagnóstico Relacional · Sistema de Inteligência Relacional</div>
+  </div>
+
+  <div class="pg-footer">
+    <span>Mapa de Compatibilidade Relacional</span>
+    <span>Diagnóstico Relacional &nbsp;·&nbsp; 13</span>
+  </div>
+</div>
+
+</body>
+</html>

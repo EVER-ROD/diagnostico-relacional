@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Manual de Conversas Emocionais — Diagnóstico Relacional</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+@page { size: A4; margin: 0; }
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 10pt;
+  color: #1a1a1a;
+  background: #F7F4EF;
+  line-height: 1.55;
+}
+
+@media print {
+  .page { page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: avoid; }
+  .frase-card, .variacao-box, .page-header, .bloco-intro-page,
+  .situacao-block, .capa {
+    page-break-inside: avoid; break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* ═══════════════ CAPA ═══════════════ */
+.capa {
+  background: linear-gradient(155deg, #0E1117 0%, #1C1628 50%, #2A1F3D 100%) !important;
+  width: 210mm;
+  height: 297mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18mm 18mm 16mm;
+  position: relative;
+  overflow: hidden;
+}
+.capa::before {
+  content: '';
+  position: absolute;
+  top: -15mm; right: -15mm;
+  width: 90mm; height: 90mm;
+  border-radius: 50%;
+  border: 1px solid rgba(201,169,110,0.10);
+}
+.capa::after {
+  content: '';
+  position: absolute;
+  bottom: 20mm; left: -20mm;
+  width: 120mm; height: 120mm;
+  border-radius: 50%;
+  border: 1px solid rgba(201,169,110,0.06);
+}
+.capa-linha { width: 18mm; height: 2px; background: #C9A96E; margin-bottom: 8mm; }
+.capa-tag {
+  font-size: 7pt; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 12mm;
+}
+.capa-titulo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 42pt; font-weight: 900; line-height: 0.92; color: #fff;
+}
+.capa-titulo em {
+  display: block; font-size: 17pt; color: #C9A96E;
+  font-style: italic; font-weight: 700; margin-bottom: 2mm;
+}
+.capa-sub {
+  font-size: 10pt; color: rgba(255,255,255,0.42); line-height: 1.6;
+  max-width: 120mm; border-left: 2px solid rgba(201,169,110,0.25);
+  padding-left: 5mm; margin-top: 7mm;
+}
+.capa-perfis { display: flex; gap: 5mm; margin-top: 9mm; }
+.capa-perfil-tag {
+  font-size: 7pt; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; padding: 2px 9px; border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.42);
+}
+.capa-rodape {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  position: relative; z-index: 2;
+}
+.capa-marca { font-size: 7.5pt; color: rgba(255,255,255,0.18); line-height: 1.6; }
+.capa-info { font-size: 7.5pt; color: rgba(201,169,110,0.45); text-align: right; line-height: 1.7; }
+
+/* ═══════════════ PÁGINA GERAL ═══════════════ */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 10mm 14mm 8mm;
+  display: flex;
+  flex-direction: column;
+  background: #FAFAF8;
+  position: relative;
+}
+
+/* ═══════════════ PAGE HEADER ═══════════════ */
+.page-header {
+  margin: -10mm -14mm 6mm;
+  padding: 5mm 14mm 4mm;
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.header-intro     { background: #0E1117 !important; }
+.header-guardia   { background: #2C1A0E !important; }
+.header-tempestade{ background: #4A0E1A !important; }
+.header-distante  { background: #0A1E35 !important; }
+
+.ph-left { flex: 1; }
+.ph-label { font-size: 6.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 1mm; }
+.ph-title { font-family: 'Playfair Display', Georgia, serif; font-size: 17pt; font-weight: 700; color: #fff; line-height: 1.1; }
+.ph-right { text-align: right; }
+.ph-num { font-family: 'Playfair Display', Georgia, serif; font-size: 26pt; font-weight: 900; color: rgba(255,255,255,0.14); line-height: 1; }
+
+/* ═══════════════ BLOCO INTRO ═══════════════ */
+.bloco-intro-page {
+  width: 210mm; height: 297mm;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 20mm; position: relative; overflow: hidden;
+}
+.bloco-intro-page.guardia    { background: linear-gradient(145deg, #2C1A0E 0%, #6B3A1F 60%, #C8956C 100%) !important; }
+.bloco-intro-page.tempestade { background: linear-gradient(145deg, #4A0E1A 0%, #8B2635 60%, #D4687A 100%) !important; }
+.bloco-intro-page.distante   { background: linear-gradient(145deg, #0A1E35 0%, #1A4A7A 60%, #5B8FBF 100%) !important; }
+
+.bloco-num { font-size: 6.5pt; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.32); margin-bottom: 6mm; }
+.bloco-perfil {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 52pt; font-weight: 900; line-height: 0.88;
+  color: rgba(255,255,255,0.9); margin-bottom: 6mm;
+}
+.bloco-perfil span { display: block; font-size: 18pt; color: rgba(255,255,255,0.42); font-style: italic; margin-bottom: 2mm; }
+.bloco-desc {
+  font-size: 10pt; color: rgba(255,255,255,0.52); line-height: 1.65;
+  max-width: 130mm; border-left: 2px solid rgba(255,255,255,0.14);
+  padding-left: 5mm; margin-bottom: 10mm;
+}
+.bloco-temas { display: flex; flex-wrap: wrap; gap: 3mm; }
+.bloco-tag {
+  font-size: 7pt; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.55);
+}
+
+/* ═══════════════ INTRO PAGE ═══════════════ */
+.intro-titulo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 19pt; font-weight: 900; color: #0E1117; margin-bottom: 4mm;
+}
+.intro-texto { font-size: 9.5pt; color: #444; line-height: 1.68; margin-bottom: 3mm; }
+
+.como-usar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; margin: 5mm 0; }
+.cu-item { background: #F2EFE9; border: 1px solid #E8E4DD; border-radius: 7px; padding: 4mm; }
+.cu-icon { font-size: 14pt; margin-bottom: 1.5mm; }
+.cu-titulo { font-size: 8pt; font-weight: 700; color: #1a1a1a; margin-bottom: 1mm; }
+.cu-texto { font-size: 7.5pt; color: #666; line-height: 1.5; }
+
+.indice-tb { width: 100%; border-collapse: collapse; margin: 4mm 0; }
+.indice-tb th { text-align: left; font-size: 7pt; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #999; padding: 2mm 3mm; border-bottom: 1px solid #E8E4DD; }
+.indice-tb td { font-size: 9pt; padding: 2mm 3mm; border-bottom: 1px solid rgba(0,0,0,0.04); vertical-align: middle; }
+.td-g { color: #6B3A1F; font-weight: 700; }
+.td-t { color: #8B2635; font-weight: 700; }
+.td-d { color: #1A4A7A; font-weight: 700; }
+
+.principio-box { background: #0E1117; border-radius: 9px; padding: 5mm 6mm; margin-top: 5mm; }
+.principio-tit { font-size: 6.5pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #C9A96E; margin-bottom: 2mm; }
+.principio-txt { font-size: 9pt; color: rgba(255,255,255,0.6); line-height: 1.65; }
+
+/* ═══════════════ SITUAÇÃO ═══════════════ */
+.situacao-block { margin-bottom: 5.5mm; }
+.situacao-label { display: inline-flex; align-items: center; gap: 3mm; margin-bottom: 2mm; }
+.sit-num {
+  width: 5.5mm; height: 5.5mm; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 7pt; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.num-g { background: #C8956C; }
+.num-t { background: #D4687A; }
+.num-d { background: #5B8FBF; }
+.sit-titulo { font-size: 8.5pt; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: #333; }
+.sit-ctx { font-size: 8pt; color: #888; font-style: italic; line-height: 1.5; margin-bottom: 2.5mm; padding-left: 8.5mm; }
+
+/* ═══════════════ FRASE CARD ═══════════════ */
+.frase-card { border-radius: 9px; padding: 3.5mm 4.5mm; margin-bottom: 2.5mm; }
+.frase-card.guardia    { background: #FDF8F4; border-left: 3px solid #C8956C; }
+.frase-card.tempestade { background: #FFF4F6; border-left: 3px solid #D4687A; }
+.frase-card.distante   { background: #F0F6FC; border-left: 3px solid #5B8FBF; }
+
+.frase-lbl { font-size: 6pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #ccc; margin-bottom: 1.5mm; }
+.frase-txt { font-size: 9.5pt; font-style: italic; color: #1a1a1a; line-height: 1.62; }
+
+/* ═══════════════ VARIAÇÃO ═══════════════ */
+.variacao-box { border-radius: 7px; padding: 2.5mm 3.5mm; margin-bottom: 2mm; }
+.variacao-box.ok  { background: rgba(50,150,100,0.06); border-left: 2px solid #5ca87e; }
+.variacao-box.nao { background: rgba(180,50,50,0.05); border-left: 2px solid #c07070; }
+.var-tit { font-size: 6pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.5mm; }
+.ok  .var-tit { color: #5ca87e; }
+.nao .var-tit { color: #c07070; }
+.var-txt { font-size: 8.5pt; color: #444; line-height: 1.5; }
+
+.divisor { height: 1px; background: #ECEAE5; margin: 5mm 0; }
+
+/* ═══════════════ FOOTER ═══════════════ */
+.page-footer {
+  margin: auto -14mm -8mm;
+  padding: 3mm 14mm;
+  border-top: 1px solid #ECEAE5;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 7pt; color: #bbb; background: #fff;
+}
+.pf-g { color: #C8956C; font-weight: 700; }
+.pf-t { color: #D4687A; font-weight: 700; }
+.pf-d { color: #5B8FBF; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ CAPA ══════════════════════════════ -->
+<div class="capa page">
+  <div>
+    <div class="capa-linha"></div>
+    <div class="capa-tag">Diagnóstico Relacional · Biblioteca de Comunicação</div>
+    <div class="capa-titulo">
+      <em>Manual de</em>
+      Conversas<br>Emocionais
+    </div>
+    <div class="capa-sub">Roteiros, frases e scripts organizados por padrão relacional — para os momentos mais difíceis de dizer o que você realmente precisa.</div>
+    <div class="capa-perfis">
+      <div class="capa-perfil-tag">A Guardiã</div>
+      <div class="capa-perfil-tag">A Tempestade</div>
+      <div class="capa-perfil-tag">A Distante</div>
+    </div>
+  </div>
+  <div class="capa-rodape">
+    <div class="capa-marca">Diagnóstico Relacional<br>Material de Uso Pessoal</div>
+    <div class="capa-info">3 Blocos · 18 Situações<br>Frases Prontas para Usar</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ INTRODUÇÃO ══════════════════════════════ -->
+<div class="page">
+  <div class="page-header header-intro">
+    <div class="ph-left">
+      <div class="ph-label">Manual de Conversas</div>
+      <div class="ph-title">Como usar este material</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">00</div></div>
+  </div>
+
+  <div class="intro-titulo">O problema não é o que você sente.<br>É saber como dizer.</div>
+  <div class="intro-texto">Cada padrão relacional tem formas específicas de travar na comunicação. A Guardiã sabe o que precisa mas não consegue pedir. A Tempestade sente com precisão mas ativa antes de filtrar. A Distante processa tudo internamente mas não verbaliza.</div>
+  <div class="intro-texto">Este manual é uma biblioteca prática: roteiros reais para situações reais, organizados por padrão. As frases não são para memorizar — são para adaptar, para treinar, para usar como ponto de partida quando as palavras travam.</div>
+
+  <div class="como-usar">
+    <div class="cu-item">
+      <div class="cu-icon">📖</div>
+      <div class="cu-titulo">Leia o seu bloco primeiro</div>
+      <div class="cu-texto">Encontre o bloco do seu padrão. As frases são contextualizadas para como você funciona.</div>
+    </div>
+    <div class="cu-item">
+      <div class="cu-icon">✏️</div>
+      <div class="cu-titulo">Adapte para a sua voz</div>
+      <div class="cu-texto">Nenhuma frase aqui é um script rígido. Use como modelo e ajuste para soar como você.</div>
+    </div>
+    <div class="cu-item">
+      <div class="cu-icon">🔁</div>
+      <div class="cu-titulo">Leia os outros blocos</div>
+      <div class="cu-texto">Entender como os outros padrões se comunicam muda como você interpreta o que recebe.</div>
+    </div>
+  </div>
+
+  <table class="indice-tb">
+    <thead><tr><th>Bloco</th><th>Perfil</th><th>Situações cobertas</th></tr></thead>
+    <tbody>
+      <tr><td class="td-g">A</td><td><strong style="color:#6B3A1F">A Guardiã</strong></td><td>Ceder demais · Pedir validação · Fechamento tardio · Pedir sem culpa · Mágoa engolida · Reconexão</td></tr>
+      <tr><td class="td-t">B</td><td><strong style="color:#8B2635">A Tempestade</strong></td><td>Escalada chegando · Pós-pico · Sentir-se ignorada · Pedir presença · Comunicar dor · Reconexão</td></tr>
+      <tr><td class="td-d">C</td><td><strong style="color:#1A4A7A">A Distante</strong></td><td>Precisar de espaço · Demonstrar interesse · Pedir calibrado · Anunciar recuo · Iniciar conexão · Abrir vulnerabilidade</td></tr>
+    </tbody>
+  </table>
+
+  <div class="principio-box">
+    <div class="principio-tit">Princípio do Manual</div>
+    <div class="principio-txt">Comunicação emocional não é sobre encontrar as palavras certas na hora certa. É sobre ter palavras disponíveis quando o sistema emocional estiver ativado demais para criá-las do zero. Este manual é o seu banco de palavras — para os momentos em que você mais precisa e menos consegue.</div>
+  </div>
+
+  <div class="page-footer">
+    <span>Manual de Conversas Emocionais</span>
+    <span>Diagnóstico Relacional</span>
+    <span>Introdução</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ BLOCO A — GUARDIÃ INTRO ══════════════════════════════ -->
+<div class="bloco-intro-page guardia page">
+  <div class="bloco-num">Bloco A · Comunicação Emocional</div>
+  <div class="bloco-perfil"><span>Você é</span>A<br>Guardiã</div>
+  <div class="bloco-desc">Você sabe o que precisa. O que trava é o ato de pedir — porque pedir parece expor demais, sobrecarregar, ou confirmar que você precisa de algo que não deveria precisar. As frases deste bloco foram criadas para esse exato momento: quando você já sabe o que quer dizer, mas o caminho entre sentir e falar ainda está bloqueado.</div>
+  <div class="bloco-temas">
+    <div class="bloco-tag">Ceder demais</div>
+    <div class="bloco-tag">Validação</div>
+    <div class="bloco-tag">Fechamento</div>
+    <div class="bloco-tag">Pedir sem culpa</div>
+    <div class="bloco-tag">Mágoa não dita</div>
+    <div class="bloco-tag">Reconexão</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ GUARDIÃ — SIT 1-3 ══════════════════════════════ -->
+<div class="page">
+  <div class="page-header header-guardia">
+    <div class="ph-left">
+      <div class="ph-label">Bloco A · A Guardiã</div>
+      <div class="ph-title">Limites e Validação</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">A1</div></div>
+  </div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-g">1</div>
+      <div class="sit-titulo">Quando você sente que está cedendo demais</div>
+    </div>
+    <div class="sit-ctx">Use quando perceber que está dando mais do que consegue sustentar — e ainda não disse nada.</div>
+    <div class="frase-card guardia">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Eu me importo com o que você está pedindo. E também preciso de [X]. Posso fazer [Y], mas não consigo fazer [Z] — pelo menos não agora."</div>
+    </div>
+    <div class="frase-card guardia">
+      <div class="frase-lbl">Variação</div>
+      <div class="frase-txt">"Notei que tenho dado mais do que consigo sustentar a longo prazo. Não é sobre você — é sobre o que funciona para mim. Preciso ajustar [algo específico]."</div>
+    </div>
+    <div class="variacao-box nao">
+      <div class="var-tit">⚠ Evite dizer</div>
+      <div class="var-txt">"Não, pode deixar, eu resolvo" — quando na verdade não consegue. Essa frase alimenta o ciclo de autoabandono e adia o limite que já deveria ter sido colocado.</div>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-g">2</div>
+      <div class="sit-titulo">Quando você precisa de validação mas não consegue pedir</div>
+    </div>
+    <div class="sit-ctx">Quando você fez algo significativo e está esperando reconhecimento que não vem — e vai ficando ressentida em silêncio.</div>
+    <div class="frase-card guardia">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Eu precisaria ouvir que você percebeu o que fiz. Não precisa ser muito — só saber que viu."</div>
+    </div>
+    <div class="frase-card guardia">
+      <div class="frase-lbl">Variação Mais Direta</div>
+      <div class="frase-txt">"Quando você reconhece [ação específica], eu me sinto mais segura para continuar investindo nessa direção. Você consegue fazer isso?"</div>
+    </div>
+    <div class="variacao-box ok">
+      <div class="var-tit">✓ Por que funciona</div>
+      <div class="var-txt">Nomear o que você precisa tira o outro da posição de adivinhar. Não é fraqueza — é precisão emocional.</div>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-g">3</div>
+      <div class="sit-titulo">Quando você se fechou e percebeu depois</div>
+    </div>
+    <div class="sit-ctx">Após um episódio de fechamento automático — quando a outra pessoa percebeu e você quer nomear o que aconteceu.</div>
+    <div class="frase-card guardia">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Percebi que me fechei quando [situação]. Não foi sobre você — foi um reflexo automático. Ainda estou aprendendo a pausar antes de sumir."</div>
+    </div>
+    <div class="frase-card guardia">
+      <div class="frase-lbl">Versão Mais Curta</div>
+      <div class="frase-txt">"Eu sumi por um tempo. Posso te contar o que estava sentindo agora que consegui processar?"</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-g">A Guardiã</span>
+    <span>Manual de Conversas Emocionais</span>
+    <span>Bloco A · Situações 1–3</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ GUARDIÃ — SIT 4-6 ══════════════════════════════ -->
+<div class="page">
+  <div class="page-header header-guardia">
+    <div class="ph-left">
+      <div class="ph-label">Bloco A · A Guardiã</div>
+      <div class="ph-title">Pedidos e Reconexão</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">A2</div></div>
+  </div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-g">4</div>
+      <div class="sit-titulo">Quando você quer pedir algo mas tem medo de sobrecarregar</div>
+    </div>
+    <div class="sit-ctx">Quando tem uma necessidade real mas começa a minimizá-la antes mesmo de verbalizar.</div>
+    <div class="frase-card guardia">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Tenho uma coisa para pedir e já estou com vontade de dizer que não precisa — mas precisa. Posso pedir?"</div>
+    </div>
+    <div class="frase-card guardia">
+      <div class="frase-lbl">Variação Direta</div>
+      <div class="frase-txt">"Preciso de [X]. Sei que parece pequeno, mas para mim faz diferença. Você consegue fazer isso?"</div>
+    </div>
+    <div class="variacao-box ok">
+      <div class="var-tit">✓ Princípio</div>
+      <div class="var-txt">Nomear o padrão ("já estou querendo minimizar") antes de pedir desativa parte do mecanismo de proteção — e avisa o outro que você está sendo corajosa ao pedir.</div>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-g">5</div>
+      <div class="sit-titulo">Quando você engoliu uma mágoa e ela ainda está lá</div>
+    </div>
+    <div class="sit-ctx">Dias ou semanas depois de algo que machucou — quando o momento já passou mas o efeito não.</div>
+    <div class="frase-card guardia">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Sei que faz tempo, mas ainda estou carregando [aquela situação]. Não preciso que você resolva — só quero que você saiba que ainda dói."</div>
+    </div>
+    <div class="frase-card guardia">
+      <div class="frase-lbl">Versão Mais Curta</div>
+      <div class="frase-txt">"Aquilo de [X] ainda aparece para mim. Posso te contar como ficou?"</div>
+    </div>
+    <div class="variacao-box nao">
+      <div class="var-tit">⚠ Evite</div>
+      <div class="var-txt">Abrir com "esquece, não tem importância" antes de terminar a frase. A mágoa que foi minimizada antes de ser dita nunca chega inteira ao outro.</div>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-g">6</div>
+      <div class="sit-titulo">Quando você quer se reconectar depois de um conflito</div>
+    </div>
+    <div class="sit-ctx">Após distanciamento — quando você quer voltar mas não sabe como iniciar sem expor demais.</div>
+    <div class="frase-card guardia">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Ainda estou processando o que aconteceu. Mas quero que você saiba que o vínculo importa para mim — mesmo quando eu sumo."</div>
+    </div>
+    <div class="frase-card guardia">
+      <div class="frase-lbl">Variação de Abertura Simples</div>
+      <div class="frase-txt">"Posso te ligar hoje? Não para resolver — só para voltar a estar presente."</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-g">A Guardiã</span>
+    <span>Manual de Conversas Emocionais</span>
+    <span>Bloco A · Situações 4–6</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ BLOCO B — TEMPESTADE INTRO ══════════════════════════════ -->
+<div class="bloco-intro-page tempestade page">
+  <div class="bloco-num">Bloco B · Comunicação Emocional</div>
+  <div class="bloco-perfil"><span>Você é</span>A<br>Tempestade</div>
+  <div class="bloco-desc">Você sente antes de filtrar. Isso não é fraqueza — é como você processa. O desafio não é sentir menos: é encontrar palavras que comuniquem a intensidade do que você sente sem ativar no outro o mecanismo de recuo. As frases deste bloco foram criadas para o espaço entre a emoção e a reação — aquele segundo em que ainda há escolha.</div>
+  <div class="bloco-temas">
+    <div class="bloco-tag">Escalada chegando</div>
+    <div class="bloco-tag">Pós-pico</div>
+    <div class="bloco-tag">Sentir-se ignorada</div>
+    <div class="bloco-tag">Pedir presença</div>
+    <div class="bloco-tag">Comunicar dor</div>
+    <div class="bloco-tag">Reconexão</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ TEMPESTADE — SIT 1-3 ══════════════════════════════ -->
+<div class="page">
+  <div class="page-header header-tempestade">
+    <div class="ph-left">
+      <div class="ph-label">Bloco B · A Tempestade</div>
+      <div class="ph-title">Regulação e Presença</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">B1</div></div>
+  </div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-t">1</div>
+      <div class="sit-titulo">Quando você sente a escalada chegando</div>
+    </div>
+    <div class="sit-ctx">Antes de entrar em modo reativo — quando você percebe que está ativando mas ainda tem janela de escolha.</div>
+    <div class="frase-card tempestade">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Estou sentindo uma coisa intensa agora e preciso de um momento antes de falar. Não é sobre você sumir — é sobre eu me organizar para não dizer algo que não quero dizer do jeito que não quero."</div>
+    </div>
+    <div class="frase-card tempestade">
+      <div class="frase-lbl">Versão Curta (quando o tempo é pouco)</div>
+      <div class="frase-txt">"Preciso de [10 minutos / uma hora]. Volto para isso. Não estou fugindo."</div>
+    </div>
+    <div class="variacao-box ok">
+      <div class="var-tit">✓ Por que funciona</div>
+      <div class="var-txt">Nomear que você está saindo para regular — não para punir — muda completamente como o outro vai experienciar a pausa. A diferença entre ausência ansiosa e presença adiada está nessa frase.</div>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-t">2</div>
+      <div class="sit-titulo">Depois de um pico — quando você sabe que foi longe demais</div>
+    </div>
+    <div class="sit-ctx">Após uma reação intensa que ultrapassou o que a situação justificava — quando você quer reconhecer sem se punir.</div>
+    <div class="frase-card tempestade">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"O que eu disse foi real — o sentimento era verdadeiro. A forma que veio não foi a que eu queria. Quero retomar com mais calma se você puder."</div>
+    </div>
+    <div class="frase-card tempestade">
+      <div class="frase-lbl">Variação Mais Simples</div>
+      <div class="frase-txt">"Fui longe demais antes. O que eu estava sentindo ainda precisa ser dito — mas de outro jeito. Posso tentar de novo?"</div>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-t">3</div>
+      <div class="sit-titulo">Quando você se sente ignorada ou invisível</div>
+    </div>
+    <div class="sit-ctx">Quando a ausência ou desatenção do outro ativa o padrão de ansiedade — antes de escalonar para confronto.</div>
+    <div class="frase-card tempestade">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Quando você some ou fica distante, meu sistema lê isso como 'não importa'. Eu sei que provavelmente não é isso — mas é como chega. Posso te contar o que acontece aqui dentro quando isso ocorre?"</div>
+    </div>
+    <div class="frase-card tempestade">
+      <div class="frase-lbl">Versão Menos Vulnerável</div>
+      <div class="frase-txt">"Preciso de um sinal de que você ainda está — não necessariamente presente, só presente o suficiente para eu saber."</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-t">A Tempestade</span>
+    <span>Manual de Conversas Emocionais</span>
+    <span>Bloco B · Situações 1–3</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ TEMPESTADE — SIT 4-6 ══════════════════════════════ -->
+<div class="page">
+  <div class="page-header header-tempestade">
+    <div class="ph-left">
+      <div class="ph-label">Bloco B · A Tempestade</div>
+      <div class="ph-title">Dor e Reconexão</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">B2</div></div>
+  </div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-t">4</div>
+      <div class="sit-titulo">Quando você precisa pedir presença sem soar como cobrança</div>
+    </div>
+    <div class="sit-ctx">Quando você quer mais do outro — mais atenção, mais tempo, mais contato — mas sabe que pedir do jeito errado afasta.</div>
+    <div class="frase-card tempestade">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Não estou cobrando. Estou pedindo. Há uma diferença — e agora estou pedindo: preciso de [algo específico] com você. Isso é possível essa semana?"</div>
+    </div>
+    <div class="frase-card tempestade">
+      <div class="frase-lbl">Versão Mais Leve</div>
+      <div class="frase-txt">"Sinto falta de você — não de resolver nada, só de estar com você. Tem espaço para isso nos próximos dias?"</div>
+    </div>
+    <div class="variacao-box ok">
+      <div class="var-tit">✓ Princípio</div>
+      <div class="var-txt">A distinção entre cobrar e pedir é real — e vale nomear. Isso sinaliza ao outro que você tem consciência do seu padrão e está se regulando ativamente.</div>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-t">5</div>
+      <div class="sit-titulo">Quando você está com dor e não quer explodir</div>
+    </div>
+    <div class="sit-ctx">Quando algo magoou de verdade e você quer comunicar isso sem transformar em conflito.</div>
+    <div class="frase-card tempestade">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Estou magoada com [X]. Não quero transformar isso em guerra. Mas também não consigo fingir que não aconteceu. Posso te contar como chegou para mim?"</div>
+    </div>
+    <div class="frase-card tempestade">
+      <div class="frase-lbl">Variação Quando Há Raiva Junto</div>
+      <div class="frase-txt">"Tem raiva junto — vou admitir. Mas o que está por baixo disso é mágoa, não ataque. Quero falar da mágoa se você puder ouvir."</div>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-t">6</div>
+      <div class="sit-titulo">Quando você quer se reconectar depois de um conflito intenso</div>
+    </div>
+    <div class="sit-ctx">Depois de uma briga, afastamento ou crise — quando você quer voltar mas precisa que o outro saiba que você não vai atacar de novo.</div>
+    <div class="frase-card tempestade">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"O que veio antes foi muito. Eu sei disso. Não estou voltando para continuar — estou voltando para reconstruir. Se você tiver espaço para isso, estou aqui."</div>
+    </div>
+    <div class="frase-card tempestade">
+      <div class="frase-lbl">Versão Mais Curta</div>
+      <div class="frase-txt">"Posso voltar? — não para brigar, para estar."</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-t">A Tempestade</span>
+    <span>Manual de Conversas Emocionais</span>
+    <span>Bloco B · Situações 4–6</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ BLOCO C — DISTANTE INTRO ══════════════════════════════ -->
+<div class="bloco-intro-page distante page">
+  <div class="bloco-num">Bloco C · Comunicação Emocional</div>
+  <div class="bloco-perfil"><span>Você é</span>A<br>Distante</div>
+  <div class="bloco-desc">Você não se afasta porque não sente — você se afasta porque sente demais e ainda não encontrou como dizer isso sem perder o chão. As frases deste bloco foram criadas para o espaço que ninguém ensina a habitar: o de querer se aproximar e não saber como fazer isso sem abrir mão de você mesma.</div>
+  <div class="bloco-temas">
+    <div class="bloco-tag">Precisar de espaço</div>
+    <div class="bloco-tag">Demonstrar interesse</div>
+    <div class="bloco-tag">Pedir calibrado</div>
+    <div class="bloco-tag">Anunciar recuo</div>
+    <div class="bloco-tag">Iniciar conexão</div>
+    <div class="bloco-tag">Vulnerabilidade</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ DISTANTE — SIT 1-3 ══════════════════════════════ -->
+<div class="page">
+  <div class="page-header header-distante">
+    <div class="ph-left">
+      <div class="ph-label">Bloco C · A Distante</div>
+      <div class="ph-title">Espaço e Presença</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">C1</div></div>
+  </div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-d">1</div>
+      <div class="sit-titulo">Quando você precisa de espaço mas não quer afastar</div>
+    </div>
+    <div class="sit-ctx">Quando a proximidade está activando o mecanismo de recuo — mas você não quer que o outro interprete como rejeição.</div>
+    <div class="frase-card distante">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Preciso de um tempo sozinha — não de você, não do que aconteceu. Do tipo de silêncio que só o espaço dá. Posso voltar em [tempo específico]?"</div>
+    </div>
+    <div class="frase-card distante">
+      <div class="frase-lbl">Versão Mais Curta</div>
+      <div class="frase-txt">"Preciso processar. Não é sobre você. Volto [hoje à noite / amanhã] — e voltarei."</div>
+    </div>
+    <div class="variacao-box ok">
+      <div class="var-tit">✓ Por que funciona</div>
+      <div class="var-txt">O compromisso de volta ("voltarei") com prazo transforma o afastamento de abandono em pausa. É a diferença entre o outro esperar em ansiedade ou em confiança.</div>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-d">2</div>
+      <div class="sit-titulo">Quando você quer demonstrar interesse mas não sabe como sem se expor demais</div>
+    </div>
+    <div class="sit-ctx">Quando você está genuinamente interessada mas o ato de mostrar isso parece muito arriscado.</div>
+    <div class="frase-card distante">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Não costumo dizer essas coisas facilmente. Mas estou dizendo: você importa para mim. Não preciso de resposta — só precisava que você soubesse."</div>
+    </div>
+    <div class="frase-card distante">
+      <div class="frase-lbl">Variação Menos Intensa</div>
+      <div class="frase-txt">"Gostei muito da conversa de hoje. Não preciso de nada com isso — só queria nomear."</div>
+    </div>
+    <div class="variacao-box nao">
+      <div class="var-tit">⚠ Evite</div>
+      <div class="var-txt">Minimizar logo depois de dizer algo verdadeiro com "mas enfim, não é nada" ou "esquece". O gesto de recuar após a abertura apaga exatamente o que a frase construiu.</div>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-d">3</div>
+      <div class="sit-titulo">Quando você precisa pedir algo mas quer fazer de forma calibrada</div>
+    </div>
+    <div class="sit-ctx">Quando tem uma necessidade legítima mas o ato de pedir ativa o medo de se tornar dependente.</div>
+    <div class="frase-card distante">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Isso é difícil de pedir — porque pedir ainda parece criar uma dívida que não quero criar. Mas preciso de [X]. E estou pedindo."</div>
+    </div>
+    <div class="frase-card distante">
+      <div class="frase-lbl">Versão Mais Direta</div>
+      <div class="frase-txt">"Preciso de ajuda com [algo concreto]. Posso pedir isso a você?"</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-d">A Distante</span>
+    <span>Manual de Conversas Emocionais</span>
+    <span>Bloco C · Situações 1–3</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ DISTANTE — SIT 4-6 ══════════════════════════════ -->
+<div class="page">
+  <div class="page-header header-distante">
+    <div class="ph-left">
+      <div class="ph-label">Bloco C · A Distante</div>
+      <div class="ph-title">Conexão e Abertura</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">C2</div></div>
+  </div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-d">4</div>
+      <div class="sit-titulo">Quando você vai recuar e quer avisar antes de desaparecer</div>
+    </div>
+    <div class="sit-ctx">Quando sente que vai precisar sair — antes de simplesmente sumir sem explicação.</div>
+    <div class="frase-card distante">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Vou precisar me afastar um pouco nas próximas [horas / dias]. Não é problema — é o jeito que eu processo. Você vai continuar aqui quando eu voltar?"</div>
+    </div>
+    <div class="frase-card distante">
+      <div class="frase-lbl">Versão de Baixo Custo</div>
+      <div class="frase-txt">"Vou ficar quieta por um tempo. Estou bem — só preciso de espaço. Volto."</div>
+    </div>
+    <div class="variacao-box ok">
+      <div class="var-tit">✓ O que muda</div>
+      <div class="var-txt">Avisar antes de recuar é um ato de presença — paradoxalmente. O outro não fica tentando entender o que fez de errado. Você nomeia o padrão e protege o vínculo enquanto cuida de você.</div>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-d">5</div>
+      <div class="sit-titulo">Quando você quer iniciar conexão depois de um período de distância</div>
+    </div>
+    <div class="sit-ctx">Após um silêncio mais longo — quando você quer voltar mas não sabe como começar sem fazer grande cerimônia disso.</div>
+    <div class="frase-card distante">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Fiquei um tempo sem dar sinal. Você continua na minha cabeça. Posso aparecer?"</div>
+    </div>
+    <div class="frase-card distante">
+      <div class="frase-lbl">Variação Para Relações Mais Próximas</div>
+      <div class="frase-txt">"Sumi. Não foi sobre você. Senti falta — e isso, para mim, é dizer muita coisa."</div>
+    </div>
+  </div>
+
+  <div class="divisor"></div>
+
+  <div class="situacao-block">
+    <div class="situacao-label">
+      <div class="sit-num num-d">6</div>
+      <div class="sit-titulo">Quando você quer abrir vulnerabilidade — e isso ainda é muito novo</div>
+    </div>
+    <div class="sit-ctx">Quando você quer se arriscar a ser vista de verdade — talvez pela primeira vez com essa pessoa.</div>
+    <div class="frase-card distante">
+      <div class="frase-lbl">Frase Principal</div>
+      <div class="frase-txt">"Vou dizer uma coisa e já quero avisar que vou querer apagar depois de dizer. Mas não vou apagar. [Diga o que precisa ser dito.]"</div>
+    </div>
+    <div class="frase-card distante">
+      <div class="frase-lbl">Versão Direta</div>
+      <div class="frase-txt">"Isso é difícil de dizer em voz alta. Mas quero tentar: [o que você precisa dizer]."</div>
+    </div>
+    <div class="variacao-box ok">
+      <div class="var-tit">✓ Por que funciona</div>
+      <div class="var-txt">Nomear a dificuldade de se abrir — antes de se abrir — cria um contexto de coragem que o outro reconhece. Você não está apenas compartilhando algo: está mostrando o que custou para chegar até ali.</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="pf-d">A Distante</span>
+    <span>Manual de Conversas Emocionais</span>
+    <span>Bloco C · Situações 4–6</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ ENCERRAMENTO ══════════════════════════════ -->
+<div class="page">
+  <div class="page-header header-intro">
+    <div class="ph-left">
+      <div class="ph-label">Manual de Conversas</div>
+      <div class="ph-title">Para continuar</div>
+    </div>
+    <div class="ph-right"><div class="ph-num">—</div></div>
+  </div>
+
+  <div style="background:#0E1117; border-radius:10px; padding:7mm 8mm; margin-bottom:5mm;">
+    <div style="font-size:6.5pt; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:#C9A96E; margin-bottom:3mm;">O que fazer com este material</div>
+    <p style="font-size:9.5pt; color:rgba(255,255,255,0.62); line-height:1.72; font-style:italic;">"Comunicação emocional não melhora por entendimento — melhora por repetição. As frases deste manual não vão soar naturais na primeira vez. Na quinta vez, vão começar a soar como sua voz. Na décima, vão ser a sua voz."</p>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:4mm; margin-bottom:5mm;">
+    <div style="background:#FDF8F4; border:1px solid #F0E4D8; border-radius:8px; padding:5mm;">
+      <div style="font-size:7pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#C8956C; margin-bottom:2mm;">Use junto com</div>
+      <p style="font-size:9pt; color:#444; line-height:1.6;">O <strong>Workbook Protocolo Emocional</strong> trabalha o que você sente internamente. Este manual trabalha o que você diz quando esse sentimento precisa chegar ao outro.</p>
+    </div>
+    <div style="background:#F2F6FC; border:1px solid #D4E4F0; border-radius:8px; padding:5mm;">
+      <div style="font-size:7pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#5B8FBF; margin-bottom:2mm;">Lembre-se</div>
+      <p style="font-size:9pt; color:#444; line-height:1.6;">Leia também os blocos dos outros padrões. Entender como os outros se comunicam — e o que travam — muda como você interpreta o silêncio e a intensidade de quem você ama.</p>
+    </div>
+  </div>
+
+  <div style="background:#F7F4EF; border-radius:8px; padding:5mm; margin-bottom:5mm;">
+    <div style="font-size:7pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#999; margin-bottom:3mm;">Resumo dos 3 princípios</div>
+    <div style="display:flex; flex-direction:column; gap:2.5mm;">
+      <div style="display:flex; gap:3mm; align-items:flex-start;">
+        <div style="width:5mm; height:5mm; border-radius:50%; background:#C8956C; flex-shrink:0; margin-top:1mm;"></div>
+        <p style="font-size:9pt; color:#333; line-height:1.55;"><strong>Nomeie antes de pedir.</strong> Dizer que você está com dificuldade de dizer algo é, em si, uma forma de comunicação. Contextualiza o que vem a seguir.</p>
+      </div>
+      <div style="display:flex; gap:3mm; align-items:flex-start;">
+        <div style="width:5mm; height:5mm; border-radius:50%; background:#D4687A; flex-shrink:0; margin-top:1mm;"></div>
+        <p style="font-size:9pt; color:#333; line-height:1.55;"><strong>Separe sentimento de reação.</strong> O sentimento é sempre válido. A forma como ele chega ao outro é o que pode ser trabalhado.</p>
+      </div>
+      <div style="display:flex; gap:3mm; align-items:flex-start;">
+        <div style="width:5mm; height:5mm; border-radius:50%; background:#5B8FBF; flex-shrink:0; margin-top:1mm;"></div>
+        <p style="font-size:9pt; color:#333; line-height:1.55;"><strong>Presença não é ausência de pausa.</strong> Avisar que vai recuar é um ato de presença. Voltar quando disse que voltaria é o que constrói confiança.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center; padding:4mm 0; border-top:1px solid #ECEAE5; margin-top:auto;">
+    <p style="font-size:7pt; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:#C9A96E;">Diagnóstico Relacional</p>
+    <p style="font-size:7.5pt; color:#bbb; margin-top:1mm;">Manual de Conversas Emocionais · Uso Pessoal · Confidencial</p>
+  </div>
+</div>
+
+</body>
+</html>
