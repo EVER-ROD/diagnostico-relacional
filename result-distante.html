@@ -205,24 +205,13 @@
     <p class="price-note">pagamento único · acesso imediato</p>
   </div>
 
-  <div style="background:#F4F9FD; border:1.5px dashed #2C5F8A; border-radius:14px; padding:16px 18px; margin:20px 0;">
-    <label style="display:flex; align-items:flex-start; gap:12px; cursor:pointer;">
-      <input type="checkbox" id="bump-check" style="margin-top:3px; width:18px; height:18px; flex-shrink:0; accent-color:#2C5F8A;">
-      <span>
-        <strong style="font-size:0.9rem; color:#333; display:block; margin-bottom:4px;">
-          ➕ Adicionar: Manual de Conversas Emocionais — R$17
-        </strong>
-        <span style="font-size:0.82rem; color:#777; line-height:1.45;">
-          Frases prontas para os momentos difíceis do padrão Distante — quando a vontade de fechar é maior que a de conectar.
-        </span>
-      </span>
-    </label>
-  </div>
-
   <a href="https://go.hotmart.com/S105649435F" class="btn-buy" id="btn-comprar">
     QUERO MEU PLANO AGORA — R$37 →
   </a>
   <p class="guarantee-text">🔒 Pagamento seguro · Acesso imediato · Satisfação garantida</p>
+  <p style="text-align:center; font-size:0.82rem; color:#888; margin-top:8px; line-height:1.5;">
+    💡 No checkout você verá a opção de adicionar o <strong>Manual de Conversas</strong> por apenas R$17
+  </p>
 
 </div>
 
@@ -254,10 +243,6 @@
 <div class="toast" id="toast">✓ Copiado! Cole onde quiser.</div>
 
 <script>
-document.getElementById('bump-check').addEventListener('change', function() {
-  const btn = document.getElementById('btn-comprar');
-  btn.textContent = this.checked ? 'QUERO MEU PLANO AGORA — R$54 →' : 'QUERO MEU PLANO AGORA — R$37 →';
-});
 function compartilhar() {
   const txt = document.getElementById('share-text').textContent.trim();
   if (navigator.share) { navigator.share({ text: txt }).catch(() => copiar(txt)); }
