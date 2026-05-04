@@ -29,6 +29,23 @@
       font-weight: 600;
     }
 
+    /* ── BOTÃO VOLTAR ─────────────────────────── */
+    .btn-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      padding: 6px 0;
+      margin-bottom: 20px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.28);
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .btn-back:hover { color: rgba(255,255,255,0.5); }
+    .btn-back svg { flex-shrink: 0; }
+
     /* ── PROGRESS — override style.css fixed+white ── */
     .progress-wrap {
       position: relative !important;
@@ -229,6 +246,12 @@
 <!-- QUIZ AREA -->
 <div class="quiz-wrap" id="quiz-area">
   <div class="question-card" id="question-card">
+    <button class="btn-back" id="btn-back" onclick="voltarPergunta()" style="display:none">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M9 11L5 7L9 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Pergunta anterior
+    </button>
     <div id="question-disclaimer" class="question-disclaimer" style="display:none">
       Não existe resposta certa ou errada. Responda pelo que você realmente sente — não pelo que deveria sentir.
     </div>
@@ -461,6 +484,7 @@ const perguntas = [
 let atual = 0;
 let pontos = { g: 0, t: 0, d: 0 };
 let respondendo = false;
+let historico = []; // guarda {perguntaIdx, opcaoIdx, pts} para cada resposta
 
 // ============================================================
 // RENDER DA PERGUNTA
@@ -478,9 +502,11 @@ function renderPergunta() {
   card.offsetHeight;
   card.style.animation = 'fadeUp 0.3s ease';
 
+  // Botão voltar: só aparece a partir da Q2
+  document.getElementById('btn-back').style.display = atual > 0 ? 'flex' : 'none';
+
   // Disclaimer só na primeira pergunta
-  const disc = document.getElementById('question-disclaimer');
-  disc.style.display = atual === 0 ? 'block' : 'none';
+  document.getElementById('question-disclaimer').style.display = atual === 0 ? 'block' : 'none';
 
   document.getElementById('question-text').textContent = p.texto;
 
@@ -493,11 +519,14 @@ function renderPergunta() {
     noteEl.style.display = 'none';
   }
 
+  // Opções — marca a resposta anterior se existir
+  const respostaAnterior = historico.find(h => h.perguntaIdx === atual);
   const lista = document.getElementById('options-list');
   lista.innerHTML = '';
   p.opcoes.forEach((op, i) => {
     const li = document.createElement('li');
     li.className = 'option-item';
+    if (respostaAnterior && respostaAnterior.opcaoIdx === i) li.classList.add('selected');
     li.textContent = op.texto;
     li.addEventListener('click', () => selecionar(i));
     lista.appendChild(li);
@@ -514,9 +543,22 @@ function selecionar(idx) {
   respondendo = true;
 
   const opcao = perguntas[atual].opcoes[idx];
+
+  // Se já havia resposta para esta pergunta (voltou e mudou), subtrai a anterior
+  const anterior = historico.findIndex(h => h.perguntaIdx === atual);
+  if (anterior !== -1) {
+    const pts = historico[anterior].pts;
+    pontos.g -= pts.g;
+    pontos.t -= pts.t;
+    pontos.d -= pts.d;
+    historico.splice(anterior, 1);
+  }
+
+  // Adiciona nova resposta
   pontos.g += opcao.pts.g;
   pontos.t += opcao.pts.t;
   pontos.d += opcao.pts.d;
+  historico.push({ perguntaIdx: atual, opcaoIdx: idx, pts: { ...opcao.pts } });
 
   const items = document.querySelectorAll('.option-item');
   items[idx].classList.add('selected');
@@ -529,6 +571,15 @@ function selecionar(idx) {
       mostrarLoading();
     }
   }, 380);
+}
+
+// ============================================================
+// VOLTAR PERGUNTA
+// ============================================================
+function voltarPergunta() {
+  if (atual <= 0) return;
+  atual--;
+  renderPergunta();
 }
 
 // ============================================================
