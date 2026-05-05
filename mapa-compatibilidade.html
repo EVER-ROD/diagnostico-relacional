@@ -40,10 +40,32 @@
   .pagina { padding: 18mm 20mm; page-break-before: always; min-height: 100vh; display: flex; flex-direction: column; }
 
   @media print {
+    body { font-size: 8.5pt !important; }
     .capa  { min-height: 297mm !important; height: auto; }
-    .pagina { min-height: 297mm !important; height: auto; page-break-before: always; break-before: page; }
+    .pagina { min-height: 297mm !important; height: auto; page-break-before: always; break-before: page; padding: 12mm 14mm !important; }
     .pagina:last-child { page-break-after: avoid; break-after: avoid; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    /* Compactar elementos das combo pages */
+    .combo-header { padding: 12px 16px !important; margin-bottom: 12px !important; }
+    .combo-titulo { font-size: 14pt !important; }
+    .combo-sub    { font-size: 8pt !important; }
+    .analise-texto { font-size: 8.5pt !important; line-height: 1.55 !important; margin-bottom: 10px !important; }
+    .mini-bloco   { padding: 8px 12px !important; }
+    .mini-bloco p { font-size: 8pt !important; line-height: 1.5 !important; }
+    .sinais-grid  { gap: 6px !important; margin: 8px 0 !important; }
+    .sinal-row    { padding: 7px 10px !important; }
+    .sinal-row p  { font-size: 8pt !important; line-height: 1.45 !important; }
+    .previsao-box { padding: 10px 14px !important; margin-top: 0 !important; page-break-inside: avoid; break-inside: avoid; }
+    .previsao-box p { font-size: 8.5pt !important; line-height: 1.6 !important; }
+    .pg-header    { margin-bottom: 12px !important; }
+    .pg-titulo    { font-size: 16pt !important; }
+    .pg-footer    { margin-top: auto; padding-top: 4mm; }
+
+    /* Compactar Leitura por Perfil */
+    .perfil-leitura { margin-bottom: 6px !important; }
+    .pl-combo-row   { padding: 6px 8px !important; gap: 6px !important; }
+    .pl-combo-row div[style] { font-size: 8pt !important; line-height: 1.5 !important; }
   }
 
   /* ───── CABEÇALHOS DE PÁGINA ───── */
