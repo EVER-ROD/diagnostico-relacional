@@ -40,8 +40,8 @@
   .pagina { padding: 18mm 20mm; page-break-before: always; min-height: 100vh; display: flex; flex-direction: column; }
 
   @media print {
-    .capa  { height: 297mm !important; min-height: unset !important; overflow: hidden; }
-    .pagina { height: 297mm !important; min-height: unset !important; overflow: hidden; page-break-before: always; break-before: page; }
+    .capa  { min-height: 297mm !important; height: auto; }
+    .pagina { min-height: 297mm !important; height: auto; page-break-before: always; break-before: page; }
     .pagina:last-child { page-break-after: avoid; break-after: avoid; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   }
