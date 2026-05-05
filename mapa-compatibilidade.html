@@ -39,6 +39,13 @@
   /* ───── ESTRUTURA GERAL ───── */
   .pagina { padding: 18mm 20mm; page-break-before: always; min-height: 100vh; display: flex; flex-direction: column; }
 
+  @media print {
+    .capa  { height: 297mm !important; min-height: unset !important; overflow: hidden; }
+    .pagina { height: 297mm !important; min-height: unset !important; overflow: hidden; page-break-before: always; break-before: page; }
+    .pagina:last-child { page-break-after: avoid; break-after: avoid; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+
   /* ───── CABEÇALHOS DE PÁGINA ───── */
   .pg-header { margin-bottom: 22px; }
   .pg-tag { font-size: 6.5pt; font-weight: 700; letter-spacing: 3.5px; text-transform: uppercase; margin-bottom: 8px; }

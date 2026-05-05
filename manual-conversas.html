@@ -18,8 +18,8 @@ body {
 }
 
 @media print {
-  .page { page-break-after: always; break-after: page; }
-  .page:last-child { page-break-after: avoid; }
+  .page { page-break-after: always; break-after: page; height: 297mm !important; overflow: hidden !important; }
+  .page:last-child { page-break-after: avoid; break-after: avoid; }
   .frase-card, .variacao-box, .page-header, .bloco-intro-page,
   .situacao-block, .capa {
     page-break-inside: avoid; break-inside: avoid;
@@ -324,16 +324,12 @@ body {
     </div>
     <div class="sit-ctx">Use quando perceber que está dando mais do que consegue sustentar — e ainda não disse nada.</div>
     <div class="frase-card guardia">
-      <div class="frase-lbl">Exemplo Concreto — como soa completo</div>
-      <div class="frase-txt">"Eu me importo com o que você está pedindo. E também preciso de espaço para recarregar no fim de semana. Posso continuar te apoiando no dia a dia, mas não consigo ser a primeira ligação toda vez que algo pesa — pelo menos não nessa frequência. Preciso de um limite aqui."</div>
-    </div>
-    <div class="variacao-box ok" style="margin-bottom:3mm;">
-      <div class="var-tit">↓ Estrutura para adaptar à sua situação</div>
-      <div class="var-txt">Substitua os campos abaixo pelo que se aplica a você — o tom e a estrutura ficam, só o conteúdo muda.</div>
+      <div class="frase-lbl">Exemplo Concreto — como soa preenchido</div>
+      <div class="frase-txt">"Eu me importo com o que você está pedindo. E também preciso de espaço para recarregar no fim de semana. Posso continuar te apoiando no dia a dia, mas não consigo ser a primeira ligação toda vez que algo pesa — pelo menos não nessa frequência."</div>
     </div>
     <div class="frase-card guardia">
-      <div class="frase-lbl">Frase Modelo</div>
-      <div class="frase-txt">"Eu me importo com o que você está pedindo. E também preciso de <em>[o que você precisa: tempo, espaço, pausa, menos frequência]</em>. Posso fazer <em>[o que você consegue oferecer]</em>, mas não consigo fazer <em>[o que está te custando caro]</em> — pelo menos não agora."</div>
+      <div class="frase-lbl">Estrutura para adaptar</div>
+      <div class="frase-txt">"Eu me importo com o que você está pedindo. E também preciso de <em>[tempo / espaço / menos frequência]</em>. Posso fazer <em>[o que você consegue]</em>, mas não consigo fazer <em>[o que está te custando]</em> — pelo menos não agora."</div>
     </div>
     <div class="frase-card guardia">
       <div class="frase-lbl">Variação</div>
@@ -800,45 +796,45 @@ body {
 </div>
 
 <!-- ══════════════════════════════ ENCERRAMENTO ══════════════════════════════ -->
-<div class="page" style="width:210mm; min-height:297mm; padding:16mm 18mm 14mm; background:#0E1117; display:flex; flex-direction:column; justify-content:space-between;">
+<div class="page" style="width:210mm; height:297mm; overflow:hidden; padding:13mm 16mm 12mm; background:#0E1117; display:flex; flex-direction:column; justify-content:space-between;">
   <div>
     <div style="font-size:7pt; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:rgba(201,169,110,0.5); margin-bottom:8mm;">Diagnóstico Relacional · Manual de Conversas</div>
 
     <div style="font-family:'Playfair Display',Georgia,serif; font-size:24pt; font-weight:900; color:#fff; line-height:1.15; margin-bottom:3mm;">Sobre o que você<br><em style="color:#C9A96E; font-style:italic;">acabou de aprender.</em></div>
-    <div style="width:18mm; height:2px; background:linear-gradient(90deg,#C9A96E,transparent); margin-bottom:8mm;"></div>
+    <div style="width:18mm; height:2px; background:linear-gradient(90deg,#C9A96E,transparent); margin-bottom:5mm;"></div>
 
     <!-- Axioma 1 -->
-    <div style="border-left:3px solid #C8956C; padding-left:5mm; margin-bottom:6mm;">
-      <div style="font-size:6.5pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C8956C; margin-bottom:2mm;">I — A Guardiã aprendeu</div>
-      <div style="font-size:10.5pt; font-family:'Playfair Display',Georgia,serif; font-style:italic; color:rgba(255,255,255,0.85); line-height:1.6; margin-bottom:2mm;">"Um limite dito com cuidado não é uma rejeição. É a única forma sustentável de continuar oferecendo o que você tem para dar."</div>
-      <div style="font-size:8.5pt; color:rgba(255,255,255,0.4); line-height:1.55;">O padrão Guardiã tende a silenciar a necessidade até que o cuidado vire ressentimento. As frases deste bloco existem para dar linguagem ao limite antes que ele se torne afastamento.</div>
+    <div style="border-left:3px solid #C8956C; padding-left:5mm; margin-bottom:4mm;">
+      <div style="font-size:6.5pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C8956C; margin-bottom:1.5mm;">I — A Guardiã aprendeu</div>
+      <div style="font-size:10pt; font-family:'Playfair Display',Georgia,serif; font-style:italic; color:rgba(255,255,255,0.85); line-height:1.55; margin-bottom:1.5mm;">"Um limite dito com cuidado não é uma rejeição. É a única forma sustentável de continuar oferecendo o que você tem para dar."</div>
+      <div style="font-size:8pt; color:rgba(255,255,255,0.4); line-height:1.5;">O padrão Guardiã tende a silenciar a necessidade até que o cuidado vire ressentimento. As frases deste bloco existem para dar linguagem ao limite antes que ele se torne afastamento.</div>
     </div>
 
     <!-- Axioma 2 -->
-    <div style="border-left:3px solid #D4687A; padding-left:5mm; margin-bottom:6mm;">
-      <div style="font-size:6.5pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#D4687A; margin-bottom:2mm;">II — A Tempestade aprendeu</div>
-      <div style="font-size:10.5pt; font-family:'Playfair Display',Georgia,serif; font-style:italic; color:rgba(255,255,255,0.85); line-height:1.6; margin-bottom:2mm;">"O sentimento que você sente no pico é real. A palavra que você escolhe para expressá-lo não precisa ser a mais destruidora para ser verdadeira."</div>
-      <div style="font-size:8.5pt; color:rgba(255,255,255,0.4); line-height:1.55;">Intensidade e precisão não são opostos. As frases deste bloco mostram que é possível comunicar com força sem usar a dor do outro como evidência da própria.</div>
+    <div style="border-left:3px solid #D4687A; padding-left:5mm; margin-bottom:4mm;">
+      <div style="font-size:6.5pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#D4687A; margin-bottom:1.5mm;">II — A Tempestade aprendeu</div>
+      <div style="font-size:10pt; font-family:'Playfair Display',Georgia,serif; font-style:italic; color:rgba(255,255,255,0.85); line-height:1.55; margin-bottom:1.5mm;">"O sentimento que você sente no pico é real. A palavra que você escolhe para expressá-lo não precisa ser a mais destruidora para ser verdadeira."</div>
+      <div style="font-size:8pt; color:rgba(255,255,255,0.4); line-height:1.5;">Intensidade e precisão não são opostos. As frases deste bloco mostram que é possível comunicar com força sem usar a dor do outro como evidência da própria.</div>
     </div>
 
     <!-- Axioma 3 -->
-    <div style="border-left:3px solid #5B8FBF; padding-left:5mm; margin-bottom:7mm;">
-      <div style="font-size:6.5pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#5B8FBF; margin-bottom:2mm;">III — A Distante aprendeu</div>
-      <div style="font-size:10.5pt; font-family:'Playfair Display',Georgia,serif; font-style:italic; color:rgba(255,255,255,0.85); line-height:1.6; margin-bottom:2mm;">"Nomear que você está se afastando, antes de se afestar, é o ato mais conectivo que o padrão Distante pode fazer."</div>
-      <div style="font-size:8.5pt; color:rgba(255,255,255,0.4); line-height:1.55;">O silêncio da Distante costuma ser interpretado como punição ou desinteresse. Uma frase dita antes do recolhimento reescreve o significado do espaço — de abandono para escolha consciente.</div>
+    <div style="border-left:3px solid #5B8FBF; padding-left:5mm; margin-bottom:5mm;">
+      <div style="font-size:6.5pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#5B8FBF; margin-bottom:1.5mm;">III — A Distante aprendeu</div>
+      <div style="font-size:10pt; font-family:'Playfair Display',Georgia,serif; font-style:italic; color:rgba(255,255,255,0.85); line-height:1.55; margin-bottom:1.5mm;">"Nomear que você está se afastando, antes de se afastar, é o ato mais conectivo que o padrão Distante pode fazer."</div>
+      <div style="font-size:8pt; color:rgba(255,255,255,0.4); line-height:1.5;">O silêncio da Distante costuma ser interpretado como punição ou desinteresse. Uma frase dita antes do recolhimento reescreve o significado do espaço — de abandono para escolha consciente.</div>
     </div>
 
     <!-- Verdade final -->
-    <div style="background:rgba(201,169,110,0.08); border:1px solid rgba(201,169,110,0.25); border-radius:8px; padding:6mm 7mm; margin-bottom:7mm;">
-      <div style="font-size:6.5pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C9A96E; margin-bottom:3mm;">O que este manual não pode fazer</div>
-      <p style="font-size:9.5pt; color:rgba(255,255,255,0.6); line-height:1.7;">Comunicação emocional não melhora por entendimento — melhora por repetição. As frases aqui não vão soar naturais na primeira vez. Na quinta, vão começar a soar como a sua voz. Na décima, vão ser a sua voz. O manual resolve o problema do vocabulário. O trabalho de usar as palavras quando importa é seu.</p>
+    <div style="background:rgba(201,169,110,0.08); border:1px solid rgba(201,169,110,0.25); border-radius:8px; padding:4mm 6mm; margin-bottom:4mm;">
+      <div style="font-size:6.5pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C9A96E; margin-bottom:2mm;">O que este manual não pode fazer</div>
+      <p style="font-size:9pt; color:rgba(255,255,255,0.6); line-height:1.65;">Comunicação emocional não melhora por entendimento — melhora por repetição. As frases aqui não vão soar naturais na primeira vez. Na quinta, vão começar a soar como a sua voz. Na décima, vão ser a sua voz. O manual resolve o problema do vocabulário. O trabalho de usar as palavras quando importa é seu.</p>
     </div>
 
     <!-- Próximo — Mapa -->
-    <div style="border:1px solid rgba(201,169,110,0.35); border-radius:10px; padding:6mm 7mm; background:rgba(255,255,255,0.02);">
-      <div style="font-size:7pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(201,169,110,0.7); margin-bottom:3mm;">Para ir mais fundo</div>
-      <div style="font-size:12pt; font-weight:700; color:#fff; font-family:'Playfair Display',Georgia,serif; margin-bottom:3mm;">Mapa de Compatibilidade Relacional</div>
-      <p style="font-size:9pt; color:rgba(255,255,255,0.5); line-height:1.65; margin-bottom:3mm;">Este manual ensina o que dizer. O Mapa mostra com quem — analisando as 9 combinações possíveis entre os três padrões, com os sinais de alerta que não aparecem nos primeiros meses e a previsão de longo prazo de cada dinâmica.</p>
+    <div style="border:1px solid rgba(201,169,110,0.35); border-radius:10px; padding:4mm 6mm; background:rgba(255,255,255,0.02);">
+      <div style="font-size:7pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(201,169,110,0.7); margin-bottom:2mm;">Para ir mais fundo</div>
+      <div style="font-size:11pt; font-weight:700; color:#fff; font-family:'Playfair Display',Georgia,serif; margin-bottom:2mm;">Mapa de Compatibilidade Relacional</div>
+      <p style="font-size:8.5pt; color:rgba(255,255,255,0.5); line-height:1.6; margin-bottom:2mm;">Este manual ensina o que dizer. O Mapa mostra com quem — analisando as 9 combinações possíveis entre os três padrões, com sinais de alerta invisíveis e previsão de longo prazo de cada dinâmica.</p>
       <div style="font-size:8pt; font-weight:700; color:#C9A96E; letter-spacing:1px;">→ Inteligência relacional estratégica · 9 combinações · previsão de 12 meses</div>
     </div>
   </div>
