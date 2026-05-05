@@ -10,18 +10,30 @@
 body { font-family: 'Inter', Arial, sans-serif; font-size: 10pt; color: #1a1a1a; background: #fff; line-height: 1.55; }
 
 @media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   .page { page-break-after: always; break-after: page; }
   .page:last-child { page-break-after: avoid; break-after: avoid; }
   .no-break, .exercicio, .reflexao-box, .frase-ancora, .insight-box,
   .alerta-box, .dia-header, .tabela-simples, .tabela-dias, .mini-cards {
     page-break-inside: avoid; break-inside: avoid;
   }
-  .capa, .page-header, .dia-header, .insight-box, .frase-ancora,
-  .callout, .progresso-bar, .tag-dia, .reflexao-box, .alerta-box,
-  .exercicio, .ex-header, .tabela-simples, .tabela-dias, .mini-cards,
-  .progresso-strip, .mini-card, .checklist, .escala-wrap {
-    -webkit-print-color-adjust: exact; print-color-adjust: exact;
-  }
+  body { font-size: 9.5pt !important; line-height: 1.5 !important; }
+  .page { padding: 12mm 14mm !important; }
+  .capa { padding: 16mm 16mm 14mm !important; }
+  .page-header { padding: 4mm 0 3mm !important; margin-bottom: 5mm !important; }
+  .dia-header { padding: 4mm 5mm !important; margin-bottom: 4mm !important; }
+  .leitura { margin-bottom: 4mm !important; }
+  .leitura p { margin-bottom: 2mm !important; }
+  .exercicio { margin-bottom: 4mm !important; }
+  .ex-header { padding: 3mm 4mm !important; }
+  .ex-body { padding: 4mm !important; }
+  .reflexao-box { padding: 4mm 5mm !important; margin-bottom: 3mm !important; }
+  .insight-box { padding: 4mm 5mm !important; margin-bottom: 3mm !important; }
+  .alerta-box { padding: 4mm 5mm !important; margin-bottom: 3mm !important; }
+  .frase-ancora { padding: 5mm !important; margin: 4mm 0 !important; }
+  .progresso-strip { margin: 3mm 0 !important; }
+  .page-footer { padding-top: 2mm !important; margin-top: auto !important; }
+  .tabela-dias td, .tabela-dias th { padding: 4px 5px !important; font-size: 8pt !important; }
 }
 
 :root {

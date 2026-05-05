@@ -18,14 +18,27 @@ body {
 }
 
 @media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   .page { page-break-after: always; break-after: page; }
   .page:last-child { page-break-after: avoid; break-after: avoid; }
   .frase-card, .variacao-box, .page-header, .bloco-intro-page,
   .situacao-block, .capa {
     page-break-inside: avoid; break-inside: avoid;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
   }
+  body { font-size: 9.5pt !important; line-height: 1.5 !important; }
+  .page { padding: 12mm 14mm !important; }
+  .capa { padding: 16mm !important; }
+  .bloco-intro-page { padding: 16mm !important; }
+  .page-header { padding: 3mm 0 !important; margin-bottom: 4mm !important; }
+  .situacao-block { margin-bottom: 4mm !important; }
+  .sit-ctx { margin-bottom: 2mm !important; font-size: 8.5pt !important; }
+  .frase-card { padding: 3mm 4mm !important; margin-bottom: 2mm !important; }
+  .frase-txt { font-size: 9.5pt !important; line-height: 1.5 !important; }
+  .variacao-box { padding: 3mm 4mm !important; margin-bottom: 2mm !important; }
+  .var-txt { font-size: 8.5pt !important; }
+  .divisor { margin: 3mm 0 !important; }
+  .page-footer { padding-top: 2mm !important; margin-top: auto !important; }
+  .principio-box { padding: 4mm 5mm !important; margin-top: 3mm !important; }
 }
 
 /* ═══════════════ CAPA ═══════════════ */

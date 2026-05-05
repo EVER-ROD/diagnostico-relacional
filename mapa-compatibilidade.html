@@ -40,32 +40,62 @@
   .pagina { padding: 18mm 20mm; page-break-before: always; min-height: 100vh; display: flex; flex-direction: column; }
 
   @media print {
-    body { font-size: 8.5pt !important; }
-    .capa  { min-height: 297mm !important; height: auto; }
-    .pagina { min-height: 297mm !important; height: auto; page-break-before: always; break-before: page; padding: 12mm 14mm !important; }
-    .pagina:last-child { page-break-after: avoid; break-after: avoid; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body { font-size: 8pt !important; line-height: 1.45 !important; }
 
-    /* Compactar elementos das combo pages */
-    .combo-header { padding: 12px 16px !important; margin-bottom: 12px !important; }
-    .combo-titulo { font-size: 14pt !important; }
-    .combo-sub    { font-size: 8pt !important; }
-    .analise-texto { font-size: 8.5pt !important; line-height: 1.55 !important; margin-bottom: 10px !important; }
-    .mini-bloco   { padding: 8px 12px !important; }
-    .mini-bloco p { font-size: 8pt !important; line-height: 1.5 !important; }
-    .sinais-grid  { gap: 6px !important; margin: 8px 0 !important; }
-    .sinal-row    { padding: 7px 10px !important; }
-    .sinal-row p  { font-size: 8pt !important; line-height: 1.45 !important; }
-    .previsao-box { padding: 10px 14px !important; margin-top: 0 !important; page-break-inside: avoid; break-inside: avoid; }
-    .previsao-box p { font-size: 8.5pt !important; line-height: 1.6 !important; }
-    .pg-header    { margin-bottom: 12px !important; }
-    .pg-titulo    { font-size: 16pt !important; }
-    .pg-footer    { margin-top: auto; padding-top: 4mm; }
+    .capa   { min-height: 297mm !important; height: auto; }
+    .pagina { min-height: 297mm !important; height: auto; page-break-before: always; break-before: page; padding: 10mm 14mm !important; }
+    .pagina:last-child { page-break-after: avoid; break-after: avoid; }
 
-    /* Compactar Leitura por Perfil */
-    .perfil-leitura { margin-bottom: 6px !important; }
-    .pl-combo-row   { padding: 6px 8px !important; gap: 6px !important; }
-    .pl-combo-row div[style] { font-size: 8pt !important; line-height: 1.5 !important; }
+    /* PAGE HEADER */
+    .pg-header  { margin-bottom: 8px !important; }
+    .pg-tag     { font-size: 6pt !important; margin-bottom: 4px !important; }
+    .pg-titulo  { font-size: 15pt !important; line-height: 1.15 !important; margin-bottom: 2px !important; }
+    .pg-sub     { font-size: 8pt !important; line-height: 1.4 !important; }
+    .pg-footer  { padding-top: 3mm !important; margin-top: auto; }
+
+    /* COMBO HEADER */
+    .combo-header  { padding: 10px 14px !important; margin-bottom: 8px !important; border-radius: 6px !important; }
+    .combo-num     { font-size: 6pt !important; margin-bottom: 3px !important; }
+    .combo-nome    { font-size: 15pt !important; line-height: 1.1 !important; margin-bottom: 2px !important; }
+    .combo-subtitulo { font-size: 8pt !important; margin-bottom: 4px !important; }
+
+    /* SEÇÃO TEXTO */
+    .secao-bloco  { margin-bottom: 6px !important; }
+    .secao-label  { font-size: 5.5pt !important; margin-bottom: 3px !important; padding-bottom: 3px !important; }
+    .secao-texto,
+    .analise-texto { font-size: 8pt !important; line-height: 1.5 !important; margin-bottom: 0 !important; }
+
+    /* MINI-BLOCOS */
+    .linha-duo  { gap: 6px !important; margin-bottom: 6px !important; }
+    .mini-bloco { padding: 6px 10px !important; }
+    .mini-bloco h5 { font-size: 7.5pt !important; margin-bottom: 3px !important; }
+    .mini-bloco li { font-size: 7.5pt !important; line-height: 1.4 !important; margin-bottom: 1px !important; }
+
+    /* SINAIS */
+    .sinais-grid { gap: 4px !important; margin: 4px 0 !important; }
+    .sinal-row   { padding: 5px 8px !important; gap: 8px !important; }
+    .sinal-icone { font-size: 9pt !important; margin-top: 1px !important; }
+    .sinal-row strong { font-size: 7.5pt !important; }
+    .sinal-row p { font-size: 7.5pt !important; line-height: 1.4 !important; margin-top: 1px !important; }
+
+    /* PREVISÃO */
+    .previsao-box   { padding: 8px 12px !important; margin-top: 4px !important; page-break-inside: avoid; break-inside: avoid; }
+    .pb-label       { font-size: 6pt !important; margin-bottom: 4px !important; }
+    .previsao-box p { font-size: 8pt !important; line-height: 1.55 !important; }
+
+    /* LEITURA POR PERFIL */
+    .perfil-leitura  { margin-bottom: 4px !important; }
+    .pl-titulo       { font-size: 8.5pt !important; padding: 5px 8px !important; margin-bottom: 3px !important; }
+    .pl-combo-row    { padding: 5px 7px !important; gap: 6px !important; margin-bottom: 2px !important; }
+    .pl-badge        { font-size: 5.5pt !important; padding: 2px 5px !important; }
+
+    /* TABELA MATRIZ */
+    .matriz-tabela td,
+    .matriz-tabela th { padding: 5px 8px !important; font-size: 7.5pt !important; }
+
+    /* PREFÁCIO */
+    .axioma-bloco { margin-bottom: 8px !important; padding: 10px 14px !important; }
   }
 
   /* ───── CABEÇALHOS DE PÁGINA ───── */
